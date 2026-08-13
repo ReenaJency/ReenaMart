@@ -1,2 +1,0 @@
-# ReenaMart
-Online Shopping Website

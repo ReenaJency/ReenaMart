@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reena Mart- Cart</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+        }
+        header {
+            background-color: #1f4d3a;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        nav {
+            background-color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .cart {
+            background-color: white;
+            width: 80%;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+        .cart h2 {
+            color: #1f4d3a;
+        }
+        .item {
+            border-bottom: 1px solid #ddd;
+            padding: 20px 0;
+        }
+        .price {
+            font-weight: bold;
+            color: #d35400;
+        }
+        .checkout {
+            background-color: #1f4d3a;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🛍️ RM | Reena Mart</h1>
+        <p>Shopping Cart</p>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="cart.html">🛒 Cart</a>
+    </nav>
+    <div class="cart">
+        <h2>🛒 Your Shopping Cart</h2>
+        <div class="item">
+            <h3>Fashion Dress</h3>
+            <p>Quantity: 1</p>
+            <p class="price">₹799</p>
+        </div>
+        <div class="item">
+            <h3>Fashion Jewellery</h3>
+            <p>Quantity: 1</p>
+            <p class="price">₹499</p>
+         </div>
+        <h2>Total: ₹1,298</h2>
+        <button class="checkout">Proceed to Checkout</button>
+    </div>
+    <footer>
+        <p>© 2026 Reena Mart</p>
+        <p>Shop Smart. Live Better.</p>
+    </footer>
+</body>
+</html>

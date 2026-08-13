@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reena Mart - Products</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+        }
+        header {
+            background-color: #1f4d3a;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .tagline {
+            font-size: 12px;
+        }
+        .search {
+            flex: 1;
+            display: flex;
+        }
+        .search input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            font-size: 16px;
+        }
+        .search button {
+            padding: 12px 20px;
+            border: none;
+            background-color: #f5a623;
+            cursor: pointer;
+        }
+        nav {
+            background-color: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px #ccc;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 18px;
+            font-weight: bold;
+        }
+        .welcome {
+            text-align: center;
+            padding: 25px;
+        }
+        .welcome h1 {
+            color: #1f4d3a;
+        }
+        .categories {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .categories button {
+            padding: 10px 18px;
+            margin: 5px;
+            border: 1px solid #1f4d3a;
+            background-color: white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .products {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        .product {
+            background-color: white;
+            width: 230px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+        .product-image {
+            font-size: 70px;
+            padding: 20px;
+        }
+        .product h3 {
+            margin: 10px 0;
+        }
+        .price {
+            color: #d35400;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .product button {
+            background-color: #1f4d3a;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .product button:hover {
+            background-color: #143528;
+        }
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            🛍️ RM | Reena Mart
+            <div class="tagline">Shop Smart. Live Better.</div>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search products...">
+            <button>🔍 Search</button>
+        </div>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="cart.html">🛒 Cart</a>
+    </nav>
+    <section class="welcome">
+        <h1>Welcome to Reena Mart</h1>
+        <p>Discover amazing products at great prices.</p>
+    </section>
+    <div class="categories">
+        <button>All</button>
+        <button>Fashion</button>
+        <button>Jewellery</button>
+        <button>Electronics</button>
+        <button>Beauty</button>
+
+    </div>
+    <!-- Products -->
+    <section class="products">
+        <div class="product">
+            <div class="product-image">👗</div>
+            <h3>Fashion Dress</h3>
+            <p>Beautiful latest fashion dress</p>
+            <div class="price">₹799</div>
+            <button>Add to Cart</button>
+        </div>
+        <div class="product">
+            <div class="product-image">💍</div>
+            <h3>Fashion Jewellery</h3>
+            <p>Elegant jewellery collection</p>
+            <div class="price">₹499</div>
+            <button>Add to Cart</button>
+        </div>
+        <div class="product">
+            <div class="product-image">🎧</div>
+            <h3>Wireless Headphones</h3>
+            <p>High quality wireless headphones</p>
+            <div class="price">₹1,299</div>
+            <button>Add to Cart</button>
+        </div>
+        <div class="product">
+            <div class="product-image">💄</div>
+            <h3>Beauty Kit</h3>
+            <p>Complete beauty care kit</p>
+            <div class="price">₹699</div>
+            <button>Add to Cart</button>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Reena Mart</p>
+        <p>Shop Smart. Live Better.</p>
+    </footer>
+</body>
+</html>

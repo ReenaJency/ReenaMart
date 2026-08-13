@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reena Mart - Checkout</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f5;
+        }
+        header {
+            background: #1f4d3a;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .logo span {
+            display: block;
+            font-size: 12px;
+            font-weight: normal;
+            margin-top: 4px;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px #ddd;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 18px;
+            font-weight: bold;
+        }
+
+        /* Main */
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+
+        .container h1 {
+            color: #1f4d3a;
+        }
+
+        .checkout-box {
+            background: white;
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        /* Form */
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Order Summary */
+        .summary {
+            background: #f8f8f8;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .summary p {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #d35400;
+        }
+
+        /* Button */
+        .place-order {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            background: #f5a623;
+            color: #222;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .place-order:hover {
+            background: #e39412;
+        }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            🛍️ RM | Reena Mart
+            <span>Shop Smart. Live Better.</span>
+        </div>
+
+        <div>
+            🛒 Checkout
+        </div>
+    </header>
+
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="login.html">Login</a>
+    </nav>
+
+
+    <!-- Checkout -->
+    <div class="container">
+
+        <h1>Checkout</h1>
+
+        <div class="checkout-box">
+
+            <h2>📦 Delivery Details</h2>
+
+            <label>Full Name</label>
+            <input type="text" placeholder="Enter your full name">
+
+            <label>Mobile Number</label>
+            <input type="tel" placeholder="Enter your mobile number">
+
+            <label>Address</label>
+            <input type="text" placeholder="Enter your delivery address">
+
+            <label>City</label>
+            <input type="text" placeholder="Enter your city">
+
+            <label>PIN Code</label>
+            <input type="text" placeholder="Enter PIN code">
+
+        </div>
+
+
+        <div class="checkout-box">
+
+            <h2>💳 Payment Method</h2>
+
+            <label>Select Payment Method</label>
+
+            <select>
+                <option>Cash on Delivery</option>
+                <option>UPI</option>
+                <option>Credit / Debit Card</option>
+            </select>
+
+        </div>
+        <div class="checkout-box">
+            <h2>🧾 Order Summary</h2>
+
+            <div class="summary">
+
+                <p>
+                    <span>Fashion Dress</span>
+                    <span>₹799</span>
+                </p>
+                <p>
+                    <span>Fashion Jewellery</span>
+                    <span>₹499</span>
+                </p>
+                <hr>
+                <p class="total">
+                    <span>Total</span>
+                    <span>₹1,298</span>
+                </p>
+            </div>
+            <button class="place-order">
+                Place Order
+            </button>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Reena Mart</p>
+        <p>Shop Smart. Live Better.</p>
+    </footer>
+</body>
+</html>
