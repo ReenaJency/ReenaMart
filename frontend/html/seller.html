@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Seller Dashboard - ReenaMart</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7f6;
+            color: #333;
+        }
+
+        /* HEADER */
+        header {
+            background: #1f4d3a;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            font-size: 25px;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #f5a623;
+        }
+
+        /* MAIN */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .welcome {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            color: #1f4d3a;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #666;
+        }
+
+        /* ADD PRODUCT */
+        .add-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .add-section h2 {
+            color: #1f4d3a;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .form-group textarea {
+            height: 90px;
+            resize: vertical;
+        }
+
+        .add-btn {
+            background: #f5a623;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #df9115;
+        }
+
+        /* MANAGE PRODUCTS */
+        .manage-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .manage-section h2 {
+            color: #1f4d3a;
+            margin-bottom: 20px;
+        }
+
+        .empty-products {
+            text-align: center;
+            padding: 45px 20px;
+            color: #777;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+        }
+
+        .empty-products h3 {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        /* PRODUCT CARD */
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f1f1f1;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-info h3 {
+            color: #1f4d3a;
+            margin-bottom: 8px;
+        }
+
+        .product-info p {
+            margin: 6px 0;
+            color: #555;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1f4d3a;
+            margin-top: 10px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .edit-btn,
+        .delete-btn {
+            border: none;
+            padding: 9px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .edit-btn {
+            background: #1976d2;
+        }
+
+        .delete-btn {
+            background: #d32f2f;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background: #1f4d3a;
+            color: white;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                width: 94%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <h1>ReenaMart Seller Dashboard</h1>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="seller-products.html">My Products</a>
+            <a href="seller-orders.html">Orders</a>
+            <a href="login.html">Logout</a>
+        </nav>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+
+        <!-- WELCOME -->
+        <div class="welcome">
+
+            <h2>Welcome, Seller!</h2>
+
+            <p>
+                Manage your products and orders from your seller dashboard.
+            </p>
+
+        </div>
+
+
+        <!-- ADD PRODUCT -->
+        <div class="add-section">
+
+            <h2>Add New Product</h2>
+
+            <form id="productForm">
+
+                <div class="form-group">
+
+                    <label for="productName">
+                        Product Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productName"
+                        placeholder="Enter product name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="productPrice">
+                        Price (₹)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productPrice"
+                        placeholder="Enter product price"
+                        min="1"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="productCategory">
+                        Category
+                    </label>
+
+                    <select id="productCategory" required>
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option value="Fashion">
+                            Fashion
+                        </option>
+
+                        <option value="Jewellery">
+                            Jewellery
+                        </option>
+
+                        <option value="Electronics">
+                            Electronics
+                        </option>
+
+                        <option value="Beauty">
+                            Beauty
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="productImage">
+                        Image URL
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productImage"
+                        placeholder="Paste product image URL"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="productDescription">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="productDescription"
+                        placeholder="Enter product description"
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="add-btn"
+                >
+                    Add Product
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- MANAGE PRODUCTS -->
+        <div class="manage-section">
+
+            <h2>Manage Products</h2>
+
+            <div
+                class="products-container"
+                id="productsContainer"
+            >
+
+                <!-- NO DEFAULT PRODUCT -->
+                <div class="empty-products">
+
+                    <h3>No Products Added Yet</h3>
+
+                    <p>
+                        You have not added any products.
+                        Add your first product using the form above.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        © 2026 ReenaMart | Seller Dashboard
+
+    </footer>
+
+
+    <script>
+
+        /*
+         * IMPORTANT:
+         * No default/sample product is added here.
+         *
+         * Products will be handled later through
+         * Spring Boot + MySQL backend.
+         */
+
+
+        document
+            .getElementById("productForm")
+            .addEventListener("submit", function (event) {
+
+                event.preventDefault();
+
+                const name =
+                    document.getElementById("productName").value.trim();
+
+                const price =
+                    document.getElementById("productPrice").value;
+
+                const category =
+                    document.getElementById("productCategory").value;
+
+                const image =
+                    document.getElementById("productImage").value.trim();
+
+                const description =
+                    document.getElementById("productDescription").value.trim();
+
+
+                if (!name || !price || !category) {
+
+                    alert("Please fill all required fields.");
+
+                    return;
+                }
+
+
+                /*
+                 * For now, this only confirms the entered product.
+                 * Backend connection will be added next.
+                 */
+
+                alert(
+                    "Product details entered successfully!\n\n" +
+                    "Product: " + name + "\n" +
+                    "Price: ₹" + price + "\n" +
+                    "Category: " + category
+                );
+
+
+                document
+                    .getElementById("productForm")
+                    .reset();
+
+            });
+
+    </script>
+
+</body>
+
+</html>

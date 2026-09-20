@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - ReenaMart</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* HEADER */
+
+        header {
+            background: #1f4d3a;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 25px;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-links a {
+            text-decoration: none;
+            color: white;
+            background: #f5a623;
+            padding: 9px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* PRODUCT */
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .product-box {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 430px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #eee;
+        }
+
+        .product-info {
+            padding: 10px;
+        }
+
+        .category {
+            color: #777;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .product-info h2 {
+            color: #1f4d3a;
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            color: #e67e22;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .stock {
+            color: #1f4d3a;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* SIZE */
+
+        .size-section {
+            margin-bottom: 25px;
+        }
+
+        .size-section label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .size-section select {
+            width: 180px;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .size-section select:focus {
+            outline: none;
+            border-color: #1f4d3a;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            padding: 13px 22px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .cart-btn {
+            background: #1f4d3a;
+            color: white;
+        }
+
+        .buy-btn {
+            background: #f5a623;
+            color: white;
+        }
+
+        .like-btn {
+            background: #eee;
+            color: #333;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* NOT FOUND */
+
+        .not-found {
+            background: white;
+            text-align: center;
+            padding: 70px 20px;
+            border-radius: 10px;
+        }
+
+        .not-found h2 {
+            color: #1f4d3a;
+            margin-bottom: 10px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            background: #1f4d3a;
+            color: white;
+            text-decoration: none;
+            padding: 11px 20px;
+            border-radius: 6px;
+        }
+
+        /* MOBILE */
+
+        @media(max-width: 750px) {
+            header {
+                padding: 15px;
+            }
+
+            .product-box {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .product-image {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+        <h1>ReenaMart</h1>
+
+        <div class="header-links">
+            <a href="product.html">Products</a>
+            <a href="cart.html">Cart</a>
+        </div>
+    </header>
+
+
+    <!-- MAIN -->
+
+    <div class="container">
+        <div id="productContainer"></div>
+    </div>
+
+
+    <script>
+
+        /* GET SELECTED PRODUCT */
+
+        const product = JSON.parse(
+            localStorage.getItem("selectedProduct")
+        );
+
+        const container = document.getElementById(
+            "productContainer"
+        );
+
+
+        /* PRODUCT NOT FOUND */
+
+        if (!product) {
+
+            container.innerHTML = `
+                <div class="not-found">
+                    <h2>Product Not Found</h2>
+
+                    <p>
+                        Please select a product from the Products page.
+                    </p>
+
+                    <a href="product.html" class="back-btn">
+                        Back to Products
+                    </a>
+                </div>
+            `;
+
+        }
+
+
+        /* SHOW PRODUCT */
+
+        else {
+
+            let sizeHTML = "";
+
+            if (product.category === "Fashion") {
+
+                sizeHTML = `
+                    <div class="size-section">
+
+                        <label for="selectedSize">
+                            Select Size
+                        </label>
+
+                        <select id="selectedSize">
+                            <option value="">
+                                Select Size
+                            </option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                        </select>
+
+                    </div>
+                `;
+            }
+
+
+            container.innerHTML = `
+
+                <div class="product-box">
+
+                    <div>
+
+                        <img
+                            src="${product.image || ''}"
+                            class="product-image"
+                            alt="${product.name}"
+                            onerror="this.src='https://via.placeholder.com/500x500?text=ReenaMart'"
+                        >
+
+                    </div>
+
+
+                    <div class="product-info">
+
+                        <div class="category">
+                            Category:
+                            ${product.category || "Product"}
+                        </div>
+
+
+                        <h2>
+                            ${product.name}
+                        </h2>
+
+
+                        <div class="price">
+                            ₹${product.price}
+                        </div>
+
+
+                        <p class="description">
+                            ${product.description ||
+                            "High quality product available on ReenaMart. Shop safely and conveniently online."}
+                        </p>
+
+
+                        <div class="stock">
+                            ✓ Available for purchase
+                        </div>
+
+
+                        ${sizeHTML}
+
+
+                        <div class="buttons">
+
+                            <button
+                                class="cart-btn"
+                                onclick="addToCart()">
+                                Add to Cart
+                            </button>
+
+
+                            <button
+                                class="buy-btn"
+                                onclick="buyNow()">
+                                Buy Now
+                            </button>
+
+
+                            <button
+                                class="like-btn"
+                                onclick="likeProduct()">
+                                ♡ Like
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            `;
+        }
+
+
+        /* GET SELECTED SIZE */
+
+        function getSelectedSize() {
+
+            if (!product) {
+                return "";
+            }
+
+            if (product.category !== "Fashion") {
+                return "";
+            }
+
+            const sizeElement =
+                document.getElementById("selectedSize");
+
+            if (!sizeElement) {
+                return "";
+            }
+
+            return sizeElement.value;
+        }
+
+
+        /* ADD TO CART */
+
+        function addToCart() {
+
+            if (!product) return;
+
+            const selectedSize = getSelectedSize();
+
+
+            if (
+                product.category === "Fashion" &&
+                selectedSize === ""
+            ) {
+                alert("Please select a size.");
+                return;
+            }
+
+
+            let cart = JSON.parse(
+                localStorage.getItem("cart")
+            ) || [];
+
+
+            const existing = cart.find(item =>
+                item.id === product.id &&
+                item.selectedSize === selectedSize
+            );
+
+
+            if (existing) {
+
+                existing.quantity =
+                    Number(existing.quantity || 1) + 1;
+
+            } else {
+
+                cart.push({
+                    ...product,
+                    selectedSize: selectedSize,
+                    quantity: 1
+                });
+
+            }
+
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+
+            alert("Product added to cart!");
+
+        }
+
+
+        /* BUY NOW */
+
+        function buyNow() {
+
+            if (!product) return;
+
+            const selectedSize = getSelectedSize();
+
+
+            if (
+                product.category === "Fashion" &&
+                selectedSize === ""
+            ) {
+                alert("Please select a size.");
+                return;
+            }
+
+
+            const buyProduct = {
+                ...product,
+                selectedSize: selectedSize,
+                quantity: 1
+            };
+
+
+            localStorage.setItem(
+                "buyNowProduct",
+                JSON.stringify(buyProduct)
+            );
+
+
+            window.location.href = "checkout.html";
+
+        }
+
+
+        /* LIKE */
+
+        function likeProduct() {
+
+            if (!product) return;
+
+
+            let likedProducts = JSON.parse(
+                localStorage.getItem("likedProducts")
+            ) || [];
+
+
+            const exists = likedProducts.some(
+                item => item.id === product.id
+            );
+
+
+            if (!exists) {
+
+                likedProducts.push(product);
+
+                localStorage.setItem(
+                    "likedProducts",
+                    JSON.stringify(likedProducts)
+                );
+
+                alert("Product liked!");
+
+            } else {
+
+                alert("Product already liked!");
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

@@ -3,96 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reena Mart- Cart</title>
+    <title>Reena Mart - Cart</title>
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f3f3f3;
         }
+
         header {
             background-color: #1f4d3a;
             color: white;
             text-align: center;
             padding: 25px;
         }
+
+        header h1 {
+            margin: 0 0 8px;
+        }
+
+        header p {
+            margin: 0;
+        }
+
         nav {
-            background-color: white;
+            background-color: ghostwhite;
             padding: 15px;
             text-align: center;
+            box-shadow: 0 1px 4px #ddd;
         }
+
         nav a {
             text-decoration: none;
             color: #333;
             margin: 0 15px;
             font-weight: bold;
         }
+
+        nav a:hover {
+            color: #1f4d3a;
+        }
+
         .cart {
             background-color: white;
-            width: 80%;
-            max-width: 700px;
+            width: 90%;
+            max-width: 900px;
             margin: 40px auto;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 2px 8px #ccc;
         }
+
         .cart h2 {
             color: #1f4d3a;
+            margin-bottom: 30px;
+            text-align: center;
         }
-        .item {
-            border-bottom: 1px solid #ddd;
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
             padding: 20px 0;
+            border-bottom: 1px solid #ddd;
         }
-        .price {
+
+        .cart-item img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .item-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .item-info h3 {
+            margin: 0 0 8px;
+            color: #333;
+        }
+
+        .category {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .size {
+            color: #555;
+            font-size: 14px;
             font-weight: bold;
-            color: #d35400;
+            margin-bottom: 8px;
         }
-        .checkout {
+
+        .price {
+            color: #1f4d3a;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .quantity button {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 5px;
             background-color: #1f4d3a;
             color: white;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .quantity span {
+            min-width: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .remove-btn {
+            background-color: #d9534f;
+            color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 9px 15px;
             border-radius: 5px;
             cursor: pointer;
         }
+
+        .remove-btn:hover {
+            background-color: #b52b27;
+        }
+
+        .cart-summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            text-align: right;
+        }
+
+        .cart-summary h3 {
+            margin: 0 0 15px;
+            color: #333;
+        }
+
+        .total {
+            font-size: 24px;
+            color: #1f4d3a;
+            font-weight: bold;
+        }
+
+        .checkout-btn {
+            display: inline-block;
+            background-color: #f5a623;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .checkout-btn:hover {
+            background-color: #d98c0b;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .empty-cart h3 {
+            font-size: 24px;
+            color: #555;
+        }
+
+        .empty-cart p {
+            color: #777;
+        }
+
+        .shop-btn {
+            display: inline-block;
+            background-color: #1f4d3a;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .shop-btn:hover {
+            background-color: #163a2c;
+        }
+
         footer {
             background-color: #222;
             color: white;
             text-align: center;
             padding: 20px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 5px;
+        }
+
+        @media (max-width: 600px) {
+            nav a {
+                display: inline-block;
+                margin: 7px 8px;
+            }
+
+            .cart {
+                width: 95%;
+                padding: 20px 15px;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cart-item img {
+                width: 100%;
+                height: 180px;
+            }
+
+            .item-info {
+                width: 100%;
+            }
+
+            .cart-summary {
+                text-align: center;
+            }
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <h1>🛍️ RM | Reena Mart</h1>
-        <p>Shopping Cart</p>
-    </header>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
-        <a href="cart.html">🛒 Cart</a>
-    </nav>
-    <div class="cart">
-        <h2>🛒 Your Shopping Cart</h2>
-        <div class="item">
-            <h3>Fashion Dress</h3>
-            <p>Quantity: 1</p>
-            <p class="price">₹799</p>
-        </div>
-        <div class="item">
-            <h3>Fashion Jewellery</h3>
-            <p>Quantity: 1</p>
-            <p class="price">₹499</p>
-         </div>
-        <h2>Total: ₹1,298</h2>
-        <button class="checkout">Proceed to Checkout</button>
-    </div>
-    <footer>
-        <p>© 2026 Reena Mart</p>
-        <p>Shop Smart. Live Better.</p>
-    </footer>
+
+<header>
+    <h1>🛍️ RM | Reena Mart</h1>
+    <p>Shopping Cart</p>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="product.html">Products</a>
+    <a href="product.html">❤️ Like</a>
+    <a href="cart.html">🛒 Cart</a>
+</nav>
+
+<div class="cart">
+    <h2>🛒 Your Shopping Cart</h2>
+    <div id="cartContainer"></div>
+</div>
+
+<footer>
+    <p>© 2026 Reena Mart</p>
+    <p>Shop Smart. Live Better.</p>
+</footer>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function displayCart() {
+        const container = document.getElementById("cartContainer");
+
+        if (cart.length === 0) {
+            container.innerHTML = `
+                <div class="empty-cart">
+                    <h3>Your Cart is Empty</h3>
+                    <p>You haven't added any products to your cart yet.</p>
+                    <a href="product.html" class="shop-btn">
+                        🛍️ Continue Shopping
+                    </a>
+                </div>
+            `;
+            return;
+        }
+
+        let total = 0;
+        let html = "";
+
+        cart.forEach((item, index) => {
+            const quantity = item.quantity || 1;
+            const itemTotal = Number(item.price) * quantity;
+
+            total += itemTotal;
+
+            html += `
+                <div class="cart-item">
+
+                    <img
+                        src="${item.image || 'https://via.placeholder.com/120'}"
+                        alt="${item.name}"
+                        onerror="this.src='https://via.placeholder.com/120'"
+                    >
+
+                    <div class="item-info">
+
+                        <h3>${item.name}</h3>
+
+                        <div class="category">
+                            Category: ${item.category || "Product"}
+                        </div>
+
+                        ${
+                            item.selectedSize
+                            ? `
+                                <div class="size">
+                                    Size: ${item.selectedSize}
+                                </div>
+                            `
+                            : ""
+                        }
+
+                        <div class="price">
+                            ₹${Number(item.price).toLocaleString("en-IN")}
+                        </div>
+
+                        <div class="quantity">
+
+                            <button onclick="decreaseQuantity(${index})">
+                                −
+                            </button>
+
+                            <span>${quantity}</span>
+
+                            <button onclick="increaseQuantity(${index})">
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="remove-btn"
+                        onclick="removeItem(${index})"
+                    >
+                        Remove
+                    </button>
+
+                </div>
+            `;
+        });
+
+        html += `
+            <div class="cart-summary">
+
+                <h3>
+                    Total Amount:
+                    <span class="total">
+                        ₹${total.toLocaleString("en-IN")}
+                    </span>
+                </h3>
+
+                <a href="checkout.html" class="checkout-btn">
+                    Proceed to Checkout →
+                </a>
+
+            </div>
+        `;
+
+        container.innerHTML = html;
+    }
+
+    function increaseQuantity(index) {
+        cart[index].quantity = (cart[index].quantity || 1) + 1;
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        displayCart();
+    }
+
+    function decreaseQuantity(index) {
+        if ((cart[index].quantity || 1) > 1) {
+            cart[index].quantity--;
+        } else {
+            cart.splice(index, 1);
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        displayCart();
+    }
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        displayCart();
+    }
+
+    displayCart();
+</script>
+
 </body>
 </html>

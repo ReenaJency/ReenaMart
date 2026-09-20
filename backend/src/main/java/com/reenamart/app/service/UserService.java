@@ -28,32 +28,74 @@ public class UserService {
 
     // Register new user
     public User register(User user) {
+
+        // Default role = BUYER
+        if (user.getRole() == null || user.getRole().isBlank()) {
+            user.setRole("BUYER");
+        }
+
+        // Convert role to uppercase
+        user.setRole(user.getRole().toUpperCase());
+
         return userRepository.save(user);
     }
 
-    // Login
-    public User login(String username, String password) {
+    // Login using email, password and role
+    public User login(String email, String password, String role) {
 
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByEmail(email);
 
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
+        if (user == null) {
+            return null;
         }
 
-        return null;
+        if (!user.getPassword().equals(password)) {
+            return null;
+        }
+
+        if (user.getRole() == null) {
+            return null;
+        }
+
+        if (!user.getRole().equalsIgnoreCase(role)) {
+            return null;
+        }
+
+        return user;
     }
 
     // Update user
     public User updateUser(Long id, User user) {
 
-        User existingUser = userRepository.findById(id).orElse(null);
+        User existingUser =
+                userRepository.findById(id).orElse(null);
 
         if (existingUser == null) {
             return null;
         }
 
         existingUser.setUsername(user.getUsername());
-        existingUser.setPassword(user.getPassword());
+
+        if (user.getEmail() != null &&
+                !user.getEmail().isBlank()) {
+
+            existingUser.setEmail(user.getEmail());
+        }
+
+        if (user.getPassword() != null &&
+                !user.getPassword().isBlank()) {
+
+            existingUser.setPassword(user.getPassword());
+        }
+
+        // Update role if provided
+        if (user.getRole() != null &&
+                !user.getRole().isBlank()) {
+
+            existingUser.setRole(
+                    user.getRole().toUpperCase()
+            );
+        }
 
         return userRepository.save(existingUser);
     }

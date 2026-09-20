@@ -50,13 +50,23 @@ public class UserController {
         return userService.register(user);
     }
 
-    // Login
+    // Login using email, password and role
     @PostMapping("/login")
     public User login(@RequestBody User user) {
-        return userService.login(
-                user.getUsername(),
-                user.getPassword()
+
+        User loggedInUser = userService.login(
+                user.getEmail(),
+                user.getPassword(),
+                user.getRole()
         );
+
+        if (loggedInUser == null) {
+            throw new RuntimeException(
+                    "Invalid email, password or role"
+            );
+        }
+
+        return loggedInUser;
     }
 
     // Update user
@@ -71,7 +81,9 @@ public class UserController {
     // Delete user
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id) {
+
         userService.deleteUser(id);
+
         return "User deleted successfully!";
     }
 }

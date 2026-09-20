@@ -1,27 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Reena Mart</title>
+
+    <title>Reena Mart - Register</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-box {
+            width: 100%;
+            max-width: 400px;
+
+            background-color: white;
+            padding: 35px 30px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 10px;
+            color: #2874f0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+
+            border: 1px solid #ccc;
+            border-radius: 6px;
+
+            font-size: 16px;
+        }
+
+        .register-btn {
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+            border-radius: 6px;
+
+            background-color: #2874f0;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .register-btn:hover {
+            background-color: #1557c0;
+        }
+
+        .login-link {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #2874f0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>🛍️ Reena Mart</h1>
-    <h2>Create Account</h2>
-    <form>
-        <label>Full Name:</label><br>
-        <input type="text" placeholder="Enter your name" required><br><br>
-        <label>Email:</label><br>
-        <input type="email" placeholder="Enter your email" required><br><br>
-        <label>Password:</label><br>
-        <input type="password" placeholder="Create a password" required><br><br>
-        <label>Confirm Password:</label><br>
-        <input type="password" placeholder="Confirm your password" required><br><br>
-        <button type="submit">Register</button>
-    </form>
-    <p>Already have an account?</p>
-    <a href="login.html">Login</a>
-    <br><br>
-    <a href="index.html">Back to Home</a>
+
+    <div class="register-box">
+
+        <h1>🛍️ Reena Mart</h1>
+
+        <h2>Create Account</h2>
+
+        <form id="registerForm">
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Enter your username"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="register-btn">
+
+                Register
+
+            </button>
+
+        </form>
+
+
+        <div class="login-link">
+
+            Already have an account?
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const registerForm =
+            document.getElementById("registerForm");
+
+
+        registerForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const username =
+                    document.getElementById("username")
+                    .value
+                    .trim();
+
+
+                const email =
+                    document.getElementById("email")
+                    .value
+                    .trim();
+
+
+                const password =
+                    document.getElementById("password")
+                    .value;
+
+
+                try {
+
+                    const response = await fetch(
+                        "http://localhost:8080/api/users/register",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                username: username,
+
+                                email: email,
+
+                                password: password,
+
+                                role: "BUYER"
+
+                            })
+                        }
+                    );
+
+
+                    if (!response.ok) {
+
+                        const errorMessage =
+                            await response.text();
+
+                        alert(
+                            errorMessage ||
+                            "Registration failed."
+                        );
+
+                        return;
+                    }
+
+
+                    const user =
+                        await response.json();
+
+
+                    alert(
+                        "Registration successful! You can now login."
+                    );
+
+
+                    window.location.href =
+                        "login.html";
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Registration error:",
+                        error
+                    );
+
+                    alert(
+                        "Unable to connect to server. Please make sure the backend is running."
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
 </body>
+
 </html>

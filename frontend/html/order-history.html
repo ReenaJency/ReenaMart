@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order History - ReenaMart</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* HEADER */
+
+        header {
+            background: #1f4d3a;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 25px;
+        }
+
+        .shop-btn {
+            background: #f5a623;
+            color: white;
+
+            padding: 10px 18px;
+
+            border-radius: 6px;
+
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* MAIN CONTAINER */
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+
+            margin: 30px auto;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            color: #1f4d3a;
+            margin-bottom: 7px;
+        }
+
+        .page-title p {
+            color: #777;
+        }
+
+        /* ORDER CARD */
+
+        .order-card {
+            background: white;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            margin-bottom: 20px;
+
+            box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            border-bottom: 1px solid #ddd;
+
+            padding-bottom: 15px;
+
+            margin-bottom: 18px;
+        }
+
+        .order-id {
+            color: #1f4d3a;
+            font-weight: bold;
+        }
+
+        .order-date {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* PRODUCT */
+
+        .product-area {
+            display: flex;
+            gap: 20px;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .product-image {
+            width: 110px;
+            height: 110px;
+
+            object-fit: cover;
+
+            border-radius: 8px;
+
+            background: #eee;
+        }
+
+        .product-info h3 {
+            color: #1f4d3a;
+            margin-bottom: 8px;
+        }
+
+        .product-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        /* BOTTOM */
+
+        .order-footer {
+            border-top: 1px solid #ddd;
+
+            padding-top: 15px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total {
+            color: #e67e22;
+
+            font-size: 19px;
+
+            font-weight: bold;
+        }
+
+        /* STATUS */
+
+        .status {
+            padding: 8px 16px;
+
+            border-radius: 20px;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .shipped {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .delivered {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* EMPTY */
+
+        .empty-orders {
+            background: white;
+
+            text-align: center;
+
+            padding: 70px 20px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .empty-orders h3 {
+            color: #1f4d3a;
+            margin-bottom: 10px;
+        }
+
+        .empty-orders p {
+            color: #777;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 15px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .order-header,
+            .order-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .product-area {
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <h1>
+        ReenaMart
+    </h1>
+
+    <a
+        href="product.html"
+        class="shop-btn">
+
+        Continue Shopping
+
+    </a>
+
+</header>
+
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <div class="page-title">
+
+        <h2>
+            My Order History
+        </h2>
+
+        <p>
+            View your orders and track their current status.
+        </p>
+
+    </div>
+
+
+
+    <!-- ORDERS -->
+
+    <div id="ordersContainer"></div>
+
+
+
+    <!-- EMPTY MESSAGE -->
+
+    <div
+        id="emptyOrders"
+        class="empty-orders">
+
+        <h3>
+            No Orders Yet
+        </h3>
+
+        <p>
+            Your placed orders will appear here.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================
+   GET ORDERS FROM LOCAL STORAGE
+===================================== */
+
+let orders =
+    JSON.parse(
+        localStorage.getItem("orders")
+    ) || [];
+
+
+
+/* =====================================
+   DISPLAY ORDERS
+===================================== */
+
+function displayOrders() {
+
+    const container =
+        document.getElementById(
+            "ordersContainer"
+        );
+
+    const emptyOrders =
+        document.getElementById(
+            "emptyOrders"
+        );
+
+
+    container.innerHTML = "";
+
+
+    /* NO ORDERS */
+
+    if (orders.length === 0) {
+
+        emptyOrders.style.display = "block";
+
+        return;
+    }
+
+
+    /* ORDERS AVAILABLE */
+
+    emptyOrders.style.display = "none";
+
+
+    orders.forEach((order, index) => {
+
+        const product =
+            order.product || order;
+
+
+        const quantity =
+            Number(order.quantity || 1);
+
+
+        const price =
+            Number(product.price || 0);
+
+
+        const total =
+            Number(
+                order.total ||
+                price * quantity
+            );
+
+
+        const status =
+            order.status || "Pending";
+
+
+        const statusClass =
+            status.toLowerCase();
+
+
+
+        container.innerHTML += `
+
+            <div class="order-card">
+
+
+                <!-- ORDER HEADER -->
+
+                <div class="order-header">
+
+                    <div class="order-id">
+
+                        Order ID:
+                        ${order.orderId || "RM" + (1000 + index)}
+
+                    </div>
+
+
+                    <div class="order-date">
+
+                        ${order.date || "Recent Order"}
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRODUCT -->
+
+                <div class="product-area">
+
+
+                    <img
+                        src="${product.image || ''}"
+                        class="product-image"
+                        alt="${product.name || 'Product'}"
+                        onerror="this.style.display='none'"
+                    >
+
+
+                    <div class="product-info">
+
+                        <h3>
+                            ${product.name || "Product"}
+                        </h3>
+
+                        <p>
+                            Category:
+                            ${product.category || "Product"}
+                        </p>
+
+                        <p>
+                            Quantity:
+                            ${quantity}
+                        </p>
+
+                        <p>
+                            Price:
+                            ₹${price}
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- FOOTER -->
+
+                <div class="order-footer">
+
+
+                    <div class="total">
+
+                        Total:
+                        ₹${total}
+
+                    </div>
+
+
+                    <div>
+
+                        <span
+                            class="status ${statusClass}">
+
+                            ${status}
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =====================================
+   INITIAL LOAD
+===================================== */
+
+displayOrders();
+
+</script>
+
+</body>
+
+</html>

@@ -1,122 +1,391 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Order Successful - Reena Mart</title>
+<title>Order Successful - Reena Mart</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f5;
-            text-align: center;
-        }
+<style>
 
-        header {
-            background-color: #1f4d3a;
-            color: white;
-            padding: 25px;
-        }
+    * {
+        box-sizing: border-box;
+    }
 
-        .logo {
-            font-size: 26px;
-            font-weight: bold;
-        }
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f5;
+        text-align: center;
+        color: #222;
+    }
+
+    header {
+        background-color: #1f4d3a;
+        color: white;
+        padding: 25px;
+    }
+
+    .logo {
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    header p {
+        margin: 8px 0 0;
+    }
+
+    .success-box {
+        background-color: white;
+        width: 90%;
+        max-width: 650px;
+        margin: 50px auto;
+        padding: 40px 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px #ccc;
+    }
+
+    .success-icon {
+        font-size: 70px;
+    }
+
+    h1 {
+        color: #1f4d3a;
+    }
+
+    .message {
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .order-details {
+        background-color: #f3f3f3;
+        padding: 20px;
+        margin: 25px 0;
+        border-radius: 8px;
+        text-align: left;
+    }
+
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .detail-row:last-child {
+        border-bottom: none;
+    }
+
+    .detail-label {
+        font-weight: bold;
+    }
+
+    .status {
+        color: #1f4d3a;
+        font-weight: bold;
+    }
+
+    .total {
+        color: #1f4d3a;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .buttons {
+        margin-top: 25px;
+    }
+
+    .home-button,
+    .products-button,
+    .history-button {
+        display: inline-block;
+        text-decoration: none;
+        padding: 13px 22px;
+        border-radius: 6px;
+        margin: 7px;
+        font-weight: bold;
+    }
+
+    .home-button {
+        background-color: #1f4d3a;
+        color: white;
+    }
+
+    .products-button {
+        background-color: #f5a623;
+        color: #222;
+    }
+
+    .history-button {
+        background-color: #555;
+        color: white;
+    }
+
+    footer {
+        background-color: #222;
+        color: white;
+        padding: 20px;
+        margin-top: 50px;
+    }
+
+    footer p {
+        margin: 5px;
+    }
+
+    @media (max-width: 600px) {
 
         .success-box {
-            background-color: white;
-            width: 90%;
-            max-width: 600px;
-            margin: 60px auto;
-            padding: 40px 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px #ccc;
+            width: 95%;
+            padding: 30px 18px;
         }
 
-        .success-icon {
-            font-size: 70px;
-        }
-
-        h1 {
-            color: #1f4d3a;
-        }
-
-        .order-number {
-            background-color: #f3f3f3;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
+        .detail-row {
+            flex-direction: column;
+            gap: 5px;
         }
 
         .home-button,
-        .products-button {
-            display: inline-block;
-            text-decoration: none;
-            padding: 13px 25px;
-            border-radius: 6px;
-            margin-top: 15px;
+        .products-button,
+        .history-button {
+            display: block;
+            margin: 10px 0;
         }
 
-        .home-button {
-            background-color: #1f4d3a;
-            color: white;
-        }
+    }
 
-        .products-button {
-            background-color: #f5a623;
-            color: #222;
-        }
+</style>
 
-        footer {
-            background-color: #222;
-            color: white;
-            padding: 20px;
-            margin-top: 50px;
-        }
-    </style>
-</head>
+</head><body><header>
 
-<body>
+    <div class="logo">
+        🛍️ RM | Reena Mart
+    </div>
 
-    <header>
-        <div class="logo">🛍️ RM | Reena Mart</div>
-        <p>Shop Smart. Live Better.</p>
-    </header>
+    <p>
+        Shop Smart. Live Better.
+    </p>
 
-    <div class="success-box">
+</header>
 
-        <div class="success-icon">✅</div>
 
-        <h1>Order Placed Successfully!</h1>
+<div class="success-box">
 
-        <p>Thank you for shopping with Reena Mart.</p>
+    <div class="success-icon">
+        ✅
+    </div>
 
-        <p>Your order has been successfully placed.</p>
 
-        <div class="order-number">
-            <strong>Order ID:</strong> RM20260001
-        </div>
+    <h1>
+        Order Placed Successfully!
+    </h1>
 
-        <p>📦 Your order will be delivered soon.</p>
 
-        <a href="products.html" class="products-button">
-            Continue Shopping
+    <p class="message">
+        Thank you for shopping with Reena Mart.
+        <br>
+        Your order has been successfully placed.
+    </p>
+
+
+    <div
+        class="order-details"
+        id="orderDetails"
+    >
+
+    </div>
+
+
+    <p>
+        📦 Your order will be delivered soon.
+    </p>
+
+
+    <div class="buttons">
+
+        <a
+            href="product.html"
+            class="products-button"
+        >
+            🛍️ Continue Shopping
         </a>
 
-        <br>
 
-        <a href="index.html" class="home-button">
-            Back to Home
+        <a
+            href="order-history.html"
+            class="history-button"
+        >
+            📦 View Order History
+        </a>
+
+
+        <a
+            href="index.html"
+            class="home-button"
+        >
+            🏠 Back to Home
         </a>
 
     </div>
 
-    <footer>
-        <p>© 2026 Reena Mart</p>
-        <p>Shop Smart. Live Better.</p>
-    </footer>
+</div>
 
-</body>
-</html>
+
+<footer>
+
+    <p>
+        © 2026 Reena Mart
+    </p>
+
+    <p>
+        Shop Smart. Live Better.
+    </p>
+
+</footer>
+
+
+<script>
+
+    const order =
+        JSON.parse(
+            localStorage.getItem("latestOrder")
+        );
+
+
+    const details =
+        document.getElementById("orderDetails");
+
+
+    if (!order) {
+
+        details.innerHTML = `
+
+            <div style="text-align:center;">
+
+                <h3>
+                    Order Details Not Found
+                </h3>
+
+                <p>
+                    Please place an order first.
+                </p>
+
+            </div>
+
+        `;
+
+    } else {
+
+        let productNames = "";
+
+        if (order.items && order.items.length > 0) {
+
+            order.items.forEach(item => {
+
+                productNames += `
+                    <div class="detail-row">
+
+                        <span class="detail-label">
+                            Product
+                        </span>
+
+                        <span>
+                            ${item.name}
+                            × ${item.quantity || 1}
+                        </span>
+
+                    </div>
+                `;
+
+            });
+
+        }
+
+
+        details.innerHTML = `
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Order ID
+                </span>
+
+                <span>
+                    ${order.orderId}
+                </span>
+
+            </div>
+
+
+            ${productNames}
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Order Date
+                </span>
+
+                <span>
+                    ${order.date}
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Payment
+                </span>
+
+                <span>
+                    ${order.paymentMethod}
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Customer
+                </span>
+
+                <span>
+                    ${order.customerName}
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Status
+                </span>
+
+                <span class="status">
+                    ${order.status}
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Total Amount
+                </span>
+
+                <span class="total">
+                    ₹${Number(order.total).toLocaleString("en-IN")}
+                </span>
+
+            </div>
+
+        `;
+
+    }
+
+</script>
+
+</body></html>

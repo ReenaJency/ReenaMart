@@ -1,191 +1,610 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reena Mart - Products</title>
+
+    <title>ReenaMart - Products</title>
+
     <style>
-        body {
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: Arial, sans-serif;
-            background-color: #f3f3f3;
         }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+        }
+
         header {
-            background-color: #1f4d3a;
+            background: #1f4d3a;
             color: white;
-            padding: 15px 30px;
+            padding: 18px 40px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            white-space: nowrap;
+
+        header h1 {
+            font-size: 26px;
         }
-        .tagline {
-            font-size: 12px;
-        }
-        .search {
-            flex: 1;
+
+        .header-right {
             display: flex;
+            gap: 10px;
         }
-        .search input {
-            width: 100%;
-            padding: 12px;
-            border: none;
+
+        .header-right a {
+            text-decoration: none;
+            color: white;
+            background: #f5a623;
+            padding: 9px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .search-section {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px #ddd;
+        }
+
+        .search-box {
+            width: 90%;
+            max-width: 550px;
+            padding: 13px 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
             font-size: 16px;
         }
-        .search button {
-            padding: 12px 20px;
-            border: none;
-            background-color: #f5a623;
-            cursor: pointer;
+
+        .search-box:focus {
+            outline: none;
+            border-color: #1f4d3a;
         }
-        nav {
-            background-color: white;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 2px 5px #ccc;
-        }
-        nav a {
-            text-decoration: none;
-            color: #333;
-            margin: 0 18px;
-            font-weight: bold;
-        }
-        .welcome {
-            text-align: center;
-            padding: 25px;
-        }
-        .welcome h1 {
-            color: #1f4d3a;
-        }
+
         .categories {
             text-align: center;
-            margin-bottom: 20px;
+            padding: 20px;
         }
-        .categories button {
+
+        .category-btn {
+            border: none;
+            background: white;
+            color: #333;
             padding: 10px 18px;
             margin: 5px;
-            border: 1px solid #1f4d3a;
-            background-color: white;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-        .products {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 20px;
-        }
-        .product {
-            background-color: white;
-            width: 230px;
-            padding: 20px;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px #ccc;
-        }
-        .product-image {
-            font-size: 70px;
-            padding: 20px;
-        }
-        .product h3 {
-            margin: 10px 0;
-        }
-        .price {
-            color: #d35400;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .product button {
-            background-color: #1f4d3a;
-            color: white;
-            border: none;
-            padding: 11px 20px;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
+            font-weight: bold;
+            box-shadow: 0 1px 5px #ddd;
         }
-        .product button:hover {
-            background-color: #143528;
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #1f4d3a;
+            color: white;
         }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 20px auto 50px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px #ddd;
+            transition: 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 5px 15px #ccc;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            background: #eee;
+            cursor: pointer;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-category {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .product-name {
+            color: #1f4d3a;
+            font-size: 18px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .product-price {
+            color: #e67e22;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .available-size {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        .available-size strong {
+            color: #1f4d3a;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .view-btn {
+            flex: 1;
+            border: none;
+            background: #1f4d3a;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .like-btn {
+            width: 45px;
+            border: none;
+            background: #eee;
+            color: #333;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .like-btn:hover {
+            background: #ddd;
+        }
+
+        .no-products {
+            grid-column: 1 / -1;
+            text-align: center;
+            background: white;
+            padding: 60px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        .no-products h2 {
+            color: #1f4d3a;
+            margin-bottom: 10px;
+        }
+
+        .no-products p {
+            color: #777;
+        }
+
         footer {
-            background-color: #222;
+            background: #222;
             color: white;
             text-align: center;
             padding: 20px;
-            margin-top: 30px;
+        }
+
+        footer p {
+            margin: 5px;
+        }
+
+        @media (max-width: 1000px) {
+            .products {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+            header {
+                padding: 15px;
+                justify-content: center;
+            }
+
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .product-image {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .product-image {
+                height: 250px;
+            }
         }
     </style>
 </head>
-<body>
-    <header>
-        <div class="logo">
-            🛍️ RM | Reena Mart
-            <div class="tagline">Shop Smart. Live Better.</div>
-        </div>
-        <div class="search">
-            <input type="text" placeholder="Search products...">
-            <button>🔍 Search</button>
-        </div>
-    </header>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
-        <a href="cart.html">🛒 Cart</a>
-    </nav>
-    <section class="welcome">
-        <h1>Welcome to Reena Mart</h1>
-        <p>Discover amazing products at great prices.</p>
-    </section>
-    <div class="categories">
-        <button>All</button>
-        <button>Fashion</button>
-        <button>Jewellery</button>
-        <button>Electronics</button>
-        <button>Beauty</button>
 
+<body>
+
+<header>
+
+    <h1>🛍️ ReenaMart</h1>
+
+    <div class="header-right">
+        <a href="index.html">Home</a>
+        <a href="cart.html">🛒 Cart</a>
     </div>
-    <!-- Products -->
-    <section class="products">
-        <div class="product">
-            <div class="product-image">👗</div>
-            <h3>Fashion Dress</h3>
-            <p>Beautiful latest fashion dress</p>
-            <div class="price">₹799</div>
-            <button>Add to Cart</button>
-        </div>
-        <div class="product">
-            <div class="product-image">💍</div>
-            <h3>Fashion Jewellery</h3>
-            <p>Elegant jewellery collection</p>
-            <div class="price">₹499</div>
-            <button>Add to Cart</button>
-        </div>
-        <div class="product">
-            <div class="product-image">🎧</div>
-            <h3>Wireless Headphones</h3>
-            <p>High quality wireless headphones</p>
-            <div class="price">₹1,299</div>
-            <button>Add to Cart</button>
-        </div>
-        <div class="product">
-            <div class="product-image">💄</div>
-            <h3>Beauty Kit</h3>
-            <p>Complete beauty care kit</p>
-            <div class="price">₹699</div>
-            <button>Add to Cart</button>
-        </div>
-    </section>
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 Reena Mart</p>
-        <p>Shop Smart. Live Better.</p>
-    </footer>
+
+</header>
+
+
+<section class="search-section">
+
+    <input
+        type="text"
+        id="searchInput"
+        class="search-box"
+        placeholder="Search products..."
+        oninput="searchProducts()"
+    >
+
+</section>
+
+
+<div class="categories">
+
+    <button
+        class="category-btn active"
+        onclick="filterCategory('All', this)">
+        All
+    </button>
+
+    <button
+        class="category-btn"
+        onclick="filterCategory('Fashion', this)">
+        Fashion
+    </button>
+
+    <button
+        class="category-btn"
+        onclick="filterCategory('Jewellery', this)">
+        Jewellery
+    </button>
+
+    <button
+        class="category-btn"
+        onclick="filterCategory('Electronics', this)">
+        Electronics
+    </button>
+
+    <button
+        class="category-btn"
+        onclick="filterCategory('Beauty', this)">
+        Beauty
+    </button>
+
+</div>
+
+
+<div class="container">
+
+    <div id="productContainer" class="products"></div>
+
+</div>
+
+
+<footer>
+    <p>© 2026 ReenaMart</p>
+    <p>Shop Smart. Live Better.</p>
+</footer>
+
+
+<script>
+
+    /* GET PRODUCTS ADDED BY SELLER */
+
+    let products =
+        JSON.parse(localStorage.getItem("sellerProducts")) || [];
+
+
+    let currentCategory = "All";
+
+
+    /* DISPLAY PRODUCTS */
+
+    function displayProducts(list) {
+
+        const container =
+            document.getElementById("productContainer");
+
+
+        if (list.length === 0) {
+
+            container.innerHTML = `
+                <div class="no-products">
+
+                    <h2>No Products Available</h2>
+
+                    <p>
+                        Seller has not added any products yet.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        let html = "";
+
+
+        list.forEach(product => {
+
+            let image =
+                product.image ||
+                product.imageUrl ||
+                "";
+
+
+            let sizeText = "";
+
+
+            if (product.category === "Fashion") {
+
+                if (product.sizes && Array.isArray(product.sizes)) {
+
+                    sizeText =
+                        product.sizes.join(", ");
+
+                } else if (product.size) {
+
+                    sizeText =
+                        product.size;
+
+                } else {
+
+                    sizeText =
+                        "S, M, L, XL, XXL";
+
+                }
+
+            }
+
+
+            html += `
+                <div class="product-card">
+
+                    <img
+                        class="product-image"
+                        src="${image}"
+                        alt="${product.name}"
+                        onclick="openProduct(${product.id})"
+                        onerror="this.src='https://via.placeholder.com/500x500?text=Image+Not+Available'"
+                    >
+
+                    <div class="product-info">
+
+                        <div class="product-category">
+                            Category:
+                            ${product.category || "Product"}
+                        </div>
+
+                        <h3
+                            class="product-name"
+                            onclick="openProduct(${product.id})">
+                            ${product.name}
+                        </h3>
+
+                        <div class="product-price">
+                            ₹${Number(product.price).toLocaleString("en-IN")}
+                        </div>
+
+                        ${
+                            product.category === "Fashion"
+                            ? `
+                                <div class="available-size">
+                                    <strong>Available Sizes:</strong>
+                                    ${sizeText}
+                                </div>
+                            `
+                            : ""
+                        }
+
+                        <div class="card-buttons">
+
+                            <button
+                                class="view-btn"
+                                onclick="openProduct(${product.id})">
+                                View Product
+                            </button>
+
+                            <button
+                                class="like-btn"
+                                onclick="likeProduct(${product.id})">
+                                ♡
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            `;
+        });
+
+
+        container.innerHTML = html;
+    }
+
+
+    /* OPEN PRODUCT DETAILS */
+
+    function openProduct(id) {
+
+        const product =
+            products.find(item => item.id == id);
+
+
+        if (!product) {
+            return;
+        }
+
+
+        localStorage.setItem(
+            "selectedProduct",
+            JSON.stringify(product)
+        );
+
+
+        window.location.href =
+            "product-details.html";
+    }
+
+
+    /* CATEGORY FILTER */
+
+    function filterCategory(category, button) {
+
+        currentCategory = category;
+
+
+        document
+            .querySelectorAll(".category-btn")
+            .forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+
+        button.classList.add("active");
+
+
+        searchProducts();
+    }
+
+
+    /* SEARCH */
+
+    function searchProducts() {
+
+        const keyword =
+            document
+                .getElementById("searchInput")
+                .value
+                .toLowerCase()
+                .trim();
+
+
+        const filtered =
+            products.filter(product => {
+
+                const categoryMatch =
+                    currentCategory === "All" ||
+                    product.category === currentCategory;
+
+
+                const nameMatch =
+                    (product.name || "")
+                        .toLowerCase()
+                        .includes(keyword);
+
+
+                const categorySearchMatch =
+                    (product.category || "")
+                        .toLowerCase()
+                        .includes(keyword);
+
+
+                return (
+                    categoryMatch &&
+                    (nameMatch || categorySearchMatch)
+                );
+            });
+
+
+        displayProducts(filtered);
+    }
+
+
+    /* LIKE PRODUCT */
+
+    function likeProduct(id) {
+
+        const product =
+            products.find(item => item.id == id);
+
+
+        if (!product) {
+            return;
+        }
+
+
+        let likedProducts =
+            JSON.parse(
+                localStorage.getItem("likedProducts")
+            ) || [];
+
+
+        const exists =
+            likedProducts.some(
+                item => item.id == id
+            );
+
+
+        if (exists) {
+
+            alert("Product already liked!");
+
+        } else {
+
+            likedProducts.push(product);
+
+
+            localStorage.setItem(
+                "likedProducts",
+                JSON.stringify(likedProducts)
+            );
+
+
+            alert("Product liked!");
+        }
+    }
+
+
+    /* LOAD PRODUCTS */
+
+    displayProducts(products);
+
+</script>
+
 </body>
+
 </html>
