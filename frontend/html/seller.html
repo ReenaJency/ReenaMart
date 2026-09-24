@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Seller Dashboard - ReenaMart</title>
+    <title>My Store - ReenaMart</title>
 
     <style>
         * {
@@ -20,7 +20,6 @@
             color: #333;
         }
 
-        /* HEADER */
         header {
             background: #1f4d3a;
             color: white;
@@ -32,7 +31,7 @@
         }
 
         header h1 {
-            font-size: 25px;
+            font-size: 24px;
         }
 
         nav {
@@ -44,22 +43,21 @@
         nav a {
             color: white;
             text-decoration: none;
-            font-size: 15px;
             font-weight: bold;
+            font-size: 15px;
         }
 
         nav a:hover {
             color: #f5a623;
         }
 
-        /* MAIN */
         .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 35px auto;
+            width: 92%;
+            max-width: 1200px;
+            margin: 30px auto;
         }
 
-        .welcome {
+        .store-header {
             background: white;
             padding: 25px;
             border-radius: 12px;
@@ -67,97 +65,79 @@
             margin-bottom: 25px;
         }
 
-        .welcome h2 {
+        .store-header h2 {
             color: #1f4d3a;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
-        .welcome p {
+        .store-header p {
             color: #666;
+            margin: 6px 0;
         }
 
-        /* ADD PRODUCT */
-        .add-section {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        .status {
+            display: inline-block;
+            padding: 6px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
             margin-bottom: 25px;
         }
 
-        .add-section h2 {
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card span {
+            font-size: 27px;
+            font-weight: bold;
             color: #1f4d3a;
-            margin-bottom: 20px;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 7px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 11px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 15px;
-        }
-
-        .form-group textarea {
-            height: 90px;
-            resize: vertical;
-        }
-
-        .add-btn {
-            background: #f5a623;
-            color: white;
-            border: none;
-            padding: 12px 22px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        .add-btn:hover {
-            background: #df9115;
-        }
-
-        /* MANAGE PRODUCTS */
-        .manage-section {
+        .products-section {
             background: white;
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
         }
 
-        .manage-section h2 {
+        .products-section h2 {
             color: #1f4d3a;
             margin-bottom: 20px;
         }
 
-        .empty-products {
-            text-align: center;
-            padding: 45px 20px;
-            color: #777;
-            border: 2px dashed #ddd;
-            border-radius: 10px;
-        }
-
-        .empty-products h3 {
-            margin-bottom: 8px;
-            color: #555;
-        }
-
-        /* PRODUCT CARD */
-        .products-container {
+        .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
             gap: 20px;
@@ -172,9 +152,9 @@
 
         .product-card img {
             width: 100%;
-            height: 200px;
+            height: 210px;
             object-fit: cover;
-            background: #f1f1f1;
+            background: #eee;
         }
 
         .product-info {
@@ -187,51 +167,80 @@
         }
 
         .product-info p {
-            margin: 6px 0;
+            margin: 7px 0;
             color: #555;
+            font-size: 14px;
         }
 
         .price {
-            font-size: 18px;
+            color: #1f4d3a !important;
+            font-size: 18px !important;
             font-weight: bold;
-            color: #1f4d3a;
-            margin-top: 10px;
         }
 
         .actions {
-            display: flex;
-            gap: 10px;
             margin-top: 15px;
         }
 
-        .edit-btn,
-        .delete-btn {
-            border: none;
-            padding: 9px 15px;
-            border-radius: 5px;
-            cursor: pointer;
+        .manage-btn {
+            display: inline-block;
+            background: #1f4d3a;
             color: white;
+            text-decoration: none;
+            padding: 9px 15px;
+            border-radius: 6px;
             font-weight: bold;
         }
 
-        .edit-btn {
-            background: #1976d2;
+        .manage-btn:hover {
+            background: #163a2c;
         }
 
-        .delete-btn {
-            background: #d32f2f;
+        .empty {
+            text-align: center;
+            padding: 45px 20px;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            color: #777;
         }
 
-        /* FOOTER */
+        .empty h3 {
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .notice {
+            margin-top: 15px;
+            padding: 14px;
+            border-radius: 8px;
+            line-height: 1.5;
+        }
+
+        .success-notice {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .warning-notice {
+            background: #fff3cd;
+            color: #856404;
+        }
+
         footer {
+            background: #1f4d3a;
+            color: white;
             text-align: center;
             padding: 20px;
             margin-top: 40px;
-            background: #1f4d3a;
-            color: white;
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 850px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
             header {
                 flex-direction: column;
                 gap: 15px;
@@ -243,8 +252,8 @@
                 justify-content: center;
             }
 
-            .container {
-                width: 94%;
+            .stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -252,249 +261,432 @@
 
 <body>
 
-    <!-- HEADER -->
-    <header>
+<header>
 
-        <h1>ReenaMart Seller Dashboard</h1>
+    <h1>ReenaMart Seller Store</h1>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="products.html">Products</a>
-            <a href="seller-products.html">My Products</a>
-            <a href="seller-orders.html">Orders</a>
-            <a href="login.html">Logout</a>
-        </nav>
+    <nav>
+        <a href="seller-dashboard.html">Dashboard</a>
+        <a href="seller.html">My Store</a>
+        <a href="seller-products.html">My Products</a>
+        <a href="seller-orders.html">Orders</a>
+        <a href="index.html">Logout</a>
+    </nav>
 
-    </header>
+</header>
 
+<div class="container">
 
-    <!-- MAIN CONTENT -->
-    <div class="container">
+    <div class="store-header">
 
-        <!-- WELCOME -->
-        <div class="welcome">
+        <h2 id="shopName">
+            My Store
+        </h2>
 
-            <h2>Welcome, Seller!</h2>
+        <p>
+            <strong>Seller:</strong>
+            <span id="sellerName">-</span>
+        </p>
 
-            <p>
-                Manage your products and orders from your seller dashboard.
-            </p>
+        <p>
+            <strong>Email:</strong>
+            <span id="sellerEmail">-</span>
+        </p>
 
-        </div>
+        <p>
+            <strong>Mobile:</strong>
+            <span id="sellerMobile">-</span>
+        </p>
 
+        <p>
+            <strong>Seller Status:</strong>
+            <span id="sellerStatus" class="status pending">
+                PENDING
+            </span>
+        </p>
 
-        <!-- ADD PRODUCT -->
-        <div class="add-section">
+        <div id="approvalMessage"></div>
 
-            <h2>Add New Product</h2>
+    </div>
 
-            <form id="productForm">
+    <div class="stats">
 
-                <div class="form-group">
+        <div class="stat-card">
 
-                    <label for="productName">
-                        Product Name
-                    </label>
+            <h3>Total Products</h3>
 
-                    <input
-                        type="text"
-                        id="productName"
-                        placeholder="Enter product name"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="productPrice">
-                        Price (₹)
-                    </label>
-
-                    <input
-                        type="number"
-                        id="productPrice"
-                        placeholder="Enter product price"
-                        min="1"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="productCategory">
-                        Category
-                    </label>
-
-                    <select id="productCategory" required>
-
-                        <option value="">
-                            Select Category
-                        </option>
-
-                        <option value="Fashion">
-                            Fashion
-                        </option>
-
-                        <option value="Jewellery">
-                            Jewellery
-                        </option>
-
-                        <option value="Electronics">
-                            Electronics
-                        </option>
-
-                        <option value="Beauty">
-                            Beauty
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="productImage">
-                        Image URL
-                    </label>
-
-                    <input
-                        type="text"
-                        id="productImage"
-                        placeholder="Paste product image URL"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="productDescription">
-                        Description
-                    </label>
-
-                    <textarea
-                        id="productDescription"
-                        placeholder="Enter product description"
-                    ></textarea>
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="add-btn"
-                >
-                    Add Product
-                </button>
-
-            </form>
+            <span id="totalProducts">
+                0
+            </span>
 
         </div>
 
+        <div class="stat-card">
 
-        <!-- MANAGE PRODUCTS -->
-        <div class="manage-section">
+            <h3>Approved Products</h3>
 
-            <h2>Manage Products</h2>
+            <span id="approvedProducts">
+                0
+            </span>
 
-            <div
-                class="products-container"
-                id="productsContainer"
-            >
+        </div>
 
-                <!-- NO DEFAULT PRODUCT -->
-                <div class="empty-products">
+        <div class="stat-card">
 
-                    <h3>No Products Added Yet</h3>
+            <h3>Pending Products</h3>
 
-                    <p>
-                        You have not added any products.
-                        Add your first product using the form above.
-                    </p>
+            <span id="pendingProducts">
+                0
+            </span>
 
-                </div>
+        </div>
 
-            </div>
+        <div class="stat-card">
+
+            <h3>Total Orders</h3>
+
+            <span id="totalOrders">
+                0
+            </span>
 
         </div>
 
     </div>
 
+    <div class="products-section">
 
-    <!-- FOOTER -->
-    <footer>
+        <h2>My Products</h2>
 
-        © 2026 ReenaMart | Seller Dashboard
+        <div
+            id="productsContainer"
+            class="products-grid"
+        ></div>
 
-    </footer>
+    </div>
 
+</div>
 
-    <script>
+<footer>
 
-        /*
-         * IMPORTANT:
-         * No default/sample product is added here.
-         *
-         * Products will be handled later through
-         * Spring Boot + MySQL backend.
-         */
+    © 2026 ReenaMart | Seller Store
 
+</footer>
 
-        document
-            .getElementById("productForm")
-            .addEventListener("submit", function (event) {
+<script>
 
-                event.preventDefault();
+    const sellerData =
+        JSON.parse(
+            localStorage.getItem("sellerRegistration")
+        );
 
-                const name =
-                    document.getElementById("productName").value.trim();
+    if (!sellerData) {
 
-                const price =
-                    document.getElementById("productPrice").value;
+        alert("Seller information not found.");
 
-                const category =
-                    document.getElementById("productCategory").value;
+        window.location.href =
+            "seller-login.html";
+    }
 
-                const image =
-                    document.getElementById("productImage").value.trim();
+    const sellerEmail =
+        sellerData?.email || "";
 
-                const description =
-                    document.getElementById("productDescription").value.trim();
+    function getSellerStatus() {
 
+        return (
+            sellerData?.approvalStatus ||
+            localStorage.getItem("sellerApprovalStatus") ||
+            "PENDING"
+        ).toUpperCase();
 
-                if (!name || !price || !category) {
+    }
 
-                    alert("Please fill all required fields.");
+    function loadSellerInfo() {
 
-                    return;
+        const sellerName =
+            sellerData?.sellerName ||
+            sellerData?.name ||
+            "Seller";
+
+        const shopName =
+            sellerData?.shopName ||
+            "My Store";
+
+        const mobile =
+            sellerData?.mobile ||
+            sellerData?.phone ||
+            "-";
+
+        const status =
+            getSellerStatus();
+
+        document.getElementById("shopName").textContent =
+            shopName;
+
+        document.getElementById("sellerName").textContent =
+            sellerName;
+
+        document.getElementById("sellerEmail").textContent =
+            sellerEmail || "-";
+
+        document.getElementById("sellerMobile").textContent =
+            mobile;
+
+        const statusElement =
+            document.getElementById("sellerStatus");
+
+        statusElement.textContent =
+            status;
+
+        statusElement.className =
+            "status " + status.toLowerCase();
+
+        const message =
+            document.getElementById("approvalMessage");
+
+        if (status === "APPROVED") {
+
+            message.innerHTML = `
+                <div class="notice success-notice">
+                    Your seller account is approved.
+                    You can add multiple products.
+                    Each product must be approved by the admin.
+                </div>
+            `;
+
+        } else if (status === "PENDING") {
+
+            message.innerHTML = `
+                <div class="notice warning-notice">
+                    Your seller account is waiting for admin approval.
+                </div>
+            `;
+
+        } else {
+
+            message.innerHTML = `
+                <div class="notice"
+                     style="background:#f8d7da;color:#721c24;">
+                    Your seller account has been rejected.
+                </div>
+            `;
+        }
+    }
+
+    function getMyProducts() {
+
+        const products =
+            JSON.parse(
+                localStorage.getItem("sellerProducts")
+            ) || [];
+
+        return products.filter(product =>
+
+            product.sellerEmail === sellerEmail ||
+            product.sellerId === sellerEmail
+
+        );
+    }
+
+    function displayProducts() {
+
+        const container =
+            document.getElementById("productsContainer");
+
+        const myProducts =
+            getMyProducts();
+
+        document.getElementById("totalProducts").textContent =
+            myProducts.length;
+
+        const approvedProducts =
+            myProducts.filter(product =>
+
+                (
+                    product.approvalStatus ||
+                    "PENDING"
+                ).toUpperCase() === "APPROVED"
+
+            );
+
+        const pendingProducts =
+            myProducts.filter(product =>
+
+                (
+                    product.approvalStatus ||
+                    "PENDING"
+                ).toUpperCase() === "PENDING"
+
+            );
+
+        document.getElementById("approvedProducts").textContent =
+            approvedProducts.length;
+
+        document.getElementById("pendingProducts").textContent =
+            pendingProducts.length;
+
+        if (myProducts.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty">
+
+                    <h3>No Products Added Yet</h3>
+
+                    <p>
+                        You have not added any products.
+                    </p>
+
+                    <br>
+
+                    <a
+                        href="seller-products.html"
+                        class="manage-btn"
+                    >
+                        Add Product
+                    </a>
+
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML =
+            myProducts.map(product => {
+
+                const status =
+                    (
+                        product.approvalStatus ||
+                        "PENDING"
+                    ).toUpperCase();
+
+                let statusClass =
+                    "pending";
+
+                if (status === "APPROVED") {
+                    statusClass = "approved";
                 }
 
+                if (status === "REJECTED") {
+                    statusClass = "rejected";
+                }
 
-                /*
-                 * For now, this only confirms the entered product.
-                 * Backend connection will be added next.
-                 */
+                const price =
+                    Number(
+                        product.finalPrice ??
+                        product.sellingPrice ??
+                        product.price ??
+                        0
+                    );
 
-                alert(
-                    "Product details entered successfully!\n\n" +
-                    "Product: " + name + "\n" +
-                    "Price: ₹" + price + "\n" +
-                    "Category: " + category
+                return `
+                    <div class="product-card">
+
+                        <img
+                            src="${product.image || ""}"
+                            alt="${product.name || "Product"}"
+                            onerror="this.src='https://via.placeholder.com/400x250?text=No+Image'"
+                        >
+
+                        <div class="product-info">
+
+                            <h3>
+                                ${product.name || "Unnamed Product"}
+                            </h3>
+
+                            <p>
+                                <strong>Category:</strong>
+                                ${product.category || "-"}
+                            </p>
+
+                            ${
+                                product.category === "Fashion"
+                                ?
+                                `
+                                <p>
+                                    <strong>Size:</strong>
+                                    ${product.size || "-"}
+                                </p>
+                                `
+                                : ""
+                            }
+
+                            <p class="price">
+                                ₹${price.toFixed(2)}
+                            </p>
+
+                            <p>
+                                <strong>Product Status:</strong>
+                                <span class="status ${statusClass}">
+                                    ${status}
+                                </span>
+                            </p>
+
+                            <div class="actions">
+
+                                <a
+                                    href="seller-products.html"
+                                    class="manage-btn"
+                                >
+                                    Manage Product
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("");
+    }
+
+    function loadOrderCount() {
+
+        const orders =
+            JSON.parse(
+                localStorage.getItem("orders")
+            ) || [];
+
+        let count = 0;
+
+        orders.forEach(order => {
+
+            let orderProducts = [];
+
+            if (Array.isArray(order.products)) {
+
+                orderProducts =
+                    order.products;
+
+            } else if (order.product) {
+
+                orderProducts =
+                    [order.product];
+            }
+
+            const hasMyProduct =
+                orderProducts.some(product =>
+
+                    product.sellerEmail === sellerEmail ||
+                    product.sellerId === sellerEmail
+
                 );
 
+            if (hasMyProduct) {
+                count++;
+            }
 
-                document
-                    .getElementById("productForm")
-                    .reset();
+        });
 
-            });
+        document.getElementById("totalOrders").textContent =
+            count;
+    }
 
-    </script>
+    loadSellerInfo();
+    displayProducts();
+    loadOrderCount();
+
+</script>
 
 </body>
 

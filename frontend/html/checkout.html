@@ -1,439 +1,889 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Reena Mart - Cart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
+    <title>Reena Mart - Checkout</title>
 
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #f3f3f3;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    header {
-        background-color: #1f4d3a;
-        color: white;
-        text-align: center;
-        padding: 25px;
-    }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            color: #333;
+        }
 
-    header h1 {
-        margin: 0 0 8px;
-    }
+        header {
+            background-color: #1f4d3a;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
 
-    header p {
-        margin: 0;
-    }
+        header h1 {
+            margin: 0 0 8px;
+        }
 
-    nav {
-        background-color: ghostwhite;
-        padding: 15px;
-        text-align: center;
-        box-shadow: 0 1px 4px #ddd;
-    }
+        header p {
+            margin: 0;
+        }
 
-    nav a {
-        text-decoration: none;
-        color: #333;
-        margin: 0 15px;
-        font-weight: bold;
-    }
-
-    nav a:hover {
-        color: #1f4d3a;
-    }
-
-    .cart {
-        background-color: white;
-        width: 90%;
-        max-width: 900px;
-        margin: 40px auto;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px #ccc;
-    }
-
-    .cart h2 {
-        color: #1f4d3a;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-
-    .cart-item {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        padding: 20px 0;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .cart-item img {
-        width: 120px;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-    }
-
-    .item-info {
-        flex: 1;
-        text-align: left;
-    }
-
-    .item-info h3 {
-        margin: 0 0 8px;
-        color: #333;
-    }
-
-    .category {
-        color: #777;
-        font-size: 14px;
-        margin-bottom: 8px;
-    }
-
-    .price {
-        color: #1f4d3a;
-        font-weight: bold;
-        font-size: 18px;
-    }
-
-    .quantity {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-top: 12px;
-    }
-
-    .quantity button {
-        width: 32px;
-        height: 32px;
-        border: none;
-        border-radius: 5px;
-        background-color: #1f4d3a;
-        color: white;
-        cursor: pointer;
-        font-size: 18px;
-    }
-
-    .quantity span {
-        min-width: 30px;
-        text-align: center;
-        font-weight: bold;
-    }
-
-    .remove-btn {
-        background-color: #d9534f;
-        color: white;
-        border: none;
-        padding: 9px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .remove-btn:hover {
-        background-color: #b52b27;
-    }
-
-    .cart-summary {
-        margin-top: 30px;
-        padding: 20px;
-        background-color: #f8f8f8;
-        border-radius: 8px;
-        text-align: right;
-    }
-
-    .cart-summary h3 {
-        margin: 0 0 15px;
-        color: #333;
-    }
-
-    .total {
-        font-size: 24px;
-        color: #1f4d3a;
-        font-weight: bold;
-    }
-
-    .checkout-btn {
-        display: inline-block;
-        background-color: #f5a623;
-        color: white;
-        text-decoration: none;
-        padding: 12px 25px;
-        border-radius: 5px;
-        margin-top: 15px;
-        font-weight: bold;
-    }
-
-    .checkout-btn:hover {
-        background-color: #d98c0b;
-    }
-
-    .empty-cart {
-        text-align: center;
-        padding: 30px;
-    }
-
-    .empty-cart h3 {
-        font-size: 24px;
-        color: #555;
-    }
-
-    .empty-cart p {
-        color: #777;
-    }
-
-    .shop-btn {
-        display: inline-block;
-        background-color: #1f4d3a;
-        color: white;
-        text-decoration: none;
-        padding: 12px 25px;
-        border-radius: 5px;
-        margin-top: 15px;
-    }
-
-    .shop-btn:hover {
-        background-color: #163a2c;
-    }
-
-    footer {
-        background-color: #222;
-        color: white;
-        text-align: center;
-        padding: 20px;
-        margin-top: 50px;
-    }
-
-    footer p {
-        margin: 5px;
-    }
-
-    @media (max-width: 600px) {
+        nav {
+            background-color: ghostwhite;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 1px 4px #ddd;
+        }
 
         nav a {
-            display: inline-block;
-            margin: 7px 8px;
+            text-decoration: none;
+            color: #333;
+            margin: 0 15px;
+            font-weight: bold;
         }
 
-        .cart {
-            width: 95%;
-            padding: 20px 15px;
+        nav a:hover {
+            color: #1f4d3a;
         }
 
-        .cart-item {
-            flex-direction: column;
-            align-items: flex-start;
+        .checkout-container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
         }
 
-        .cart-item img {
+        .box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        .box h2 {
+            color: #1f4d3a;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            height: 180px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
         }
 
-        .item-info {
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .product-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .product-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 7px;
+            border: 1px solid #ddd;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-info h3 {
+            margin: 0 0 6px;
+            font-size: 16px;
+        }
+
+        .product-info p {
+            margin: 4px 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .product-price {
+            color: #1f4d3a !important;
+            font-weight: bold;
+        }
+
+        .summary {
+            margin-top: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .discount-row {
+            color: #d35400;
+        }
+
+        .final-total {
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #1f4d3a;
+        }
+
+        .payment-method {
+            margin-top: 25px;
+        }
+
+        .payment-method h3 {
+            color: #1f4d3a;
+            margin-bottom: 15px;
+        }
+
+        .payment-option {
+            margin-bottom: 12px;
+        }
+
+        .payment-option label {
+            cursor: pointer;
+        }
+
+        .place-order-btn {
             width: 100%;
+            border: none;
+            background-color: #f5a623;
+            color: white;
+            padding: 14px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
-        .cart-summary {
+        .place-order-btn:hover {
+            background-color: #d98c0b;
+        }
+
+        .empty-message {
             text-align: center;
+            padding: 40px 20px;
         }
-    }
-</style>
 
-</head><body><header>
+        .empty-message h3 {
+            color: #555;
+        }
 
+        .shop-btn {
+            display: inline-block;
+            background-color: #1f4d3a;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 5px;
+        }
+
+        @media (max-width: 750px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+                width: 95%;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 7px 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
     <h1>🛍️ RM | Reena Mart</h1>
-
-    <p>Shopping Cart</p>
-
+    <p>Checkout</p>
 </header>
 
 <nav>
-
     <a href="index.html">Home</a>
-
-    <a href="product.html">Products</a>
-
-    <a href="product.html">❤️ Like</a>
-
+    <a href="products.html">Products</a>
     <a href="cart.html">🛒 Cart</a>
-
 </nav>
 
-<div class="cart">
+<div class="checkout-container">
 
-    <h2>🛒 Your Shopping Cart</h2>
+    <!-- CUSTOMER DETAILS -->
 
-    <div id="cartContainer"></div>
+    <div class="box">
+
+        <h2>📦 Delivery Details</h2>
+
+        <form id="checkoutForm">
+
+            <div class="form-group">
+                <label for="customerName">Full Name</label>
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Enter your full name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input
+                    type="tel"
+                    id="mobile"
+                    placeholder="Enter 10-digit mobile number"
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="address">Full Address</label>
+                <textarea
+                    id="address"
+                    placeholder="House No, Street, Area"
+                    required
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="city">City</label>
+                <input
+                    type="text"
+                    id="city"
+                    placeholder="Enter city"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="state">State</label>
+                <input
+                    type="text"
+                    id="state"
+                    placeholder="Enter state"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input
+                    type="text"
+                    id="pincode"
+                    placeholder="Enter 6-digit pincode"
+                    pattern="[0-9]{6}"
+                    maxlength="6"
+                    required
+                >
+            </div>
+
+            <div class="payment-method">
+
+                <h3>💳 Payment Method</h3>
+
+                <div class="payment-option">
+                    <input
+                        type="radio"
+                        id="cod"
+                        name="payment"
+                        value="Cash on Delivery"
+                        required
+                    >
+                    <label for="cod">Cash on Delivery</label>
+                </div>
+
+                <div class="payment-option">
+                    <input
+                        type="radio"
+                        id="upi"
+                        name="payment"
+                        value="UPI"
+                    >
+                    <label for="upi">UPI</label>
+                </div>
+
+                <div class="payment-option">
+                    <input
+                        type="radio"
+                        id="card"
+                        name="payment"
+                        value="Card"
+                    >
+                    <label for="card">Credit / Debit Card</label>
+                </div>
+
+            </div>
+
+            <button
+                type="submit"
+                class="place-order-btn"
+            >
+                ✅ Place Order
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- ORDER SUMMARY -->
+
+    <div class="box">
+
+        <h2>🛒 Order Summary</h2>
+
+        <div id="orderProducts"></div>
+
+        <div class="summary">
+
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <strong id="subtotal">₹0</strong>
+            </div>
+
+            <div class="summary-row discount-row">
+                <span>Discount:</span>
+                <strong id="discount">-₹0</strong>
+            </div>
+
+            <div class="summary-row final-total">
+                <span>Final Total:</span>
+                <strong id="finalTotal">₹0</strong>
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
+
 <footer>
-
     <p>© 2026 Reena Mart</p>
-
     <p>Shop Smart. Live Better.</p>
-
 </footer>
 
 
 <script>
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    function displayCart() {
 
-        const container = document.getElementById("cartContainer");
+/* SELLING PRICE */
 
-        if (cart.length === 0) {
+function getSellingPrice(item) {
 
-            container.innerHTML = `
-                <div class="empty-cart">
+    const price = Number(
+        item.sellingPrice ??
+        item.price ??
+        0
+    );
 
-                    <h3>Your Cart is Empty</h3>
+    return Math.max(price, 0);
+}
 
-                    <p>
-                        You haven't added any products to your cart yet.
-                    </p>
 
-                    <a href="product.html" class="shop-btn">
-                        🛍️ Continue Shopping
-                    </a>
+/* ADMIN DISCOUNT PERCENTAGE */
 
-                </div>
-            `;
+function getDiscountPercentage(item) {
 
-            return;
+    const discount = Number(item.discount ?? 0);
+
+    if (isNaN(discount) || discount < 0) {
+        return 0;
+    }
+
+    return discount;
+}
+
+
+/* FINAL PRICE */
+
+function getFinalPrice(item) {
+
+    const sellingPrice = getSellingPrice(item);
+
+    /*
+       Admin already calculated finalPrice.
+       Use it as the main source of truth.
+    */
+
+    if (
+        item.finalPrice !== undefined &&
+        item.finalPrice !== null &&
+        item.finalPrice !== ""
+    ) {
+
+        const storedFinalPrice =
+            Number(item.finalPrice);
+
+        if (!isNaN(storedFinalPrice)) {
+            return Math.max(storedFinalPrice, 0);
         }
+    }
 
-        let total = 0;
 
-        let html = "";
+    /*
+       Fallback calculation:
+       Selling Price - Admin Discount %
+    */
 
-        cart.forEach((item, index) => {
+    const discountPercentage =
+        getDiscountPercentage(item);
 
-            const quantity = item.quantity || 1;
+    const discountAmount =
+        sellingPrice * discountPercentage / 100;
 
-            const itemTotal = Number(item.price) * quantity;
+    return Math.max(
+        sellingPrice - discountAmount,
+        0
+    );
+}
 
-            total += itemTotal;
 
-            html += `
+/* DISPLAY ORDER SUMMARY */
 
-                <div class="cart-item">
+function displayOrderSummary() {
 
-                    <img
-                        src="${item.image || 'https://via.placeholder.com/120'}"
-                        alt="${item.name}"
-                        onerror="this.src='https://via.placeholder.com/120'"
-                    >
+    const productsContainer =
+        document.getElementById("orderProducts");
 
-                    <div class="item-info">
+    if (cart.length === 0) {
 
-                        <h3>${item.name}</h3>
+        productsContainer.innerHTML = `
+            <div class="empty-message">
 
-                        <div class="category">
-                            Category: ${item.category || "Product"}
-                        </div>
+                <h3>Your Cart is Empty</h3>
 
-                        <div class="price">
-                            ₹${Number(item.price).toLocaleString("en-IN")}
-                        </div>
+                <p>Please add products before checkout.</p>
 
-                        <div class="quantity">
-
-                            <button onclick="decreaseQuantity(${index})">
-                                −
-                            </button>
-
-                            <span>${quantity}</span>
-
-                            <button onclick="increaseQuantity(${index})">
-                                +
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <button
-                        class="remove-btn"
-                        onclick="removeItem(${index})"
-                    >
-                        Remove
-                    </button>
-
-                </div>
-
-            `;
-        });
-
-        html += `
-
-            <div class="cart-summary">
-
-                <h3>
-                    Total Amount:
-                    <span class="total">
-                        ₹${total.toLocaleString("en-IN")}
-                    </span>
-                </h3>
-
-                <a href="checkout.html" class="checkout-btn">
-                    Proceed to Checkout →
+                <a href="products.html" class="shop-btn">
+                    Continue Shopping
                 </a>
 
             </div>
-
         `;
 
-        container.innerHTML = html;
+        document.getElementById("subtotal").textContent = "₹0";
+        document.getElementById("discount").textContent = "-₹0";
+        document.getElementById("finalTotal").textContent = "₹0";
+
+        return;
     }
 
 
-    function increaseQuantity(index) {
+    let subtotal = 0;
+    let totalDiscount = 0;
+    let finalTotal = 0;
 
-        cart[index].quantity = (cart[index].quantity || 1) + 1;
+    let html = "";
 
-        localStorage.setItem("cart", JSON.stringify(cart));
 
-        displayCart();
+    cart.forEach(function(item) {
+
+        const quantity =
+            Number(item.quantity ?? item.qty ?? 1) || 1;
+
+
+        const sellingPrice =
+            getSellingPrice(item);
+
+
+        const finalPrice =
+            getFinalPrice(item);
+
+
+        /*
+           Discount per item is calculated from
+           Selling Price - Final Price.
+        */
+
+        const discountPerItem =
+            Math.max(
+                sellingPrice - finalPrice,
+                0
+            );
+
+
+        const itemSubtotal =
+            sellingPrice * quantity;
+
+
+        const itemDiscount =
+            discountPerItem * quantity;
+
+
+        const itemFinalTotal =
+            finalPrice * quantity;
+
+
+        subtotal += itemSubtotal;
+
+        totalDiscount += itemDiscount;
+
+        finalTotal += itemFinalTotal;
+
+
+        html += `
+            <div class="product-item">
+
+                <img
+                    src="${item.image || 'https://via.placeholder.com/80'}"
+                    alt="${item.name || 'Product'}"
+                    onerror="this.src='https://via.placeholder.com/80'"
+                >
+
+                <div class="product-info">
+
+                    <h3>
+                        ${item.name || "Product"}
+                    </h3>
+
+                    <p>
+                        Category:
+                        ${item.category || "Product"}
+                    </p>
+
+                    <p>
+                        Quantity:
+                        ${quantity}
+                    </p>
+
+                    <p>
+                        Selling Price:
+                        ₹${sellingPrice.toLocaleString("en-IN")}
+                    </p>
+
+                    ${
+                        discountPerItem > 0
+                        ? `
+                            <p>
+                                Discount:
+                                ₹${discountPerItem.toLocaleString("en-IN")}
+                            </p>
+                        `
+                        : ""
+                    }
+
+                    <p class="product-price">
+                        Final Price:
+                        ₹${finalPrice.toLocaleString("en-IN")}
+                    </p>
+
+                    <p class="product-price">
+                        Item Total:
+                        ₹${itemFinalTotal.toLocaleString("en-IN")}
+                    </p>
+
+                </div>
+
+            </div>
+        `;
+    });
+
+
+    productsContainer.innerHTML = html;
+
+
+    document.getElementById("subtotal").textContent =
+        "₹" + subtotal.toLocaleString("en-IN");
+
+
+    document.getElementById("discount").textContent =
+        "-₹" + totalDiscount.toLocaleString("en-IN");
+
+
+    document.getElementById("finalTotal").textContent =
+        "₹" + finalTotal.toLocaleString("en-IN");
+
+
+    /*
+       Save the exact checkout calculation.
+    */
+
+    localStorage.setItem(
+        "cartSubtotal",
+        subtotal
+    );
+
+    localStorage.setItem(
+        "cartDiscount",
+        totalDiscount
+    );
+
+    localStorage.setItem(
+        "cartTotal",
+        finalTotal
+    );
+}
+
+
+/* PLACE ORDER */
+
+document.getElementById("checkoutForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+
+    if (cart.length === 0) {
+
+        alert(
+            "Your cart is empty. Please add a product first."
+        );
+
+        window.location.href =
+            "products.html";
+
+        return;
     }
 
 
-    function decreaseQuantity(index) {
+    const customerName =
+        document.getElementById("customerName")
+        .value
+        .trim();
 
-        if ((cart[index].quantity || 1) > 1) {
 
-            cart[index].quantity--;
+    const mobile =
+        document.getElementById("mobile")
+        .value
+        .trim();
 
-        } else {
 
-            cart.splice(index, 1);
+    const address =
+        document.getElementById("address")
+        .value
+        .trim();
 
-        }
 
-        localStorage.setItem("cart", JSON.stringify(cart));
+    const city =
+        document.getElementById("city")
+        .value
+        .trim();
 
-        displayCart();
+
+    const state =
+        document.getElementById("state")
+        .value
+        .trim();
+
+
+    const pincode =
+        document.getElementById("pincode")
+        .value
+        .trim();
+
+
+    const selectedPayment =
+        document.querySelector(
+            'input[name="payment"]:checked'
+        );
+
+
+    if (!selectedPayment) {
+
+        alert("Please select a payment method.");
+
+        return;
     }
 
 
-    function removeItem(index) {
-
-        cart.splice(index, 1);
-
-        localStorage.setItem("cart", JSON.stringify(cart));
-
-        displayCart();
-    }
+    const payment =
+        selectedPayment.value;
 
 
-    displayCart();
+    /*
+       Recalculate again before placing order.
+       This prevents stale localStorage totals.
+    */
+
+    let orderSubtotal = 0;
+    let orderDiscount = 0;
+    let orderTotal = 0;
+
+
+    cart.forEach(function(item) {
+
+        const quantity =
+            Number(item.quantity ?? item.qty ?? 1) || 1;
+
+
+        const sellingPrice =
+            getSellingPrice(item);
+
+
+        const finalPrice =
+            getFinalPrice(item);
+
+
+        const discountPerItem =
+            Math.max(
+                sellingPrice - finalPrice,
+                0
+            );
+
+
+        orderSubtotal +=
+            sellingPrice * quantity;
+
+
+        orderDiscount +=
+            discountPerItem * quantity;
+
+
+        orderTotal +=
+            finalPrice * quantity;
+
+    });
+
+
+    const order = {
+
+        orderId:
+            "RM" + Date.now(),
+
+        customerName:
+            customerName,
+
+        mobile:
+            mobile,
+
+        address:
+            address,
+
+        city:
+            city,
+
+        state:
+            state,
+
+        pincode:
+            pincode,
+
+        paymentMethod:
+            payment,
+
+        products:
+            cart,
+
+        subtotal:
+            orderSubtotal,
+
+        discount:
+            orderDiscount,
+
+        total:
+            orderTotal,
+
+        status:
+            "PLACED",
+
+        orderDate:
+            new Date().toLocaleString("en-IN")
+
+    };
+
+
+    let orders =
+        JSON.parse(
+            localStorage.getItem("orders")
+        ) || [];
+
+
+    orders.push(order);
+
+
+    localStorage.setItem(
+        "orders",
+        JSON.stringify(orders)
+    );
+
+
+    /*
+       Keep both names for compatibility
+       with existing order-success flow.
+    */
+
+    localStorage.setItem(
+        "lastOrder",
+        JSON.stringify(order)
+    );
+
+    localStorage.setItem(
+        "latestOrder",
+        JSON.stringify(order)
+    );
+
+
+    /*
+       Clear cart after successful order.
+    */
+
+    localStorage.removeItem("cart");
+
+    localStorage.removeItem("cartSubtotal");
+
+    localStorage.removeItem("cartDiscount");
+
+    localStorage.removeItem("cartTotal");
+
+
+    window.location.href =
+        "order-success.html";
+
+});
+
+
+displayOrderSummary();
 
 </script>
 
-</body></html>
+</body>
+</html>

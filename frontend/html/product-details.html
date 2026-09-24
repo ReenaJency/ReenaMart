@@ -1,535 +1,728 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details - ReenaMart</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ReenaMart - Product Details</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 
-        body {
-            background: #f5f5f5;
-            color: #333;
-        }
+body{
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+color:#333
+}
 
-        /* HEADER */
+header{
+background:#1f4d3a;
+color:white;
+padding:15px 6%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+flex-wrap:wrap
+}
 
-        header {
-            background: #1f4d3a;
-            color: white;
-            padding: 18px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.logo{
+font-size:25px;
+font-weight:bold
+}
 
-        header h1 {
-            font-size: 25px;
-        }
+nav{
+display:flex;
+gap:20px;
+align-items:center
+}
 
-        .header-links {
-            display: flex;
-            gap: 10px;
-        }
+nav a{
+color:white;
+text-decoration:none;
+font-weight:bold
+}
 
-        .header-links a {
-            text-decoration: none;
-            color: white;
-            background: #f5a623;
-            padding: 9px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
+.cart{
+background:#f5a623;
+color:#111;
+padding:8px 14px;
+border-radius:20px
+}
 
-        /* PRODUCT */
+.container{
+max-width:1100px;
+margin:40px auto;
+padding:20px
+}
 
-        .container {
-            width: 92%;
-            max-width: 1100px;
-            margin: 40px auto;
-        }
+.product-box{
+background:white;
+border-radius:15px;
+padding:30px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+box-shadow:0 5px 20px rgba(0,0,0,.08)
+}
 
-        .product-box {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
-        }
+.image-box{
+display:flex;
+align-items:center;
+justify-content:center;
+background:#f8f8f8;
+border-radius:12px;
+min-height:420px
+}
 
-        .product-image {
-            width: 100%;
-            height: 430px;
-            object-fit: cover;
-            border-radius: 10px;
-            background: #eee;
-        }
+.image-box img{
+max-width:100%;
+max-height:400px;
+object-fit:contain;
+border-radius:10px
+}
 
-        .product-info {
-            padding: 10px;
-        }
+.info h1{
+font-size:32px;
+margin-bottom:15px;
+color:#1f4d3a
+}
 
-        .category {
-            color: #777;
-            font-size: 15px;
-            margin-bottom: 12px;
-        }
+.category{
+display:inline-block;
+background:#e8f2ed;
+color:#1f4d3a;
+padding:7px 14px;
+border-radius:20px;
+font-size:14px;
+font-weight:bold;
+margin-bottom:20px
+}
 
-        .product-info h2 {
-            color: #1f4d3a;
-            font-size: 30px;
-            margin-bottom: 15px;
-        }
+.description{
+line-height:1.7;
+margin-bottom:20px;
+color:#555
+}
 
-        .price {
-            color: #e67e22;
-            font-size: 26px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+.price-box{
+margin:20px 0
+}
 
-        .description {
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
+.old-price{
+text-decoration:line-through;
+color:#888;
+font-size:18px;
+margin-right:10px
+}
 
-        .stock {
-            color: #1f4d3a;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+.final-price{
+font-size:30px;
+font-weight:bold;
+color:#1f4d3a
+}
 
-        /* SIZE */
+.discount{
+color:#d35400;
+font-weight:bold;
+margin-top:8px
+}
 
-        .size-section {
-            margin-bottom: 25px;
-        }
+.stock{
+font-weight:bold;
+margin:20px 0
+}
 
-        .size-section label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #333;
-        }
+.in-stock{
+color:green
+}
 
-        .size-section select {
-            width: 180px;
-            padding: 11px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 15px;
-        }
+.out-stock{
+color:red
+}
 
-        .size-section select:focus {
-            outline: none;
-            border-color: #1f4d3a;
-        }
+.size-title{
+font-weight:bold;
+margin:20px 0 10px
+}
 
-        /* BUTTONS */
+.sizes{
+display:flex;
+gap:8px;
+flex-wrap:wrap
+}
 
-        .buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
+.size{
+border:1px solid #aaa;
+padding:9px 15px;
+border-radius:6px;
+cursor:pointer;
+background:white
+}
 
-        button {
-            border: none;
-            padding: 13px 22px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 15px;
-        }
+.size.active{
+background:#1f4d3a;
+color:white;
+border-color:#1f4d3a
+}
 
-        .cart-btn {
-            background: #1f4d3a;
-            color: white;
-        }
+.buttons{
+display:flex;
+gap:12px;
+margin-top:25px;
+flex-wrap:wrap
+}
 
-        .buy-btn {
-            background: #f5a623;
-            color: white;
-        }
+button{
+border:none;
+padding:13px 22px;
+border-radius:7px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer
+}
 
-        .like-btn {
-            background: #eee;
-            color: #333;
-        }
+.add-btn{
+background:#1f4d3a;
+color:white
+}
 
-        button:hover {
-            opacity: 0.9;
-        }
+.buy-btn{
+background:#f5a623;
+color:#111
+}
 
-        /* NOT FOUND */
+.like-btn{
+background:#eee;
+color:#333
+}
 
-        .not-found {
-            background: white;
-            text-align: center;
-            padding: 70px 20px;
-            border-radius: 10px;
-        }
+button:disabled{
+background:#aaa;
+color:white;
+cursor:not-allowed
+}
 
-        .not-found h2 {
-            color: #1f4d3a;
-            margin-bottom: 10px;
-        }
+.share{
+margin-top:25px
+}
 
-        .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            background: #1f4d3a;
-            color: white;
-            text-decoration: none;
-            padding: 11px 20px;
-            border-radius: 6px;
-        }
+.share button{
+background:#eee;
+padding:9px 15px;
+margin:5px
+}
 
-        /* MOBILE */
+.message{
+text-align:center;
+padding:80px 20px
+}
 
-        @media(max-width: 750px) {
-            header {
-                padding: 15px;
-            }
+.message h2{
+color:#1f4d3a;
+margin-bottom:15px
+}
 
-            .product-box {
-                grid-template-columns: 1fr;
-                padding: 20px;
-            }
+@media(max-width:768px){
+.product-box{
+grid-template-columns:1fr;
+padding:20px
+}
 
-            .product-image {
-                height: 300px;
-            }
-        }
-    </style>
+.image-box{
+min-height:300px
+}
+
+.info h1{
+font-size:25px
+}
+
+header{
+justify-content:center
+}
+
+nav{
+gap:12px
+}
+
+.container{
+margin:20px auto
+}
+}
+</style>
 </head>
 
 <body>
 
-    <!-- HEADER -->
+<header>
+<div class="logo">ReenaMart</div>
 
-    <header>
-        <h1>ReenaMart</h1>
+<nav>
+<a href="index.html">Home</a>
+<a href="products.html">Products</a>
+<a href="cart.html" class="cart">
+Cart (<span id="cartCount">0</span>)
+</a>
+</nav>
+</header>
 
-        <div class="header-links">
-            <a href="product.html">Products</a>
-            <a href="cart.html">Cart</a>
-        </div>
-    </header>
+<div class="container">
 
+<div id="productContainer"></div>
 
-    <!-- MAIN -->
+</div>
 
-    <div class="container">
-        <div id="productContainer"></div>
-    </div>
+<script>
 
+let product=null;
 
-    <script>
+function getProducts(){
+return JSON.parse(localStorage.getItem("sellerProducts")) || [];
+}
 
-        /* GET SELECTED PRODUCT */
+function getCart(){
+return JSON.parse(localStorage.getItem("cart")) || [];
+}
 
-        const product = JSON.parse(
-            localStorage.getItem("selectedProduct")
-        );
+function updateCartCount(){
+const cart=getCart();
 
-        const container = document.getElementById(
-            "productContainer"
-        );
+const count=cart.reduce((total,item)=>{
+return total+Number(item.quantity || item.qty || 1);
+},0);
 
+document.getElementById("cartCount").textContent=count;
+}
 
-        /* PRODUCT NOT FOUND */
+function getSellingPrice(product){
+return Number(product.sellingPrice ?? product.price ?? 0);
+}
 
-        if (!product) {
+function getDiscount(product){
+const discount=Number(product.discount ?? 0);
+return Math.max(discount,0);
+}
 
-            container.innerHTML = `
-                <div class="not-found">
-                    <h2>Product Not Found</h2>
+function getFinalPrice(product){
 
-                    <p>
-                        Please select a product from the Products page.
-                    </p>
+const storedFinal=Number(product.finalPrice);
 
-                    <a href="product.html" class="back-btn">
-                        Back to Products
-                    </a>
-                </div>
-            `;
+if(Number.isFinite(storedFinal) && storedFinal>=0){
+return storedFinal;
+}
 
-        }
+const sellingPrice=getSellingPrice(product);
+const discount=getDiscount(product);
 
+return Math.max(
+sellingPrice-(sellingPrice*discount/100),
+0
+);
+}
 
-        /* SHOW PRODUCT */
+function getStock(product){
+return Number(product.stock ?? product.quantity ?? 0);
+}
 
-        else {
+function formatPrice(price){
+return "₹"+Number(price).toFixed(2);
+}
 
-            let sizeHTML = "";
+function getSelectedProduct(){
 
-            if (product.category === "Fashion") {
+const saved=localStorage.getItem("selectedProduct");
 
-                sizeHTML = `
-                    <div class="size-section">
+if(saved){
+try{
+return JSON.parse(saved);
+}catch(e){}
+}
 
-                        <label for="selectedSize">
-                            Select Size
-                        </label>
+const params=new URLSearchParams(window.location.search);
+const id=params.get("id");
 
-                        <select id="selectedSize">
-                            <option value="">
-                                Select Size
-                            </option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                            <option value="XXL">XXL</option>
-                        </select>
+if(!id) return null;
 
-                    </div>
-                `;
-            }
+const products=getProducts();
 
+return products.find(p=>String(p.id)===String(id)) || null;
+}
 
-            container.innerHTML = `
+function displayProduct(){
 
-                <div class="product-box">
+product=getSelectedProduct();
 
-                    <div>
+const container=document.getElementById("productContainer");
 
-                        <img
-                            src="${product.image || ''}"
-                            class="product-image"
-                            alt="${product.name}"
-                            onerror="this.src='https://via.placeholder.com/500x500?text=ReenaMart'"
-                        >
+if(!product){
 
-                    </div>
+container.innerHTML=`
+<div class="message">
+<h2>Product Not Found</h2>
+<p>The selected product is not available.</p>
+<br>
+<button onclick="location.href='products.html'">
+Back to Products
+</button>
+</div>`;
 
+return;
+}
 
-                    <div class="product-info">
+const sellingPrice=getSellingPrice(product);
+const discount=getDiscount(product);
+const finalPrice=getFinalPrice(product);
+const stock=getStock(product);
 
-                        <div class="category">
-                            Category:
-                            ${product.category || "Product"}
-                        </div>
+const image=product.image ||
+product.imageUrl ||
+"https://via.placeholder.com/500x500?text=ReenaMart";
 
+let priceHTML="";
 
-                        <h2>
-                            ${product.name}
-                        </h2>
+if(discount>0 && sellingPrice>finalPrice){
 
+priceHTML=`
+<span class="old-price">${formatPrice(sellingPrice)}</span>
+<span class="final-price">${formatPrice(finalPrice)}</span>
+<div class="discount">${discount}% OFF</div>
+`;
 
-                        <div class="price">
-                            ₹${product.price}
-                        </div>
+}else{
 
+priceHTML=`
+<span class="final-price">${formatPrice(finalPrice)}</span>
+`;
 
-                        <p class="description">
-                            ${product.description ||
-                            "High quality product available on ReenaMart. Shop safely and conveniently online."}
-                        </p>
+}
 
+let stockHTML="";
 
-                        <div class="stock">
-                            ✓ Available for purchase
-                        </div>
+if(stock>0){
 
+stockHTML=`
+<div class="stock in-stock">
+✓ In Stock: ${stock}
+</div>
+`;
 
-                        ${sizeHTML}
+}else{
 
+stockHTML=`
+<div class="stock out-stock">
+✕ Out of Stock
+</div>
+`;
 
-                        <div class="buttons">
+}
 
-                            <button
-                                class="cart-btn"
-                                onclick="addToCart()">
-                                Add to Cart
-                            </button>
+let sizeHTML="";
 
+if(String(product.category || "").toLowerCase()==="fashion"){
 
-                            <button
-                                class="buy-btn"
-                                onclick="buyNow()">
-                                Buy Now
-                            </button>
+const sizes=["XS","S","M","L","XL","XXL"];
 
+sizeHTML=`
+<div class="size-title">Select Size</div>
+<div class="sizes">
 
-                            <button
-                                class="like-btn"
-                                onclick="likeProduct()">
-                                ♡ Like
-                            </button>
+${sizes.map(size=>`
+<button
+class="size"
+onclick="selectSize(this,'${size}')">
+${size}
+</button>
+`).join("")}
 
-                        </div>
+</div>
+`;
 
-                    </div>
+}
 
-                </div>
-            `;
-        }
+container.innerHTML=`
 
+<div class="product-box">
 
-        /* GET SELECTED SIZE */
+<div class="image-box">
+<img
+src="${image}"
+alt="${product.name || "Product"}"
+onerror="this.src='https://via.placeholder.com/500x500?text=ReenaMart'">
+</div>
 
-        function getSelectedSize() {
+<div class="info">
 
-            if (!product) {
-                return "";
-            }
+<div class="category">
+${product.category || "Product"}
+</div>
 
-            if (product.category !== "Fashion") {
-                return "";
-            }
+<h1>${product.name || "Unnamed Product"}</h1>
 
-            const sizeElement =
-                document.getElementById("selectedSize");
+<p class="description">
+${product.description || "Quality product available at ReenaMart."}
+</p>
 
-            if (!sizeElement) {
-                return "";
-            }
+<div class="price-box">
+${priceHTML}
+</div>
 
-            return sizeElement.value;
-        }
+${stockHTML}
 
+${sizeHTML}
 
-        /* ADD TO CART */
+<div class="buttons">
 
-        function addToCart() {
+<button
+id="addButton"
+class="add-btn"
+onclick="addToCart()"
+${stock<=0 ? "disabled" : ""}>
+Add to Cart
+</button>
 
-            if (!product) return;
+<button
+id="buyButton"
+class="buy-btn"
+onclick="buyNow()"
+${stock<=0 ? "disabled" : ""}>
+Buy Now
+</button>
 
-            const selectedSize = getSelectedSize();
+<button
+class="like-btn"
+onclick="likeProduct()"
+id="likeButton">
+♡ Like
+</button>
 
+</div>
 
-            if (
-                product.category === "Fashion" &&
-                selectedSize === ""
-            ) {
-                alert("Please select a size.");
-                return;
-            }
+<div class="share">
 
+<strong>Share:</strong>
 
-            let cart = JSON.parse(
-                localStorage.getItem("cart")
-            ) || [];
+<button onclick="shareProduct('whatsapp')">
+WhatsApp
+</button>
 
+<button onclick="shareProduct('copy')">
+Copy Link
+</button>
 
-            const existing = cart.find(item =>
-                item.id === product.id &&
-                item.selectedSize === selectedSize
-            );
+</div>
 
+</div>
 
-            if (existing) {
+</div>
+`;
 
-                existing.quantity =
-                    Number(existing.quantity || 1) + 1;
+updateLikeButton();
+}
 
-            } else {
+function selectSize(button,size){
 
-                cart.push({
-                    ...product,
-                    selectedSize: selectedSize,
-                    quantity: 1
-                });
+document.querySelectorAll(".size").forEach(btn=>{
+btn.classList.remove("active");
+});
 
-            }
+button.classList.add("active");
 
+localStorage.setItem("selectedSize",size);
+}
 
-            localStorage.setItem(
-                "cart",
-                JSON.stringify(cart)
-            );
+function addToCart(){
 
+if(!product) return;
 
-            alert("Product added to cart!");
+const stock=getStock(product);
 
-        }
+if(stock<=0){
 
+alert("This product is currently out of stock.");
+return;
+}
 
-        /* BUY NOW */
+const selectedSize=
+localStorage.getItem("selectedSize") || "";
 
-        function buyNow() {
+if(
+String(product.category || "").toLowerCase()==="fashion"
+&& !selectedSize
+){
 
-            if (!product) return;
+alert("Please select a size.");
+return;
+}
 
-            const selectedSize = getSelectedSize();
+let cart=getCart();
 
+const productId=String(product.id);
 
-            if (
-                product.category === "Fashion" &&
-                selectedSize === ""
-            ) {
-                alert("Please select a size.");
-                return;
-            }
+const existing=cart.find(item=>
+String(item.id)===productId &&
+String(item.selectedSize || "")===selectedSize
+);
 
+if(existing){
 
-            const buyProduct = {
-                ...product,
-                selectedSize: selectedSize,
-                quantity: 1
-            };
+const currentQty=Number(existing.quantity || 1);
 
+if(currentQty>=stock){
 
-            localStorage.setItem(
-                "buyNowProduct",
-                JSON.stringify(buyProduct)
-            );
+alert(`Only ${stock} item(s) available in stock.`);
+return;
+}
 
+existing.quantity=currentQty+1;
 
-            window.location.href = "checkout.html";
+}else{
 
-        }
+cart.push({
+...product,
+quantity:1,
+selectedSize:selectedSize
+});
 
+}
 
-        /* LIKE */
+localStorage.setItem("cart",JSON.stringify(cart));
 
-        function likeProduct() {
+updateCartCount();
 
-            if (!product) return;
+alert("Product added to cart successfully!");
+}
 
+function buyNow(){
 
-            let likedProducts = JSON.parse(
-                localStorage.getItem("likedProducts")
-            ) || [];
+if(!product) return;
 
+const stock=getStock(product);
 
-            const exists = likedProducts.some(
-                item => item.id === product.id
-            );
+if(stock<=0){
 
+alert("This product is currently out of stock.");
+return;
+}
 
-            if (!exists) {
+const selectedSize=
+localStorage.getItem("selectedSize") || "";
 
-                likedProducts.push(product);
+if(
+String(product.category || "").toLowerCase()==="fashion"
+&& !selectedSize
+){
 
-                localStorage.setItem(
-                    "likedProducts",
-                    JSON.stringify(likedProducts)
-                );
+alert("Please select a size.");
+return;
+}
 
-                alert("Product liked!");
+const buyProduct={
+...product,
+quantity:1,
+selectedSize:selectedSize
+};
 
-            } else {
+localStorage.setItem(
+"buyNowProduct",
+JSON.stringify(buyProduct)
+);
 
-                alert("Product already liked!");
+window.location.href="checkout.html";
+}
 
-            }
+function getLikedProducts(){
 
-        }
+return JSON.parse(
+localStorage.getItem("likedProducts")
+) || [];
+}
 
-    </script>
+function likeProduct(){
+
+if(!product) return;
+
+let liked=getLikedProducts();
+
+const id=String(product.id);
+
+const index=liked.findIndex(
+item=>String(item)===id
+);
+
+if(index===-1){
+
+liked.push(product.id);
+alert("Product liked!");
+
+}else{
+
+liked.splice(index,1);
+alert("Product unliked!");
+}
+
+localStorage.setItem(
+"likedProducts",
+JSON.stringify(liked)
+);
+
+updateLikeButton();
+}
+
+function updateLikeButton(){
+
+const button=document.getElementById("likeButton");
+
+if(!button || !product) return;
+
+const liked=getLikedProducts();
+
+const exists=liked.some(
+item=>String(item)===String(product.id)
+);
+
+button.textContent=
+exists ? "♥ Liked" : "♡ Like";
+}
+
+function shareProduct(type){
+
+if(!product) return;
+
+const url=
+window.location.origin+
+window.location.pathname+
+"?id="+encodeURIComponent(product.id);
+
+if(type==="whatsapp"){
+
+const text=
+encodeURIComponent(
+`Check out ${product.name} on ReenaMart: ${url}`
+);
+
+window.open(
+"https://wa.me/?text="+text,
+"_blank"
+);
+
+}
+
+if(type==="copy"){
+
+navigator.clipboard.writeText(url)
+.then(()=>{
+alert("Product link copied!");
+})
+.catch(()=>{
+prompt("Copy this link:",url);
+});
+
+}
+}
+
+updateCartCount();
+displayProduct();
+
+</script>
 
 </body>
 </html>

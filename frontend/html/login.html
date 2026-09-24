@@ -1,210 +1,606 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ReenaMart - Buyer Login</title>
 
-    <title>Reena Mart - Login</title>
+<style>
+*{box-sizing:border-box}
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+body{
+margin:0;
+min-height:100vh;
+font-family:Arial,sans-serif;
+background:#f5f7fa;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px
+}
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            background-color: #f5f7fa;
+.login-box{
+width:100%;
+max-width:400px;
+background:white;
+padding:35px 30px;
+border-radius:12px;
+box-shadow:0 4px 15px rgba(0,0,0,.1)
+}
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+h1{
+text-align:center;
+color:#1f4d3a;
+margin-bottom:10px
+}
 
-        .login-box {
-            width: 100%;
-            max-width: 400px;
+h2{
+text-align:center;
+margin-bottom:25px;
+color:#222
+}
 
-            background-color: white;
+.form-group{
+margin-bottom:18px
+}
 
-            padding: 35px 30px;
+label{
+display:block;
+margin-bottom:6px;
+font-weight:bold
+}
 
-            border-radius: 12px;
+input{
+width:100%;
+padding:12px;
+border:1px solid #ccc;
+border-radius:6px;
+font-size:16px
+}
 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
-        }
+input:focus{
+outline:none;
+border-color:#1f4d3a
+}
 
-        h1 {
-            text-align: center;
-            color: #2874f0;
-            margin-bottom: 10px;
-        }
+.login-btn,
+.reset-btn{
+width:100%;
+padding:12px;
+border:none;
+border-radius:6px;
+background:#1f4d3a;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer
+}
 
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+.login-btn:hover,
+.reset-btn:hover{
+background:#163a2c
+}
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+.forgot-password{
+text-align:right;
+margin-top:8px;
+margin-bottom:20px
+}
 
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
+.forgot-password a{
+color:#1f4d3a;
+text-decoration:none;
+font-size:13px;
+font-weight:bold
+}
 
-        input,
-        select {
-            width: 100%;
-            padding: 12px;
+.register-link,
+.back-link{
+text-align:center;
+font-size:14px;
+margin-top:20px
+}
 
-            border: 1px solid #ccc;
-            border-radius: 6px;
+.register-link a{
+color:#1f4d3a;
+text-decoration:none;
+font-weight:bold
+}
 
-            font-size: 16px;
-        }
+.back-link{
+margin-top:15px
+}
 
-        select {
-            background-color: white;
-            cursor: pointer;
-        }
+.back-link a{
+color:#666;
+text-decoration:none;
+font-size:13px
+}
 
-        .login-btn {
-            width: 100%;
+.back-link a:hover{
+color:#1f4d3a
+}
 
-            padding: 12px;
+.forgot-box{
+display:none;
+margin-top:25px;
+padding-top:20px;
+border-top:1px solid #ddd
+}
 
-            border: none;
-            border-radius: 6px;
+.forgot-box h3{
+text-align:center;
+color:#1f4d3a;
+margin-bottom:20px
+}
 
-            background-color: #2874f0;
-            color: white;
+.otp-row{
+display:flex;
+gap:8px
+}
 
-            font-size: 16px;
-            font-weight: bold;
+.otp-row input{
+flex:1
+}
 
-            cursor: pointer;
-        }
+.otp-btn{
+padding:12px;
+border:none;
+border-radius:6px;
+background:#f5a623;
+color:#222;
+font-weight:bold;
+cursor:pointer
+}
 
-        .login-btn:hover {
-            background-color: #1557c0;
-        }
+.small-link{
+text-align:center;
+margin-top:12px
+}
 
-        .register-link {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .register-link a {
-            color: #2874f0;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
+.small-link a{
+color:#1f4d3a;
+font-size:13px;
+text-decoration:none;
+font-weight:bold
+}
+</style>
 </head>
 
 <body>
 
-    <div class="login-box">
+<div class="login-box">
 
-        <h1>🛍️ Reena Mart</h1>
+<h1>🛍️ ReenaMart</h1>
 
-        <h2>Login</h2>
+<h2>Buyer Login</h2>
 
-        <form id="loginForm">
+<form id="loginForm">
 
-            <div class="form-group">
+<div class="form-group">
 
-                <label for="email">
-                    Email
-                </label>
+<label for="email">Email</label>
 
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter your email"
-                    required>
+<input
+type="email"
+id="email"
+placeholder="Enter your email"
+required>
 
-            </div>
+</div>
 
+<div class="form-group">
 
-            <div class="form-group">
+<label for="password">Password</label>
 
-                <label for="password">
-                    Password
-                </label>
+<input
+type="password"
+id="password"
+placeholder="Enter your password"
+required>
 
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter your password"
-                    required>
+</div>
 
-            </div>
+<div class="forgot-password">
 
+<a href="#" onclick="showForgotPassword(event)">
+Forgot Password?
+</a>
 
-            <div class="form-group">
+</div>
 
-                <label for="role">
-                    Select your role
-                </label>
+<button
+type="submit"
+class="login-btn">
+Login
+</button>
 
-                <select id="role" required>
+</form>
 
-                    <option value="">
-                        Select your role
-                    </option>
+<div class="register-link">
 
-                    <option value="BUYER">
-                        Buyer
-                    </option>
+New to ReenaMart?
 
-                    <option value="SELLER">
-                        Seller
-                    </option>
+<a href="register.html">
+Register
+</a>
 
-                    <option value="ADMIN">
-                        Admin
-                    </option>
+</div>
 
-                </select>
+<div class="back-link">
 
-            </div>
+<a href="index.html">
+← Back to Home
+</a>
 
-
-            <button
-                type="submit"
-                class="login-btn">
-
-                Login
-
-            </button>
-
-        </form>
+</div>
 
 
-        <div class="register-link">
+<!-- FORGOT PASSWORD -->
 
-            New to Reena Mart?
+<div class="forgot-box" id="forgotBox">
 
-            <a href="register.html">
-                Register
-            </a>
+<h3>Reset Buyer Password</h3>
 
-        </div>
+<div class="form-group">
 
-    </div>
+<label for="resetEmail">
+Registered Email
+</label>
+
+<input
+type="email"
+id="resetEmail"
+placeholder="Enter registered email">
+
+</div>
+
+<div class="form-group">
+
+<label for="resetOTP">
+OTP
+</label>
+
+<div class="otp-row">
+
+<input
+type="text"
+id="resetOTP"
+placeholder="Enter OTP">
+
+<button
+type="button"
+class="otp-btn"
+onclick="sendResetOTP()">
+Send OTP
+</button>
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label for="newPassword">
+New Password
+</label>
+
+<input
+type="password"
+id="newPassword"
+placeholder="Enter new password">
+
+</div>
+
+<div class="form-group">
+
+<label for="confirmPassword">
+Confirm Password
+</label>
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm password">
+
+</div>
+
+<button
+type="button"
+class="reset-btn"
+onclick="resetPassword()">
+Reset Password
+</button>
+
+<div class="small-link">
+
+<a href="#" onclick="hideForgotPassword(event)">
+← Back to Login
+</a>
+
+</div>
+
+</div>
+
+</div>
 
 
-    <!-- IMPORTANT: Correct JavaScript path -->
+<script>
 
-    <script src="../js/script.js"></script>
+let resetOTP="";
+
+
+/* -------------------------------
+   BUYER LOGIN
+-------------------------------- */
+
+document
+.getElementById("loginForm")
+.addEventListener("submit",async function(e){
+
+e.preventDefault();
+
+const email=
+document.getElementById("email")
+.value.trim();
+
+const password=
+document.getElementById("password")
+.value.trim();
+
+if(!email || !password){
+
+alert("Please enter email and password.");
+
+return;
+
+}
+
+try{
+
+const response=
+await fetch(
+"http://localhost:8080/api/users/login",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+email:email,
+password:password
+})
+}
+);
+
+const data=await response.json();
+
+if(!response.ok){
+
+alert(
+data.message ||
+data.error ||
+"Invalid email or password."
+);
+
+return;
+
+}
+
+
+/* Save logged-in buyer */
+
+localStorage.setItem(
+"loggedInUser",
+JSON.stringify(data)
+);
+
+localStorage.setItem(
+"userRole",
+"BUYER"
+);
+
+
+/* Go to products */
+
+window.location.href="products.html";
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Unable to connect to server. Please start the Spring Boot backend."
+);
+
+}
+
+});
+
+
+/* -------------------------------
+   FORGOT PASSWORD
+-------------------------------- */
+
+function showForgotPassword(e){
+
+if(e){
+e.preventDefault();
+}
+
+document.getElementById(
+"forgotBox"
+).style.display="block";
+
+}
+
+
+function hideForgotPassword(e){
+
+if(e){
+e.preventDefault();
+}
+
+document.getElementById(
+"forgotBox"
+).style.display="none";
+
+resetOTP="";
+
+}
+
+
+/* -------------------------------
+   SEND RESET OTP
+-------------------------------- */
+
+function sendResetOTP(){
+
+const email=
+document.getElementById("resetEmail")
+.value.trim();
+
+if(!email){
+
+alert("Enter your registered email.");
+
+return;
+
+}
+
+const users=
+JSON.parse(
+localStorage.getItem("users")
+) || [];
+
+const user=
+users.find(
+u=>String(u.email).toLowerCase()===
+email.toLowerCase()
+);
+
+if(!user){
+
+alert("No buyer account found with this email.");
+
+return;
+
+}
+
+resetOTP=
+Math.floor(
+100000+
+Math.random()*900000
+).toString();
+
+alert(
+"Demo OTP: "+resetOTP
+);
+
+}
+
+
+/* -------------------------------
+   RESET PASSWORD
+-------------------------------- */
+
+function resetPassword(){
+
+const email=
+document.getElementById("resetEmail")
+.value.trim();
+
+const otp=
+document.getElementById("resetOTP")
+.value.trim();
+
+const newPassword=
+document.getElementById("newPassword")
+.value.trim();
+
+const confirmPassword=
+document.getElementById("confirmPassword")
+.value.trim();
+
+
+if(!email || !otp || !newPassword || !confirmPassword){
+
+alert("Please fill all fields.");
+
+return;
+
+}
+
+if(!resetOTP || otp!==resetOTP){
+
+alert("Invalid OTP.");
+
+return;
+
+}
+
+if(newPassword.length<6){
+
+alert(
+"Password must contain at least 6 characters."
+);
+
+return;
+
+}
+
+if(newPassword!==confirmPassword){
+
+alert("Passwords do not match.");
+
+return;
+
+}
+
+
+let users=
+JSON.parse(
+localStorage.getItem("users")
+) || [];
+
+const index=
+users.findIndex(
+u=>String(u.email).toLowerCase()===
+email.toLowerCase()
+);
+
+if(index===-1){
+
+alert("Buyer account not found.");
+
+return;
+
+}
+
+users[index].password=newPassword;
+
+localStorage.setItem(
+"users",
+JSON.stringify(users)
+);
+
+alert(
+"Password reset successfully. Please login."
+);
+
+document.getElementById(
+"forgotBox"
+).style.display="none";
+
+document.getElementById(
+"loginForm"
+).reset();
+
+resetOTP="";
+
+}
+
+</script>
 
 </body>
-
 </html>

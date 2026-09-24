@@ -1,411 +1,618 @@
-.<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Seller Orders - ReenaMart</title>
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #f5f5f5;
-            color: #333;
-        }
-
-        /* HEADER */
-
-        header {
-            background: #1f4d3a;
-            color: white;
-
-            padding: 18px 40px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            font-size: 25px;
-        }
-
-        .back-btn {
-            background: #f5a623;
-            color: white;
-
-            padding: 10px 18px;
-
-            border-radius: 6px;
-
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* MAIN */
-
-        .container {
-            width: 92%;
-            max-width: 1200px;
-
-            margin: 30px auto;
-        }
-
-        .page-title {
-            margin-bottom: 25px;
-        }
-
-        .page-title h2 {
-            color: #1f4d3a;
-            margin-bottom: 7px;
-        }
-
-        .page-title p {
-            color: #777;
-        }
-
-        /* ORDER CARD */
-
-        .order-card {
-            background: white;
-
-            border-radius: 10px;
-
-            padding: 20px;
-
-            margin-bottom: 20px;
-
-            box-shadow:
-                0 3px 10px rgba(0,0,0,0.10);
-        }
-
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            border-bottom: 1px solid #ddd;
-
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-        }
-
-        .order-id {
-            font-weight: bold;
-            color: #1f4d3a;
-        }
-
-        .order-date {
-            color: #777;
-            font-size: 14px;
-        }
-
-        /* PRODUCT */
-
-        .order-product {
-            display: flex;
-            gap: 20px;
-
-            align-items: center;
-
-            margin-bottom: 15px;
-        }
-
-        .product-image {
-            width: 100px;
-            height: 100px;
-
-            object-fit: cover;
-
-            border-radius: 8px;
-
-            background: #eee;
-        }
-
-        .product-details h3 {
-            color: #1f4d3a;
-            margin-bottom: 7px;
-        }
-
-        .product-details p {
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        /* CUSTOMER */
-
-        .customer-info {
-            background: #f8f8f8;
-
-            padding: 12px;
-
-            border-radius: 6px;
-
-            margin-bottom: 15px;
-        }
-
-        .customer-info strong {
-            color: #1f4d3a;
-        }
-
-        /* BOTTOM */
-
-        .order-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            border-top: 1px solid #ddd;
-
-            padding-top: 15px;
-        }
-
-        .total {
-            font-size: 19px;
-            font-weight: bold;
-
-            color: #e67e22;
-        }
-
-        /* STATUS */
-
-        .status-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .status-section label {
-            font-weight: bold;
-        }
-
-        .status-select {
-            padding: 9px;
-
-            border: 1px solid #ccc;
-
-            border-radius: 5px;
-
-            cursor: pointer;
-        }
-
-        .update-btn {
-            background: #1f4d3a;
-            color: white;
-
-            border: none;
-
-            padding: 9px 15px;
-
-            border-radius: 5px;
-
-            cursor: pointer;
-
-            font-weight: bold;
-        }
-
-        .update-btn:hover {
-            background: #163a2c;
-        }
-
-        /* EMPTY */
-
-        .empty-orders {
-            background: white;
-
-            text-align: center;
-
-            padding: 70px 20px;
-
-            border-radius: 10px;
-
-            box-shadow:
-                0 3px 10px rgba(0,0,0,0.08);
-        }
-
-        .empty-orders h3 {
-            color: #1f4d3a;
-            margin-bottom: 10px;
-        }
-
-        .empty-orders p {
-            color: #777;
-        }
-
-        /* MOBILE */
-
-        @media(max-width: 700px) {
-
-            header {
-                padding: 15px;
-            }
-
-            .container {
-                width: 94%;
-            }
-
-            .order-header,
-            .order-bottom {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-
-            .order-product {
-                align-items: flex-start;
-            }
-
-            .status-section {
-                flex-wrap: wrap;
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReenaMart - Seller Orders</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f5f5;
+    color:#333;
+}
+
+header{
+    background:#1f4d3a;
+    color:white;
+    padding:18px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+header h1{
+    font-size:24px;
+}
+
+.back-btn{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.container{
+    max-width:1100px;
+    margin:30px auto;
+    padding:0 20px;
+}
+
+.page-title{
+    margin-bottom:20px;
+}
+
+.page-title h2{
+    color:#1f4d3a;
+    margin-bottom:5px;
+}
+
+.seller-info{
+    background:white;
+    padding:18px;
+    border-radius:10px;
+    margin-bottom:25px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.seller-info p{
+    margin:6px 0;
+}
+
+.order-card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:25px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.order-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+    border-bottom:1px solid #ddd;
+    padding-bottom:15px;
+    margin-bottom:15px;
+}
+
+.order-header h3{
+    color:#1f4d3a;
+}
+
+.order-date{
+    color:#777;
+    font-size:14px;
+    margin-top:5px;
+}
+
+.status-label{
+    background:#f5a623;
+    color:white;
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.customer-box{
+    background:#f8f8f8;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:18px;
+}
+
+.customer-box h4{
+    color:#1f4d3a;
+    margin-bottom:8px;
+}
+
+.customer-box p{
+    margin:5px 0;
+}
+
+.product{
+    display:flex;
+    gap:18px;
+    padding:15px 0;
+    border-bottom:1px solid #eee;
+}
+
+.product img{
+    width:100px;
+    height:100px;
+    object-fit:cover;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
+.product-info{
+    flex:1;
+}
+
+.product-info h4{
+    margin-bottom:8px;
+    color:#222;
+}
+
+.product-info p{
+    margin:5px 0;
+    font-size:14px;
+}
+
+.price{
+    color:#555;
+}
+
+.discount{
+    color:#d97706;
+}
+
+.final-price{
+    color:#1f4d3a;
+    font-weight:bold;
+}
+
+.product-total{
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.order-footer{
+    margin-top:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.total{
+    font-size:18px;
+    font-weight:bold;
+    color:#1f4d3a;
+}
+
+.status-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.status-box label{
+    font-weight:bold;
+}
+
+.status-box select{
+    padding:9px 12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:14px;
+    background:white;
+}
+
+.status-btn{
+    background:#f5a623;
+    border:none;
+    color:white;
+    padding:9px 16px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.status-btn:hover{
+    opacity:.9;
+}
+
+.status-note{
+    margin-top:8px;
+    font-size:12px;
+    color:#777;
+}
+
+.empty{
+    background:white;
+    padding:40px;
+    text-align:center;
+    border-radius:10px;
+    color:#777;
+}
+
+@media(max-width:700px){
+
+    header{
+        padding:15px;
+    }
+
+    header h1{
+        font-size:19px;
+    }
+
+    .container{
+        padding:0 12px;
+    }
+
+    .product{
+        flex-direction:column;
+    }
+
+    .product img{
+        width:100%;
+        height:180px;
+    }
+
+    .order-footer{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .status-box{
+        width:100%;
+    }
+
+    .status-box select{
+        flex:1;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
-
-<!-- HEADER -->
-
 <header>
-
-    <h1>
-        ReenaMart - Seller
-    </h1>
-
-    <a
-        href="seller.html"
-        class="back-btn">
-
-        ← Seller Dashboard
-
-    </a>
-
+    <h1>ReenaMart - Seller</h1>
+    <a href="seller.html" class="back-btn">← My Store</a>
 </header>
-
-
-
-<!-- MAIN -->
 
 <div class="container">
 
-
     <div class="page-title">
-
-        <h2>
-            Customer Orders
-        </h2>
-
-        <p>
-            View and manage orders received for your products.
-        </p>
-
+        <h2>Customer Orders</h2>
+        <p>View and manage orders containing your products.</p>
     </div>
 
-
-
-    <!-- ORDERS -->
+    <div class="seller-info" id="sellerInfo">
+        Loading seller information...
+    </div>
 
     <div id="ordersContainer"></div>
 
-
-
-    <!-- EMPTY ORDERS -->
-
-    <div
-        id="emptyOrders"
-        class="empty-orders">
-
-        <h3>
-            No Orders Yet
-        </h3>
-
-        <p>
-            When customers place orders for your products,
-            they will appear here.
-        </p>
-
-    </div>
-
-
 </div>
-
-
 
 <script>
 
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+let sellerData = JSON.parse(localStorage.getItem("sellerRegistration")) || {};
 
-/* =====================================
-   LOAD ORDERS
-===================================== */
+const sellerEmail = sellerData.email || "";
+const sellerId = sellerData.id || sellerEmail;
 
-let orders =
-    JSON.parse(
-        localStorage.getItem("orders")
-    ) || [];
+function escapeHTML(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
 
+function getOrderProducts(order){
 
+    if(Array.isArray(order.products)){
+        return order.products;
+    }
 
-/* =====================================
-   DISPLAY ORDERS
-===================================== */
+    if(order.product){
+        return [order.product];
+    }
 
-function displayOrders() {
+    return [];
+}
 
-    const container =
-        document.getElementById(
-            "ordersContainer"
+function isSellerProduct(product){
+
+    if(!product){
+        return false;
+    }
+
+    const productSellerEmail = product.sellerEmail || "";
+    const productSellerId = product.sellerId || "";
+
+    if(productSellerEmail || productSellerId){
+
+        return (
+            productSellerEmail === sellerEmail ||
+            productSellerId === sellerEmail ||
+            productSellerId === sellerId
         );
+    }
 
-    const emptyOrders =
-        document.getElementById(
-            "emptyOrders"
-        );
+    return false;
+}
 
+function getSellerProducts(order){
 
-    container.innerHTML = "";
+    return getOrderProducts(order).filter(product =>
+        isSellerProduct(product)
+    );
+}
 
+function getSellingPrice(product){
 
-    if (orders.length === 0) {
+    return Number(
+        product.sellingPrice ??
+        product.price ??
+        0
+    );
+}
 
-        emptyOrders.style.display = "block";
+function getDiscount(product){
+
+    return Number(product.discount ?? 0);
+}
+
+function getFinalPrice(product){
+
+    const sellingPrice = getSellingPrice(product);
+    const discount = getDiscount(product);
+
+    if(
+        product.finalPrice !== undefined &&
+        product.finalPrice !== null &&
+        product.finalPrice !== ""
+    ){
+        return Number(product.finalPrice);
+    }
+
+    return sellingPrice -
+        (sellingPrice * discount / 100);
+}
+
+function getQuantity(product){
+
+    return Number(
+        product.quantity ??
+        product.qty ??
+        1
+    );
+}
+
+function getSellerStatus(order){
+
+    if(
+        order.sellerStatuses &&
+        sellerEmail &&
+        order.sellerStatuses[sellerEmail]
+    ){
+        return order.sellerStatuses[sellerEmail];
+    }
+
+    return order.status || "PLACED";
+}
+
+function getAddress(order){
+
+    if(typeof order.address === "string"){
+        return order.address;
+    }
+
+    if(
+        order.address &&
+        typeof order.address === "object"
+    ){
+
+        return [
+            order.address.address,
+            order.address.city,
+            order.address.state,
+            order.address.pincode
+        ].filter(Boolean).join(", ");
+    }
+
+    return [
+        order.city,
+        order.state,
+        order.pincode
+    ].filter(Boolean).join(", ");
+}
+
+function displaySellerInfo(){
+
+    const sellerInfo =
+        document.getElementById("sellerInfo");
+
+    if(!sellerEmail){
+
+        sellerInfo.innerHTML = `
+            <p style="color:red;">
+                Seller information not found. Please login again.
+            </p>
+        `;
 
         return;
     }
 
+    sellerInfo.innerHTML = `
+        <p>
+            <strong>Shop:</strong>
+            ${escapeHTML(sellerData.shopName || "N/A")}
+        </p>
 
-    emptyOrders.style.display = "none";
+        <p>
+            <strong>Seller:</strong>
+            ${escapeHTML(sellerData.sellerName || "N/A")}
+        </p>
 
+        <p>
+            <strong>Email:</strong>
+            ${escapeHTML(sellerData.email || "N/A")}
+        </p>
 
-    orders.forEach((order, index) => {
+        <p>
+            <strong>Mobile:</strong>
+            ${escapeHTML(sellerData.mobile || "N/A")}
+        </p>
 
-        const product =
-            order.product || order;
+        <p>
+            <strong>Approval Status:</strong>
+            ${escapeHTML(
+                sellerData.approvalStatus || "PENDING"
+            )}
+        </p>
+    `;
+}
 
+function displayOrders(){
 
-        const quantity =
-            order.quantity || 1;
+    const container =
+        document.getElementById("ordersContainer");
 
+    container.innerHTML = "";
 
-        const price =
-            Number(product.price || 0);
+    let sellerOrderCount = 0;
 
+    orders.forEach((order, orderIndex) => {
 
-        const total =
-            price * quantity;
+        const sellerProducts =
+            getSellerProducts(order);
 
+        if(sellerProducts.length === 0){
+            return;
+        }
+
+        sellerOrderCount++;
+
+        let sellerTotal = 0;
+        let productsHTML = "";
+
+        sellerProducts.forEach(product => {
+
+            const quantity = getQuantity(product);
+            const sellingPrice = getSellingPrice(product);
+            const discount = getDiscount(product);
+            const finalPrice = Math.max(
+                0,
+                getFinalPrice(product)
+            );
+
+            const productTotal =
+                finalPrice * quantity;
+
+            sellerTotal += productTotal;
+
+            productsHTML += `
+                <div class="product">
+
+                    <img
+                        src="${escapeHTML(
+                            product.image ||
+                            product.imageUrl ||
+                            "https://via.placeholder.com/300x300?text=Product"
+                        )}"
+                        alt="${escapeHTML(
+                            product.name || "Product"
+                        )}"
+                        onerror="this.src='https://via.placeholder.com/300x300?text=Product'"
+                    >
+
+                    <div class="product-info">
+
+                        <h4>
+                            ${escapeHTML(
+                                product.name || "Product"
+                            )}
+                        </h4>
+
+                        <p>
+                            <strong>Category:</strong>
+                            ${escapeHTML(
+                                product.category || "N/A"
+                            )}
+                        </p>
+
+                        ${
+                            product.size
+                            ? `
+                            <p>
+                                <strong>Size:</strong>
+                                ${escapeHTML(product.size)}
+                            </p>
+                            `
+                            : ""
+                        }
+
+                        <p>
+                            <strong>Quantity:</strong>
+                            ${quantity}
+                        </p>
+
+                        <p class="price">
+                            <strong>Selling Price:</strong>
+                            ₹${sellingPrice.toFixed(2)}
+                        </p>
+
+                        <p class="discount">
+                            <strong>Admin Discount:</strong>
+                            ${discount}%
+                        </p>
+
+                        <p class="final-price">
+                            <strong>Final Price:</strong>
+                            ₹${finalPrice.toFixed(2)}
+                        </p>
+
+                        <p class="product-total">
+                            Product Total:
+                            ₹${productTotal.toFixed(2)}
+                        </p>
+
+                    </div>
+
+                </div>
+            `;
+        });
+
+        const status = getSellerStatus(order);
+
+        const customerName =
+            order.customerName ||
+            order.name ||
+            order.userName ||
+            (order.customer && order.customer.name) ||
+            "Customer";
+
+        const customerMobile =
+            order.mobile ||
+            order.phone ||
+            (order.customer && order.customer.mobile) ||
+            "N/A";
+
+        const paymentMethod =
+            order.paymentMethod ||
+            order.payment ||
+            "N/A";
+
+        const address = getAddress(order);
+
+        const orderDate =
+            order.createdAt ||
+            order.orderDate ||
+            order.date ||
+            "";
+
+        const orderNumber =
+            order.id ||
+            order.orderId ||
+            orderIndex + 1;
 
         container.innerHTML += `
 
@@ -415,189 +622,262 @@ function displayOrders() {
 
                     <div>
 
-                        <div class="order-id">
-                            Order ID:
-                            ${order.orderId || "RM" + (1000 + index)}
-                        </div>
-
-                        <div class="order-date">
-                            ${order.date || "Recent Order"}
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="order-product">
-
-                    <img
-                        src="${product.image || ''}"
-                        class="product-image"
-                        alt="${product.name || 'Product'}"
-                        onerror="this.style.display='none'"
-                    >
-
-
-                    <div class="product-details">
-
                         <h3>
-                            ${product.name || "Product"}
+                            Order #${escapeHTML(orderNumber)}
                         </h3>
 
-                        <p>
-                            Category:
-                            ${product.category || "Product"}
-                        </p>
+                        ${
+                            orderDate
+                            ? `
+                            <div class="order-date">
+                                ${escapeHTML(orderDate)}
+                            </div>
+                            `
+                            : ""
+                        }
 
-                        <p>
-                            Quantity:
-                            ${quantity}
-                        </p>
+                    </div>
 
-                        <p>
-                            Price:
-                            ₹${price}
-                        </p>
-
+                    <div class="status-label">
+                        ${escapeHTML(status)}
                     </div>
 
                 </div>
 
+                <div class="customer-box">
 
-                <div class="customer-info">
+                    <h4>Customer Details</h4>
 
-                    <strong>
-                        Customer Details
-                    </strong>
+                    <p>
+                        <strong>Name:</strong>
+                        ${escapeHTML(customerName)}
+                    </p>
 
-                    <br><br>
+                    <p>
+                        <strong>Mobile:</strong>
+                        ${escapeHTML(customerMobile)}
+                    </p>
 
-                    Name:
-                    ${order.customerName || "Customer"}
+                    <p>
+                        <strong>Address:</strong>
+                        ${escapeHTML(
+                            address || "N/A"
+                        )}
+                    </p>
 
-                    <br>
-
-                    Address:
-                    ${order.address || "Address not available"}
+                    <p>
+                        <strong>Payment:</strong>
+                        ${escapeHTML(paymentMethod)}
+                    </p>
 
                 </div>
 
+                ${productsHTML}
 
-                <div class="order-bottom">
+                <div class="order-footer">
 
                     <div class="total">
-
-                        Total:
-                        ₹${total}
-
+                        Your Total:
+                        ₹${sellerTotal.toFixed(2)}
                     </div>
 
+                    <div>
 
-                    <div class="status-section">
+                        <div class="status-box">
 
-                        <label>
-                            Status:
-                        </label>
+                            <label for="status-${orderIndex}">
+                                Update Status:
+                            </label>
 
+                            <select id="status-${orderIndex}">
 
-                        <select
-                            class="status-select"
-                            id="status-${index}">
+                                <option
+                                    value="PLACED"
+                                    ${status === "PLACED"
+                                    ? "selected"
+                                    : ""}
+                                >
+                                    PLACED
+                                </option>
 
-                            <option value="Pending"
-                                ${order.status === "Pending" ? "selected" : ""}>
-                                Pending
-                            </option>
+                                <option
+                                    value="CONFIRMED"
+                                    ${status === "CONFIRMED"
+                                    ? "selected"
+                                    : ""}
+                                >
+                                    CONFIRMED
+                                </option>
 
-                            <option value="Confirmed"
-                                ${order.status === "Confirmed" ? "selected" : ""}>
-                                Confirmed
-                            </option>
+                                <option
+                                    value="SHIPPED"
+                                    ${status === "SHIPPED"
+                                    ? "selected"
+                                    : ""}
+                                >
+                                    SHIPPED
+                                </option>
 
-                            <option value="Shipped"
-                                ${order.status === "Shipped" ? "selected" : ""}>
-                                Shipped
-                            </option>
+                                <option
+                                    value="DELIVERED"
+                                    ${status === "DELIVERED"
+                                    ? "selected"
+                                    : ""}
+                                >
+                                    DELIVERED
+                                </option>
 
-                            <option value="Delivered"
-                                ${order.status === "Delivered" ? "selected" : ""}>
-                                Delivered
-                            </option>
+                            </select>
 
-                        </select>
+                            <button
+                                class="status-btn"
+                                onclick="updateStatus(${orderIndex})"
+                            >
+                                Update
+                            </button>
 
+                        </div>
 
-                        <button
-                            class="update-btn"
-                            onclick="updateStatus(${index})">
-
-                            Update
-
-                        </button>
+                        <div class="status-note">
+                            Status is updated for your products.
+                        </div>
 
                     </div>
 
                 </div>
 
             </div>
-
         `;
-
     });
 
+    if(sellerOrderCount === 0){
+
+        container.innerHTML = `
+            <div class="empty">
+
+                <h3>No Customer Orders</h3>
+
+                <p>
+                    Orders containing your products
+                    will appear here.
+                </p>
+
+            </div>
+        `;
+    }
 }
 
-
-
-/* =====================================
-   UPDATE ORDER STATUS
-===================================== */
-
-function updateStatus(index) {
+function updateStatus(orderIndex){
 
     const select =
         document.getElementById(
-            "status-" + index
+            `status-${orderIndex}`
         );
 
+    if(!select){
+        return;
+    }
 
-    const newStatus =
-        select.value;
+    const newStatus = select.value;
+    const order = orders[orderIndex];
 
+    if(!order){
+        alert("Order not found.");
+        return;
+    }
 
-    orders[index].status =
+    const sellerProducts =
+        getSellerProducts(order);
+
+    if(sellerProducts.length === 0){
+
+        alert(
+            "This order does not contain your product."
+        );
+
+        return;
+    }
+
+    /*
+      Seller-specific status is stored separately.
+      This prevents one seller from changing
+      another seller's status in a multi-seller order.
+    */
+
+    order.sellerStatuses =
+        order.sellerStatuses || {};
+
+    order.sellerStatuses[sellerEmail] =
         newStatus;
 
+    /*
+      If this is a single-seller order,
+      also update the normal order.status.
+      This keeps existing buyer order tracking compatible.
+    */
+
+    const allProducts =
+        getOrderProducts(order);
+
+    const sellerIds = [
+        ...new Set(
+            allProducts
+                .map(product =>
+                    product.sellerEmail ||
+                    product.sellerId ||
+                    ""
+                )
+                .filter(Boolean)
+        )
+    ];
+
+    if(sellerIds.length <= 1){
+
+        order.status = newStatus;
+
+    }else{
+
+        /*
+          For multi-seller orders, do not immediately
+          change the global order.status.
+
+          Only change it when every seller has
+          reached the same status.
+        */
+
+        const sellerStatuses =
+            order.sellerStatuses;
+
+        const allStatuses =
+            sellerIds.map(seller =>
+                sellerStatuses[seller] || null
+            );
+
+        if(
+            allStatuses.length > 0 &&
+            allStatuses.every(
+                currentStatus =>
+                    currentStatus === newStatus
+            )
+        ){
+            order.status = newStatus;
+        }
+    }
 
     localStorage.setItem(
         "orders",
         JSON.stringify(orders)
     );
 
-
-    alert(
-        "Order status updated to " +
-        newStatus
-    );
-
+    alert("Order status updated successfully.");
 
     displayOrders();
-
 }
 
-
-
-/* =====================================
-   INITIAL LOAD
-===================================== */
-
+displaySellerInfo();
 displayOrders();
-
 
 </script>
 
-
 </body>
-
 </html>

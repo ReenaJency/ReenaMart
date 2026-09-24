@@ -5,123 +5,165 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Reena Mart - Welcome</title>
+    <title>ReenaMart - Welcome</title>
 
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            background-color: #f5f7fa;
-            color: #222;
-
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            text-align: center;
-            padding: 30px 20px 15px;
-        }
-
-        header h1 {
-            margin: 0 0 8px;
-            font-size: 32px;
-        }
-
-        header p {
-            margin: 0;
-            color: #666;
-        }
-
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .welcome-box {
-            width: 100%;
-            max-width: 500px;
-            background-color: white;
-            padding: 35px 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
-        }
-
-        .welcome-box h2 {
-            margin: 0 0 12px;
-            font-size: 26px;
-        }
-
-        .welcome-box > p {
-            margin: 0 0 25px;
-            color: #666;
-        }
-
-        .auth-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .btn {
-            display: inline-block;
-            min-width: 120px;
-            padding: 12px 30px;
-
-            text-decoration: none;
-            text-align: center;
-
-            font-size: 16px;
-            font-weight: bold;
-
-            border-radius: 6px;
-
-            background-color: #2874f0;
+            background: #1f4d3a;
             color: white;
         }
 
-        .btn:hover {
-            background-color: #1557c0;
+        /* HEADER */
+        header {
+            height: 70px;
+            background: #1f4d3a;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+
+            z-index: 1000;
         }
 
-        .info-text {
-            margin-top: 22px;
-            line-height: 1.7;
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
             font-size: 14px;
-            color: #666;
+            font-weight: bold;
         }
 
-        footer {
+        nav a:hover {
+            color: #f5a623;
+        }
+
+        /* WELCOME SCREEN */
+        .welcome-section {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
             text-align: center;
-            padding: 15px 10px;
-            background-color: white;
-            border-top: 1px solid #ddd;
-            font-size: 14px;
-            color: #666;
+
+            padding: 70px 20px 20px;
+
+            background:
+                linear-gradient(
+                    rgba(31, 77, 58, 0.90),
+                    rgba(31, 77, 58, 0.90)
+                ),
+                url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80");
+
+            background-size: cover;
+            background-position: center;
         }
 
-        footer p {
-            margin: 0;
+        .welcome-content {
+            width: 90%;
+            max-width: 750px;
         }
 
-        @media (max-width: 500px) {
+        .welcome-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
 
-            .auth-buttons {
-                flex-direction: column;
-                align-items: center;
+        .welcome-content h1 {
+            font-size: 52px;
+            margin-bottom: 15px;
+        }
+
+        .welcome-content h2 {
+            color: #f5a623;
+            font-size: 27px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-content p {
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+        /* START BUTTON */
+        .start-btn {
+            display: inline-block;
+
+            background: #f5a623;
+            color: #222;
+
+            text-decoration: none;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            padding: 14px 45px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        .start-btn:hover {
+            background: #ffc35c;
+            transform: translateY(-2px);
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+
+            header {
+                height: 65px;
+                padding: 0 20px;
             }
 
-            .btn {
-                width: 180px;
+            .logo {
+                font-size: 22px;
+            }
+
+            .welcome-section {
+                padding-top: 65px;
+            }
+
+            .welcome-icon {
+                font-size: 50px;
+            }
+
+            .welcome-content h1 {
+                font-size: 38px;
+            }
+
+            .welcome-content h2 {
+                font-size: 21px;
+            }
+
+            .welcome-content p {
+                font-size: 15px;
+            }
+
+            .start-btn {
+                font-size: 16px;
+                padding: 13px 38px;
             }
         }
     </style>
@@ -129,45 +171,50 @@
 
 <body>
 
+    <!-- HEADER -->
     <header>
-        <h1>🛍️ Reena Mart</h1>
-        <p>Your Online Shopping Destination</p>
+
+        <div class="logo">
+            🛍️ ReenaMart
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+
     </header>
 
-    <main>
 
-        <div class="welcome-box">
+    <!-- WELCOME SCREEN -->
+    <section class="welcome-section">
 
-            <h2>Welcome to Reena Mart</h2>
+        <div class="welcome-content">
+
+            <div class="welcome-icon">
+                🛍️
+            </div>
+
+            <h1>
+                Welcome to ReenaMart
+            </h1>
+
+            <h2>
+                Your Smart Online Shopping Destination
+            </h2>
 
             <p>
-                Shop your favourite products easily and securely.
+                Discover fashion, jewellery, electronics,
+                beauty products and more — all in one place.
             </p>
 
-            <div class="auth-buttons">
-
-                <a href="register.html" class="btn">
-                    Register
-                </a>
-
-                <a href="login.html" class="btn">
-                    Login
-                </a>
-
-            </div>
-
-            <div class="info-text">
-                <div>New to Reena Mart? Please register to continue.</div>
-                <div>Already registered? Please login to continue.</div>
-            </div>
+            <!-- DIRECT PAGE NAVIGATION -->
+            <a href="role.html" class="start-btn">
+                START
+            </a>
 
         </div>
 
-    </main>
-
-    <footer>
-        <p>© 2026 Reena Mart | Online Shopping Website</p>
-    </footer>
+    </section>
 
 </body>
 

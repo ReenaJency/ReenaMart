@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Seller Login - ReenaMart</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f5f7f6;min-height:100vh;display:flex;justify-content:center;align-items:center}
+.login-container{width:100%;max-width:430px;background:white;padding:35px;border-radius:14px;box-shadow:0 8px 25px rgba(0,0,0,.12)}
+.logo{text-align:center;font-size:30px;font-weight:bold;color:#1f4d3a;margin-bottom:8px}
+.subtitle{text-align:center;color:#777;margin-bottom:25px}
+h2{text-align:center;color:#1f4d3a;margin-bottom:25px}
+.form-group{margin-bottom:17px}
+label{display:block;margin-bottom:7px;font-weight:bold;color:#333}
+input{width:100%;padding:12px;border:1px solid #ccc;border-radius:7px;font-size:15px;outline:none}
+input:focus{border-color:#1f4d3a}
+.otp-row{display:flex;gap:8px}
+.otp-row input{flex:1}
+.otp-btn{background:#f5a623;color:white;border:0;padding:0 14px;border-radius:7px;cursor:pointer;font-weight:bold;white-space:nowrap}
+.otp-btn:hover{background:#d98d0c}
+.login-btn{width:100%;padding:13px;background:#1f4d3a;color:white;border:0;border-radius:7px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:8px}
+.login-btn:hover{background:#163b2d}
+.links{text-align:center;margin-top:20px;line-height:2}
+.links a{color:#1f4d3a;text-decoration:none;font-weight:bold}
+.links a:hover{text-decoration:underline}
+.message{text-align:center;margin-top:12px;font-size:14px;color:#666}
+#forgotBox{display:none;margin-top:25px;padding-top:25px;border-top:1px solid #ddd}
+#forgotBox h3{text-align:center;color:#1f4d3a;margin-bottom:18px}
+.reset-btn{width:100%;padding:12px;background:#f5a623;color:white;border:0;border-radius:7px;font-size:15px;font-weight:bold;cursor:pointer}
+.reset-btn:hover{background:#d98d0c}
+.cancel-btn{width:100%;padding:10px;background:#777;color:white;border:0;border-radius:7px;margin-top:8px;cursor:pointer}
+@media(max-width:480px){.login-container{margin:15px;padding:25px}.otp-row{flex-direction:column}.otp-btn{padding:11px}}
+</style>
+</head>
+<body>
+<div class="login-container">
+<div class="logo">ReenaMart</div>
+<div class="subtitle">Seller Portal</div>
+<h2>Seller Login</h2>
+<form id="sellerLoginForm">
+<div class="form-group">
+<label for="email">Seller Email</label>
+<input type="email" id="email" placeholder="Enter registered email" required>
+</div>
+<div class="form-group">
+<label for="mobile">Mobile Number</label>
+<input type="tel" id="mobile" placeholder="Enter registered mobile number" maxlength="10" required>
+</div>
+<div class="form-group">
+<label for="password">Password</label>
+<input type="password" id="password" placeholder="Enter password" required>
+</div>
+<div class="form-group">
+<label for="otp">OTP Verification</label>
+<div class="otp-row">
+<input type="text" id="otp" placeholder="Enter OTP" maxlength="6" required>
+<button type="button" class="otp-btn" onclick="sendOTP()">Send OTP</button>
+</div>
+</div>
+<button type="submit" class="login-btn">Login</button>
+</form>
+<div class="message">OTP is for demo testing only.</div>
+<div class="links">
+<a href="#" onclick="showForgotPassword(event)">Forgot Password?</a><br>
+New seller? <a href="seller-register.html">Register</a><br>
+<a href="index.html">← Back to Role Selection</a>
+</div>
+<div id="forgotBox">
+<h3>Reset Password</h3>
+<div class="form-group">
+<label for="forgotEmail">Registered Email</label>
+<input type="email" id="forgotEmail" placeholder="Enter registered email">
+</div>
+<div class="form-group">
+<label for="forgotMobile">Registered Mobile Number</label>
+<input type="tel" id="forgotMobile" placeholder="Enter registered mobile number" maxlength="10">
+</div>
+<button type="button" class="otp-btn" style="width:100%;padding:12px;margin-bottom:15px" onclick="sendResetOTP()">Send Reset OTP</button>
+<div class="form-group">
+<label for="resetOTP">Enter OTP</label>
+<input type="text" id="resetOTP" placeholder="Enter OTP" maxlength="6">
+</div>
+<div class="form-group">
+<label for="newPassword">New Password</label>
+<input type="password" id="newPassword" placeholder="Enter new password">
+</div>
+<div class="form-group">
+<label for="confirmPassword">Confirm New Password</label>
+<input type="password" id="confirmPassword" placeholder="Confirm new password">
+</div>
+<button type="button" class="reset-btn" onclick="resetPassword()">Reset Password</button>
+<button type="button" class="cancel-btn" onclick="hideForgotPassword()">Cancel</button>
+</div>
+</div>
+<script>
+let generatedOTP="",resetOTP="";
+function sendOTP(){
+const mobile=document.getElementById("mobile").value.trim();
+if(!mobile){alert("Please enter your mobile number first.");return}
+if(!/^[0-9]{10}$/.test(mobile)){alert("Please enter a valid 10-digit mobile number.");return}
+const sellers=JSON.parse(localStorage.getItem("sellers"))||[];
+let sellerData=sellers.find(s=>String(s.mobile||"")===mobile);
+if(!sellerData){
+const oldSeller=JSON.parse(localStorage.getItem("sellerRegistration"));
+if(oldSeller&&String(oldSeller.mobile||"")===mobile)sellerData=oldSeller;
+}
+if(!sellerData){alert("No seller account found with this mobile number.");return}
+generatedOTP=Math.floor(100000+Math.random()*900000).toString();
+alert("Your Demo OTP is: "+generatedOTP);
+document.getElementById("otp").focus();
+}
+document.getElementById("sellerLoginForm").addEventListener("submit",function(e){
+e.preventDefault();
+const email=document.getElementById("email").value.trim().toLowerCase();
+const mobile=document.getElementById("mobile").value.trim();
+const password=document.getElementById("password").value;
+const otp=document.getElementById("otp").value.trim();
+if(!email||!mobile||!password||!otp){alert("Please fill all fields.");return}
+if(!/^[0-9]{10}$/.test(mobile)){alert("Please enter a valid 10-digit mobile number.");return}
+if(!generatedOTP){alert("Please click Send OTP first.");return}
+if(otp!==generatedOTP){alert("Invalid OTP.");return}
+let sellers=JSON.parse(localStorage.getItem("sellers"))||[];
+let sellerData=sellers.find(s=>String(s.email||"").toLowerCase()===email&&String(s.mobile||"")===mobile);
+if(!sellerData){
+const oldSeller=JSON.parse(localStorage.getItem("sellerRegistration"));
+if(oldSeller&&String(oldSeller.email||"").toLowerCase()===email&&String(oldSeller.mobile||"")===mobile){
+sellerData=oldSeller;
+if(!sellers.some(s=>String(s.email||"").toLowerCase()===email)){
+sellers.push(sellerData);
+localStorage.setItem("sellers",JSON.stringify(sellers));
+}
+}
+}
+if(!sellerData){alert("Invalid seller email or mobile number.");return}
+if(String(sellerData.password||"")!==password){alert("Incorrect password.");return}
+if(sellerData.role&&String(sellerData.role).toUpperCase()!=="SELLER"){alert("This account is not a seller account.");return}
+const approvalStatus=String(sellerData.approvalStatus||"PENDING").toUpperCase();
+if(approvalStatus==="PENDING"){alert("Your seller account is waiting for Admin approval.");return}
+if(approvalStatus==="REJECTED"){alert("Your seller account was rejected by Admin.");return}
+if(approvalStatus!=="APPROVED"){alert("Your seller account is not approved yet.");return}
+localStorage.setItem("loggedInUser",JSON.stringify(sellerData));
+localStorage.setItem("sellerRegistration",JSON.stringify(sellerData));
+localStorage.setItem("sellerApprovalStatus","APPROVED");
+localStorage.setItem("userRole","SELLER");
+alert("Seller login successful!");
+window.location.href="seller-dashboard.html";
+});
+function showForgotPassword(e){
+e.preventDefault();
+document.getElementById("forgotBox").style.display="block";
+document.getElementById("forgotBox").scrollIntoView({behavior:"smooth"});
+}
+function hideForgotPassword(){document.getElementById("forgotBox").style.display="none"}
+function sendResetOTP(){
+const email=document.getElementById("forgotEmail").value.trim().toLowerCase();
+const mobile=document.getElementById("forgotMobile").value.trim();
+if(!email||!mobile){alert("Please enter your email and mobile number.");return}
+if(!/^[0-9]{10}$/.test(mobile)){alert("Please enter a valid 10-digit mobile number.");return}
+const sellers=JSON.parse(localStorage.getItem("sellers"))||[];
+let sellerData=sellers.find(s=>String(s.email||"").toLowerCase()===email&&String(s.mobile||"")===mobile);
+if(!sellerData){
+const oldSeller=JSON.parse(localStorage.getItem("sellerRegistration"));
+if(oldSeller&&String(oldSeller.email||"").toLowerCase()===email&&String(oldSeller.mobile||"")===mobile)sellerData=oldSeller;
+}
+if(!sellerData){alert("Seller account not found.");return}
+resetOTP=Math.floor(100000+Math.random()*900000).toString();
+alert("Your Password Reset Demo OTP is: "+resetOTP);
+document.getElementById("resetOTP").focus();
+}
+function resetPassword(){
+const email=document.getElementById("forgotEmail").value.trim().toLowerCase();
+const mobile=document.getElementById("forgotMobile").value.trim();
+const otp=document.getElementById("resetOTP").value.trim();
+const newPassword=document.getElementById("newPassword").value;
+const confirmPassword=document.getElementById("confirmPassword").value;
+if(!email||!mobile||!otp||!newPassword||!confirmPassword){alert("Please fill all reset password fields.");return}
+if(!resetOTP){alert("Please click Send Reset OTP first.");return}
+if(otp!==resetOTP){alert("Invalid reset OTP.");return}
+if(newPassword.length<6){alert("Password must contain at least 6 characters.");return}
+if(newPassword!==confirmPassword){alert("Passwords do not match.");return}
+let sellers=JSON.parse(localStorage.getItem("sellers"))||[];
+let sellerIndex=sellers.findIndex(s=>String(s.email||"").toLowerCase()===email&&String(s.mobile||"")===mobile);
+let sellerData=null;
+if(sellerIndex!==-1){
+sellers[sellerIndex].password=newPassword;
+sellerData=sellers[sellerIndex];
+localStorage.setItem("sellers",JSON.stringify(sellers));
+}
+const oldSeller=JSON.parse(localStorage.getItem("sellerRegistration"));
+if(oldSeller&&String(oldSeller.email||"").toLowerCase()===email&&String(oldSeller.mobile||"")===mobile){
+oldSeller.password=newPassword;
+localStorage.setItem("sellerRegistration",JSON.stringify(oldSeller));
+if(!sellerData)sellerData=oldSeller;
+}
+if(!sellerData){alert("Seller account not found.");return}
+alert("Password reset successful! Please login with your new password.");
+document.getElementById("forgotEmail").value="";
+document.getElementById("forgotMobile").value="";
+document.getElementById("resetOTP").value="";
+document.getElementById("newPassword").value="";
+document.getElementById("confirmPassword").value="";
+resetOTP="";
+hideForgotPassword();
+}
+</script>
+</body>
+</html>

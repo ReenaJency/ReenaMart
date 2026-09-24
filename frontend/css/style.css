@@ -7,11 +7,11 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
-    color: #333;
+    color: #1f4d3a;
 }
 
 header {
-    background-color: #2874f0;
+    background-color: #1f4d3a;
     color: white;
     padding: 20px;
     display: flex;
@@ -24,13 +24,15 @@ header h1 {
 }
 
 nav a {
-    color: white;
+    color: #1f4d3a;
     text-decoration: none;
     margin-left: 20px;
     font-size: 16px;
+    font-weight: bold;
 }
 
 nav a:hover {
+    color: #1f4d3a;
     text-decoration: underline;
 }
 
@@ -42,6 +44,7 @@ main {
 main h2 {
     font-size: 40px;
     margin-bottom: 20px;
+    color: #1f4d3a;
 }
 
 main p {
@@ -50,7 +53,7 @@ main p {
 }
 
 button {
-    background-color: #fb641b;
+    background-color: #1f4d3a;
     color: white;
     border: none;
     padding: 12px 30px;
@@ -60,13 +63,47 @@ button {
 }
 
 button:hover {
-    background-color: #e85b18;
+    background-color: #1f4d3a;
 }
 
 footer {
-    background-color: #222;
+    background-color: #1f4d3a;
     color: white;
     text-align: center;
     padding: 20px;
     margin-top: 100px;
+}
+
+@media (max-width: 700px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    nav a {
+        margin: 5px 8px;
+    }
+
+    main {
+        padding: 60px 20px;
+    }
+
+    main h2 {
+        font-size: 32px;
+    }
+
+    main p {
+        font-size: 17px;
+    }
+
+    button {
+        font-size: 16px;
+        padding: 10px 25px;
+    }
 }

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Registration - ReenaMart</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7f6;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:600px;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 25px rgba(0,0,0,.12);
+}
+
+.logo{
+    text-align:center;
+    color:#1f4d3a;
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#777;
+    margin-bottom:25px;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+    color:#333;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+}
+
+input:focus,select:focus{
+    border-color:#1f4d3a;
+}
+
+.otp-row{
+    display:flex;
+    gap:10px;
+}
+
+.otp-row input{
+    flex:1;
+}
+
+.otp-row button{
+    width:130px;
+    background:#f5a623;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.otp-status{
+    margin-top:7px;
+    font-size:13px;
+    color:#1f4d3a;
+}
+
+.register-btn{
+    width:100%;
+    padding:14px;
+    background:#1f4d3a;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.register-btn:hover{
+    background:#163a2c;
+}
+
+.login-link{
+    text-align:center;
+    margin-top:20px;
+}
+
+.login-link a{
+    color:#1f4d3a;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.note{
+    background:#f1f7f4;
+    border-left:4px solid #1f4d3a;
+    padding:12px;
+    margin-bottom:20px;
+    font-size:14px;
+    line-height:1.5;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">ReenaMart</div>
+    <div class="subtitle">Seller Registration</div>
+
+    <div class="note">
+        After registration, your seller account will be sent to Admin
+        for approval. You can add products after your seller account is approved.
+    </div>
+
+    <form id="sellerRegisterForm">
+
+        <div class="form-group">
+            <label>Seller Name</label>
+            <input type="text" id="sellerName" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" required>
+        </div>
+
+        <div class="form-group">
+            <label>Mobile Number</label>
+
+            <div class="otp-row">
+                <input
+                    type="tel"
+                    id="mobile"
+                    maxlength="10"
+                    placeholder="10 digit mobile number"
+                    required
+                >
+
+                <button type="button" id="sendOtpBtn">
+                    Send OTP
+                </button>
+            </div>
+
+            <div class="otp-status" id="otpStatus"></div>
+        </div>
+
+        <div class="form-group">
+            <label>Enter OTP</label>
+            <input
+                type="text"
+                id="otp"
+                maxlength="6"
+                placeholder="Enter OTP"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Shop / Business Name</label>
+            <input type="text" id="shopName" required>
+        </div>
+
+        <div class="form-group">
+            <label>Business Category</label>
+
+            <select id="category" required>
+                <option value="">Select Category</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Jewellery">Jewellery</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Beauty">Beauty</option>
+                <option value="Home">Home</option>
+                <option value="Others">Others</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input
+                type="password"
+                id="password"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input
+                type="password"
+                id="confirmPassword"
+                required
+            >
+        </div>
+
+        <button type="submit" class="register-btn">
+            Register as Seller
+        </button>
+
+    </form>
+
+    <div class="login-link">
+        Already registered?
+        <a href="seller-login.html">Seller Login</a>
+    </div>
+
+</div>
+
+<script>
+let generatedOTP="";
+
+const sellerRegisterForm=document.getElementById("sellerRegisterForm");
+const sendOtpBtn=document.getElementById("sendOtpBtn");
+const otpStatus=document.getElementById("otpStatus");
+
+sendOtpBtn.addEventListener("click",function(){
+
+    const mobile=document.getElementById("mobile").value.trim();
+
+    if(!/^[0-9]{10}$/.test(mobile)){
+        alert("Please enter a valid 10 digit mobile number.");
+        return;
+    }
+
+    generatedOTP=Math.floor(100000+Math.random()*900000).toString();
+
+    otpStatus.textContent="Demo OTP sent successfully.";
+
+    alert("Your Demo OTP is: "+generatedOTP);
+});
+
+sellerRegisterForm.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const sellerName=document.getElementById("sellerName").value.trim();
+    const email=document.getElementById("email").value.trim().toLowerCase();
+    const mobile=document.getElementById("mobile").value.trim();
+    const otp=document.getElementById("otp").value.trim();
+    const shopName=document.getElementById("shopName").value.trim();
+    const category=document.getElementById("category").value;
+    const password=document.getElementById("password").value;
+    const confirmPassword=document.getElementById("confirmPassword").value;
+
+    if(generatedOTP===""){
+        alert("Please send OTP first.");
+        return;
+    }
+
+    if(otp!==generatedOTP){
+        alert("Invalid OTP.");
+        return;
+    }
+
+    if(password!==confirmPassword){
+        alert("Passwords do not match.");
+        return;
+    }
+
+    let sellers=JSON.parse(
+        localStorage.getItem("sellers")
+    ) || [];
+
+    /*
+     * Migrate old sellerRegistration data
+     * so existing seller account is not lost.
+     */
+    const oldSeller=JSON.parse(
+        localStorage.getItem("sellerRegistration")
+    );
+
+    if(oldSeller && !sellers.some(
+        seller=>seller.email===oldSeller.email
+    )){
+        sellers.push(oldSeller);
+    }
+
+    /*
+     * Prevent duplicate email.
+     */
+    if(sellers.some(
+        seller=>seller.email===email
+    )){
+        alert("This email is already registered as a seller.");
+        return;
+    }
+
+    /*
+     * Create new seller.
+     */
+    const sellerData={
+        id:Date.now(),
+        sellerName:sellerName,
+        email:email,
+        mobile:mobile,
+        shopName:shopName,
+        category:category,
+        password:password,
+        role:"SELLER",
+        mobileVerified:true,
+        approvalStatus:"PENDING",
+        registeredAt:new Date().toLocaleString("en-IN")
+    };
+
+    sellers.push(sellerData);
+
+    /*
+     * Main seller list used by Admin.
+     */
+    localStorage.setItem(
+        "sellers",
+        JSON.stringify(sellers)
+    );
+
+    /*
+     * Keep latest seller for seller login/dashboard.
+     */
+    localStorage.setItem(
+        "sellerRegistration",
+        JSON.stringify(sellerData)
+    );
+
+    localStorage.setItem(
+        "sellerApprovalStatus",
+        "PENDING"
+    );
+
+    alert(
+        "Seller registration successful!\n\n"+
+        "Your account is waiting for Admin approval."
+    );
+
+    window.location.href="seller-login.html";
+});
+</script>
+
+</body>
+</html>

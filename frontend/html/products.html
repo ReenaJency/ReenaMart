@@ -1,610 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ReenaMart - Products</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #f5f5f5;
-            color: #333;
-        }
-
-        header {
-            background: #1f4d3a;
-            color: white;
-            padding: 18px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        header h1 {
-            font-size: 26px;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 10px;
-        }
-
-        .header-right a {
-            text-decoration: none;
-            color: white;
-            background: #f5a623;
-            padding: 9px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .search-section {
-            background: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 5px #ddd;
-        }
-
-        .search-box {
-            width: 90%;
-            max-width: 550px;
-            padding: 13px 16px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: #1f4d3a;
-        }
-
-        .categories {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .category-btn {
-            border: none;
-            background: white;
-            color: #333;
-            padding: 10px 18px;
-            margin: 5px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 1px 5px #ddd;
-        }
-
-        .category-btn:hover,
-        .category-btn.active {
-            background: #1f4d3a;
-            color: white;
-        }
-
-        .container {
-            width: 92%;
-            max-width: 1200px;
-            margin: 20px auto 50px;
-        }
-
-        .products {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px #ddd;
-            transition: 0.2s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 5px 15px #ccc;
-        }
-
-        .product-image {
-            width: 100%;
-            height: 230px;
-            object-fit: cover;
-            background: #eee;
-            cursor: pointer;
-        }
-
-        .product-info {
-            padding: 15px;
-        }
-
-        .product-category {
-            color: #777;
-            font-size: 13px;
-            margin-bottom: 7px;
-        }
-
-        .product-name {
-            color: #1f4d3a;
-            font-size: 18px;
-            margin-bottom: 8px;
-            cursor: pointer;
-        }
-
-        .product-price {
-            color: #e67e22;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .available-size {
-            font-size: 13px;
-            color: #555;
-            margin-bottom: 12px;
-        }
-
-        .available-size strong {
-            color: #1f4d3a;
-        }
-
-        .card-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .view-btn {
-            flex: 1;
-            border: none;
-            background: #1f4d3a;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .like-btn {
-            width: 45px;
-            border: none;
-            background: #eee;
-            color: #333;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .like-btn:hover {
-            background: #ddd;
-        }
-
-        .no-products {
-            grid-column: 1 / -1;
-            text-align: center;
-            background: white;
-            padding: 60px 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px #ddd;
-        }
-
-        .no-products h2 {
-            color: #1f4d3a;
-            margin-bottom: 10px;
-        }
-
-        .no-products p {
-            color: #777;
-        }
-
-        footer {
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        footer p {
-            margin: 5px;
-        }
-
-        @media (max-width: 1000px) {
-            .products {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 750px) {
-            header {
-                padding: 15px;
-                justify-content: center;
-            }
-
-            .products {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .product-image {
-                height: 200px;
-            }
-        }
-
-        @media (max-width: 500px) {
-            .products {
-                grid-template-columns: 1fr;
-            }
-
-            .product-image {
-                height: 250px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ReenaMart - Products</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f7f6;color:#222}
+header{background:#1f4d3a;color:white;padding:16px 30px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px}
+.logo{font-size:25px;font-weight:bold}
+nav{display:flex;gap:10px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;padding:9px 14px;border-radius:6px}
+nav a:hover{background:#2d654d}
+.container{width:92%;max-width:1400px;margin:30px auto}
+.top-section{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:25px}
+h1{color:#1f4d3a}
+.search-box{width:320px;max-width:100%;padding:12px 15px;border:1px solid #ccc;border-radius:7px;font-size:15px}
+.categories{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:25px}
+.category-btn{border:none;background:#ddd;padding:10px 17px;border-radius:6px;cursor:pointer;font-weight:bold}
+.category-btn.active,.category-btn:hover{background:#1f4d3a;color:white}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.product-card{background:white;border-radius:10px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.1);transition:.2s;position:relative}
+.product-card:hover{transform:translateY(-4px)}
+.product-image-box{height:230px;background:#f1f1f1;position:relative;overflow:hidden}
+.product-image{width:100%;height:100%;object-fit:cover}
+.like-btn{position:absolute;right:12px;top:12px;width:38px;height:38px;border:none;border-radius:50%;background:white;cursor:pointer;font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.like-btn.liked{color:red}
+.product-info{padding:15px}
+.product-name{font-size:18px;font-weight:bold;margin-bottom:7px}
+.category{color:#777;font-size:14px;margin-bottom:10px}
+.price-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.old-price{color:#888;text-decoration:line-through;font-size:14px}
+.final-price{color:#1f4d3a;font-size:20px;font-weight:bold}
+.discount{color:#d35400;font-size:13px;font-weight:bold;margin-bottom:8px}
+.stock{font-size:14px;font-weight:bold;margin-bottom:8px}
+.in-stock{color:#16803a}
+.out-stock{color:#d32f2f}
+.view-btn{width:100%;border:none;background:#f5a623;color:#111;padding:11px;border-radius:6px;cursor:pointer;font-weight:bold;margin-top:8px}
+.view-btn:hover{background:#e59512}
+.view-btn:disabled{background:#ccc;color:#666;cursor:not-allowed}
+.empty{grid-column:1/-1;text-align:center;background:white;padding:50px 20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.empty h2{color:#1f4d3a;margin-bottom:10px}
+.empty p{color:#666}
+@media(max-width:1000px){.product-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:750px){.product-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.product-grid{grid-template-columns:1fr}header{padding:15px}.container{width:94%}}
+</style>
 </head>
-
 <body>
 
 <header>
-
-    <h1>🛍️ ReenaMart</h1>
-
-    <div class="header-right">
-        <a href="index.html">Home</a>
-        <a href="cart.html">🛒 Cart</a>
-    </div>
-
+<div class="logo">🛍️ ReenaMart</div>
+<nav>
+<a href="index.html">Home</a>
+<a href="products.html">Products</a>
+<a href="cart.html">Cart <span id="cartCount">0</span></a>
+</nav>
 </header>
 
-
-<section class="search-section">
-
-    <input
-        type="text"
-        id="searchInput"
-        class="search-box"
-        placeholder="Search products..."
-        oninput="searchProducts()"
-    >
-
-</section>
-
+<div class="container">
+<div class="top-section">
+<h1>Products</h1>
+<input type="text" id="searchInput" class="search-box" placeholder="Search products...">
+</div>
 
 <div class="categories">
-
-    <button
-        class="category-btn active"
-        onclick="filterCategory('All', this)">
-        All
-    </button>
-
-    <button
-        class="category-btn"
-        onclick="filterCategory('Fashion', this)">
-        Fashion
-    </button>
-
-    <button
-        class="category-btn"
-        onclick="filterCategory('Jewellery', this)">
-        Jewellery
-    </button>
-
-    <button
-        class="category-btn"
-        onclick="filterCategory('Electronics', this)">
-        Electronics
-    </button>
-
-    <button
-        class="category-btn"
-        onclick="filterCategory('Beauty', this)">
-        Beauty
-    </button>
-
+<button class="category-btn active" onclick="filterCategory('All',this)">All</button>
+<button class="category-btn" onclick="filterCategory('Fashion',this)">Fashion</button>
+<button class="category-btn" onclick="filterCategory('Jewellery',this)">Jewellery</button>
+<button class="category-btn" onclick="filterCategory('Electronics',this)">Electronics</button>
+<button class="category-btn" onclick="filterCategory('Beauty',this)">Beauty</button>
 </div>
 
-
-<div class="container">
-
-    <div id="productContainer" class="products"></div>
-
+<div id="productGrid" class="product-grid"></div>
 </div>
-
-
-<footer>
-    <p>© 2026 ReenaMart</p>
-    <p>Shop Smart. Live Better.</p>
-</footer>
-
 
 <script>
-
-    /* GET PRODUCTS ADDED BY SELLER */
-
-    let products =
-        JSON.parse(localStorage.getItem("sellerProducts")) || [];
-
-
-    let currentCategory = "All";
-
-
-    /* DISPLAY PRODUCTS */
-
-    function displayProducts(list) {
-
-        const container =
-            document.getElementById("productContainer");
-
-
-        if (list.length === 0) {
-
-            container.innerHTML = `
-                <div class="no-products">
-
-                    <h2>No Products Available</h2>
-
-                    <p>
-                        Seller has not added any products yet.
-                    </p>
-
-                </div>
-            `;
-
-            return;
-        }
-
-
-        let html = "";
-
-
-        list.forEach(product => {
-
-            let image =
-                product.image ||
-                product.imageUrl ||
-                "";
-
-
-            let sizeText = "";
-
-
-            if (product.category === "Fashion") {
-
-                if (product.sizes && Array.isArray(product.sizes)) {
-
-                    sizeText =
-                        product.sizes.join(", ");
-
-                } else if (product.size) {
-
-                    sizeText =
-                        product.size;
-
-                } else {
-
-                    sizeText =
-                        "S, M, L, XL, XXL";
-
-                }
-
-            }
-
-
-            html += `
-                <div class="product-card">
-
-                    <img
-                        class="product-image"
-                        src="${image}"
-                        alt="${product.name}"
-                        onclick="openProduct(${product.id})"
-                        onerror="this.src='https://via.placeholder.com/500x500?text=Image+Not+Available'"
-                    >
-
-                    <div class="product-info">
-
-                        <div class="product-category">
-                            Category:
-                            ${product.category || "Product"}
-                        </div>
-
-                        <h3
-                            class="product-name"
-                            onclick="openProduct(${product.id})">
-                            ${product.name}
-                        </h3>
-
-                        <div class="product-price">
-                            ₹${Number(product.price).toLocaleString("en-IN")}
-                        </div>
-
-                        ${
-                            product.category === "Fashion"
-                            ? `
-                                <div class="available-size">
-                                    <strong>Available Sizes:</strong>
-                                    ${sizeText}
-                                </div>
-                            `
-                            : ""
-                        }
-
-                        <div class="card-buttons">
-
-                            <button
-                                class="view-btn"
-                                onclick="openProduct(${product.id})">
-                                View Product
-                            </button>
-
-                            <button
-                                class="like-btn"
-                                onclick="likeProduct(${product.id})">
-                                ♡
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-            `;
-        });
-
-
-        container.innerHTML = html;
-    }
-
-
-    /* OPEN PRODUCT DETAILS */
-
-    function openProduct(id) {
-
-        const product =
-            products.find(item => item.id == id);
-
-
-        if (!product) {
-            return;
-        }
-
-
-        localStorage.setItem(
-            "selectedProduct",
-            JSON.stringify(product)
-        );
-
-
-        window.location.href =
-            "product-details.html";
-    }
-
-
-    /* CATEGORY FILTER */
-
-    function filterCategory(category, button) {
-
-        currentCategory = category;
-
-
-        document
-            .querySelectorAll(".category-btn")
-            .forEach(btn => {
-                btn.classList.remove("active");
-            });
-
-
-        button.classList.add("active");
-
-
-        searchProducts();
-    }
-
-
-    /* SEARCH */
-
-    function searchProducts() {
-
-        const keyword =
-            document
-                .getElementById("searchInput")
-                .value
-                .toLowerCase()
-                .trim();
-
-
-        const filtered =
-            products.filter(product => {
-
-                const categoryMatch =
-                    currentCategory === "All" ||
-                    product.category === currentCategory;
-
-
-                const nameMatch =
-                    (product.name || "")
-                        .toLowerCase()
-                        .includes(keyword);
-
-
-                const categorySearchMatch =
-                    (product.category || "")
-                        .toLowerCase()
-                        .includes(keyword);
-
-
-                return (
-                    categoryMatch &&
-                    (nameMatch || categorySearchMatch)
-                );
-            });
-
-
-        displayProducts(filtered);
-    }
-
-
-    /* LIKE PRODUCT */
-
-    function likeProduct(id) {
-
-        const product =
-            products.find(item => item.id == id);
-
-
-        if (!product) {
-            return;
-        }
-
-
-        let likedProducts =
-            JSON.parse(
-                localStorage.getItem("likedProducts")
-            ) || [];
-
-
-        const exists =
-            likedProducts.some(
-                item => item.id == id
-            );
-
-
-        if (exists) {
-
-            alert("Product already liked!");
-
-        } else {
-
-            likedProducts.push(product);
-
-
-            localStorage.setItem(
-                "likedProducts",
-                JSON.stringify(likedProducts)
-            );
-
-
-            alert("Product liked!");
-        }
-    }
-
-
-    /* LOAD PRODUCTS */
-
-    displayProducts(products);
-
+let allProducts=JSON.parse(localStorage.getItem("sellerProducts"))||[];
+
+let products=allProducts.filter(product=>
+String(product.approvalStatus||"").toUpperCase()==="APPROVED"
+);
+
+let selectedCategory="All";
+
+function getSellingPrice(product){
+return Number(product.sellingPrice??product.price??0);
+}
+
+function getDiscount(product){
+let discount=Number(product.discount??0);
+return isNaN(discount)?0:Math.max(discount,0);
+}
+
+function getFinalPrice(product){
+if(product.finalPrice!==undefined&&product.finalPrice!==null&&product.finalPrice!==""){
+return Number(product.finalPrice);
+}
+let sellingPrice=getSellingPrice(product);
+let discount=getDiscount(product);
+return Math.max(sellingPrice-(sellingPrice*discount/100),0);
+}
+
+function getStock(product){
+let stock=product.stock??product.quantity??0;
+stock=Number(stock);
+return isNaN(stock)?0:Math.max(stock,0);
+}
+
+function isLiked(productId){
+let likedProducts=JSON.parse(localStorage.getItem("likedProducts"))||[];
+return likedProducts.some(id=>String(id)===String(productId));
+}
+
+function toggleLike(productId,event){
+event.stopPropagation();
+let likedProducts=JSON.parse(localStorage.getItem("likedProducts"))||[];
+if(likedProducts.some(id=>String(id)===String(productId))){
+likedProducts=likedProducts.filter(id=>String(id)!==String(productId));
+}else{
+likedProducts.push(productId);
+}
+localStorage.setItem("likedProducts",JSON.stringify(likedProducts));
+displayProducts();
+}
+
+function openProduct(id){
+const product=products.find(item=>String(item.id)===String(id));
+if(!product){
+alert("Product not found.");
+return;
+}
+localStorage.setItem("selectedProduct",JSON.stringify(product));
+window.location.href="product-details.html";
+}
+
+function displayProducts(){
+const grid=document.getElementById("productGrid");
+grid.innerHTML="";
+
+const searchText=document.getElementById("searchInput").value.toLowerCase().trim();
+
+const filteredProducts=products.filter(product=>{
+const matchesCategory=selectedCategory==="All"||
+String(product.category||"").toLowerCase()===selectedCategory.toLowerCase();
+
+const matchesSearch=String(product.name||"").toLowerCase().includes(searchText)||
+String(product.category||"").toLowerCase().includes(searchText);
+
+return matchesCategory&&matchesSearch;
+});
+
+if(filteredProducts.length===0){
+grid.innerHTML=`
+<div class="empty">
+<h2>No Approved Products</h2>
+<p>Products approved by the admin will appear here.</p>
+</div>`;
+return;
+}
+
+filteredProducts.forEach(product=>{
+const sellingPrice=getSellingPrice(product);
+const discount=getDiscount(product);
+const finalPrice=getFinalPrice(product);
+const stock=getStock(product);
+const liked=isLiked(product.id);
+const outOfStock=stock<=0;
+
+grid.innerHTML+=`
+<div class="product-card" onclick="openProduct('${product.id}')">
+<div class="product-image-box">
+<img src="${product.image||""}" class="product-image" alt="${product.name||"Product"}" onerror="this.src='https://via.placeholder.com/500x500?text=Product'">
+<button class="like-btn ${liked?"liked":""}" onclick="toggleLike('${product.id}',event)">${liked?"♥":"♡"}</button>
+</div>
+
+<div class="product-info">
+<div class="product-name">${product.name||"Product"}</div>
+<div class="category">${product.category||"General"}</div>
+
+<div class="price-row">
+${discount>0?`<span class="old-price">₹${sellingPrice.toFixed(2)}</span>`:""}
+<span class="final-price">₹${finalPrice.toFixed(2)}</span>
+</div>
+
+${discount>0?`<div class="discount">Admin Discount: ${discount}%</div>`:""}
+
+<div class="stock ${outOfStock?"out-stock":"in-stock"}">
+${outOfStock?"Out of Stock":`In Stock: ${stock}`}
+</div>
+
+<button class="view-btn" onclick="openProduct('${product.id}')" ${outOfStock?"disabled":""}>
+${outOfStock?"Out of Stock":"View Product"}
+</button>
+</div>
+</div>`;
+});
+}
+
+function filterCategory(category,button){
+selectedCategory=category;
+document.querySelectorAll(".category-btn").forEach(btn=>btn.classList.remove("active"));
+button.classList.add("active");
+displayProducts();
+}
+
+function updateCartCount(){
+const cart=JSON.parse(localStorage.getItem("cart"))||[];
+const count=cart.reduce((total,item)=>total+Number(item.quantity||1),0);
+document.getElementById("cartCount").textContent=count;
+}
+
+document.getElementById("searchInput").addEventListener("input",displayProducts);
+
+updateCartCount();
+displayProducts();
 </script>
 
 </body>
-
 </html>
