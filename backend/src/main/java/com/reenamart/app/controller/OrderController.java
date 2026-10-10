@@ -2,6 +2,7 @@ package com.reenamart.app.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,28 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reenamart.app.model.Order;
-import com.reenamart.app.repository.OrderRepository;
+import com.reenamart.app.service.OrderService;
 
 @RestController
 @RequestMapping("/api/orders")
 @CrossOrigin(origins = "*")
 public class OrderController {
 
-    private final OrderRepository orderRepository;
+    private final OrderService service;
 
-    public OrderController(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    public OrderController(OrderService service) {
+        this.service = service;
     }
 
     @GetMapping
     public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+        return service.getAllOrders();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-
-        Order order = orderRepository.findById(id).orElse(null);
+    public ResponseEntity<?> getOrder(@PathVariable Long id) {
+        Order order = service.getOrderById(id);
 
         if (order == null) {
             return ResponseEntity.notFound().build();
@@ -45,51 +45,39 @@ public class OrderController {
     }
 
     @PostMapping
-    public Order createOrder(@RequestBody Order order) {
+    public ResponseEntity<?> createOrder(@RequestBody Order order) {
+        try {
+            Order saved = service.createOrder(order);
 
-        if (order.getStatus() == null || order.getStatus().isEmpty()) {
-            order.setStatus("PLACED");
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(saved);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        return orderRepository.save(order);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(
+    public ResponseEntity<?> updateOrder(
             @PathVariable Long id,
             @RequestBody Order order) {
+        try {
+            Order updated = service.updateOrder(id, order);
 
-        Order existingOrder =
-                orderRepository.findById(id).orElse(null);
+            if (updated == null) {
+                return ResponseEntity.notFound().build();
+            }
 
-        if (existingOrder == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(updated);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        existingOrder.setCustomerName(order.getCustomerName());
-        existingOrder.setMobile(order.getMobile());
-        existingOrder.setAddress(order.getAddress());
-        existingOrder.setCity(order.getCity());
-        existingOrder.setPin(order.getPin());
-        existingOrder.setPaymentMethod(order.getPaymentMethod());
-        existingOrder.setStatus(order.getStatus());
-        existingOrder.setProductTotal(order.getProductTotal());
-        existingOrder.setDeliveryCharge(order.getDeliveryCharge());
-        existingOrder.setTotal(order.getTotal());
-
-        return ResponseEntity.ok(
-                orderRepository.save(existingOrder)
-        );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
-
-        if (!orderRepository.existsById(id)) {
+    public ResponseEntity<?> deleteOrder(@PathVariable Long id) {
+        if (!service.deleteOrder(id)) {
             return ResponseEntity.notFound().build();
         }
-
-        orderRepository.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }
@@ -97,7 +85,6 @@ public class OrderController {
     @GetMapping("/status/{status}")
     public List<Order> getOrdersByStatus(
             @PathVariable String status) {
-
-        return orderRepository.findByStatusIgnoreCase(status);
+        return service.getOrdersByStatus(status);
     }
 }

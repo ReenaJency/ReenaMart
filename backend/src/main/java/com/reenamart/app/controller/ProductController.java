@@ -2,6 +2,7 @@ package com.reenamart.app.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,75 +23,115 @@ import com.reenamart.app.service.ProductService;
 @CrossOrigin(origins = "*")
 public class ProductController {
 
-    private final ProductService productService;
+    private final ProductService service;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public ProductController(ProductService service) {
+        this.service = service;
     }
 
     @GetMapping
     public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+        return service.getAllProducts();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(
-            @PathVariable Long id) {
-
-        Product product = productService.getProductById(id);
-
-        if (product == null) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> getProduct(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(service.getProductById(id));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
         }
-
-        return ResponseEntity.ok(product);
     }
 
     @PostMapping
-    public Product addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
+    public ResponseEntity<?> addProduct(@RequestBody Product product) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(service.addProduct(product));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(
+    public ResponseEntity<?> updateProduct(
             @PathVariable Long id,
             @RequestBody Product product) {
-
-        Product updatedProduct =
-                productService.updateProduct(id, product);
-
-        if (updatedProduct == null) {
-            return ResponseEntity.notFound().build();
+        try {
+            return ResponseEntity.ok(
+                    service.updateProduct(id, product)
+            );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        return ResponseEntity.ok(updatedProduct);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(
-            @PathVariable Long id) {
-
-        boolean deleted =
-                productService.deleteProduct(id);
-
-        if (!deleted) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+        try {
+            service.deleteProduct(id);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
         }
-
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")
     public List<Product> searchProducts(
-            @RequestParam String keyword) {
-
-        return productService.searchProducts(keyword);
+            @RequestParam(defaultValue = "") String keyword) {
+        return service.searchProducts(keyword);
     }
 
     @GetMapping("/category/{category}")
-    public List<Product> getProductsByCategory(
+    public List<Product> getByCategory(
             @PathVariable String category) {
+        return service.getProductsByCategory(category);
+    }
 
-        return productService.getProductsByCategory(category);
+    @GetMapping("/seller/{sellerEmail}")
+    public List<Product> getBySeller(
+            @PathVariable String sellerEmail) {
+        return service.getProductsBySeller(sellerEmail);
+    }
+
+    @GetMapping("/status/{status}")
+    public List<Product> getByStatus(@PathVariable String status) {
+        return service.getProductsByApprovalStatus(status);
+    }
+
+    @PutMapping("/{id}/price")
+    public ResponseEntity<?> updatePrice(
+            @PathVariable Long id,
+            @RequestParam double sellingPrice,
+            @RequestParam double discount) {
+        try {
+            return ResponseEntity.ok(
+                    service.updateAdminPrice(
+                            id, sellingPrice, discount
+                    )
+            );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/approve")
+    public ResponseEntity<?> approve(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(service.approveProduct(id));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<?> reject(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(service.rejectProduct(id));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

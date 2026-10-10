@@ -2,6 +2,8 @@ package com.reenamart.app.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,73 +19,152 @@ import com.reenamart.app.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class UserController {
 
-    private final UserService userService;
+    private final UserService service;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserService service) {
+        this.service = service;
     }
 
-    // Test API
     @GetMapping
-    public String test() {
-        return "User API is working!";
-    }
-
-    // Get all users
-    @GetMapping("/all")
     public List<User> getAllUsers() {
-        return userService.getAllUsers();
+        return service.getAllUsers();
     }
 
-    // Get user by ID
+    @GetMapping("/all")
+    public List<User> getAllUsersOld() {
+        return service.getAllUsers();
+    }
+
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
-    }
+    public ResponseEntity<?> getUser(@PathVariable Long id) {
+        User user = service.getUserById(id);
 
-    // Register new user
-    @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
-    }
-
-    // Login using email, password and role
-    @PostMapping("/login")
-    public User login(@RequestBody User user) {
-
-        User loggedInUser = userService.login(
-                user.getEmail(),
-                user.getPassword(),
-                user.getRole()
-        );
-
-        if (loggedInUser == null) {
-            throw new RuntimeException(
-                    "Invalid email, password or role"
-            );
+        if (user == null) {
+            return ResponseEntity.notFound().build();
         }
 
-        return loggedInUser;
+        return ResponseEntity.ok(user);
     }
 
-    // Update user
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody User user) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(service.register(user));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/buyer/register")
+    public ResponseEntity<?> registerBuyer(@RequestBody User user) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(service.registerBuyer(user));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/seller/register")
+    public ResponseEntity<?> registerSeller(@RequestBody User user) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(service.registerSeller(user));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User user) {
+        try {
+            return ResponseEntity.ok(
+                    service.login(
+                            user.getEmail(),
+                            user.getPassword(),
+                            user.getRole()
+                    )
+            );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/buyer/login")
+    public ResponseEntity<?> loginBuyer(@RequestBody User user) {
+        try {
+            return ResponseEntity.ok(
+                    service.loginBuyer(
+                            user.getEmail(),
+                            user.getPassword()
+                    )
+            );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/seller/login")
+    public ResponseEntity<?> loginSeller(@RequestBody User user) {
+        try {
+            return ResponseEntity.ok(
+                    service.loginSeller(
+                            user.getEmail(),
+                            user.getPassword()
+                    )
+            );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<?> loginAdmin(@RequestBody User user) {
+        try {
+            return ResponseEntity.ok(
+                    service.loginAdmin(
+                            user.getEmail(),
+                            user.getPassword()
+                    )
+            );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(e.getMessage());
+        }
+    }
+
     @PutMapping("/{id}")
-    public User updateUser(
+    public ResponseEntity<?> update(
             @PathVariable Long id,
             @RequestBody User user) {
+        try {
+            User updated = service.updateUser(id, user);
 
-        return userService.updateUser(id, user);
+            if (updated == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(updated);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    // Delete user
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id) {
-
-        userService.deleteUser(id);
-
-        return "User deleted successfully!";
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        try {
+            service.deleteUser(id);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }
     }
 }

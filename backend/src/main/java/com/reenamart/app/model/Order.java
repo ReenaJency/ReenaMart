@@ -1,9 +1,17 @@
 package com.reenamart.app.model;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,25 +22,44 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    private String orderId;
+
     private String customerName;
+
+    @Column(name = "email")
+    private String email;
 
     private String mobile;
 
+    @Column(length = 1000)
     private String address;
 
     private String city;
 
-    private String pin;
+    private String state;
+
+    private String pincode;
 
     private String paymentMethod;
 
     private String status;
 
-    private double productTotal;
+    private double subtotal;
 
-    private double deliveryCharge;
+    private double discount;
 
     private double total;
+
+    private LocalDateTime orderDate;
+
+    @OneToMany(
+        mappedBy = "order",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true,
+        fetch = FetchType.EAGER
+    )
+    private List<OrderItem> products = new ArrayList<>();
 
     public Order() {
     }
@@ -41,12 +68,28 @@ public class Order {
         return id;
     }
 
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
     public String getCustomerName() {
         return customerName;
     }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getMobile() {
@@ -73,12 +116,20 @@ public class Order {
         this.city = city;
     }
 
-    public String getPin() {
-        return pin;
+    public String getState() {
+        return state;
     }
 
-    public void setPin(String pin) {
-        this.pin = pin;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getPincode() {
+        return pincode;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
     }
 
     public String getPaymentMethod() {
@@ -97,20 +148,20 @@ public class Order {
         this.status = status;
     }
 
-    public double getProductTotal() {
-        return productTotal;
+    public double getSubtotal() {
+        return subtotal;
     }
 
-    public void setProductTotal(double productTotal) {
-        this.productTotal = productTotal;
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
     }
 
-    public double getDeliveryCharge() {
-        return deliveryCharge;
+    public double getDiscount() {
+        return discount;
     }
 
-    public void setDeliveryCharge(double deliveryCharge) {
-        this.deliveryCharge = deliveryCharge;
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     public double getTotal() {
@@ -119,5 +170,21 @@ public class Order {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public List<OrderItem> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<OrderItem> products) {
+        this.products = products;
     }
 }

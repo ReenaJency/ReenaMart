@@ -1,288 +1,96 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Reena Mart - Register</title>
+    <title>Buyer Registration | ReenaMart</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            background-color: #f5f7fa;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .register-box {
-            width: 100%;
-            max-width: 400px;
-
-            background-color: white;
-            padding: 35px 30px;
-
-            border-radius: 12px;
-
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
-        }
-
-        h1 {
-            text-align: center;
-            margin: 0 0 10px;
-            color: #2874f0;
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-
-            border: 1px solid #ccc;
-            border-radius: 6px;
-
-            font-size: 16px;
-        }
-
-        .register-btn {
-            width: 100%;
-
-            padding: 12px;
-
-            border: none;
-            border-radius: 6px;
-
-            background-color: #2874f0;
-            color: white;
-
-            font-size: 16px;
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-        .register-btn:hover {
-            background-color: #1557c0;
-        }
-
-        .login-link {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .login-link a {
-            color: #2874f0;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
 
-    <div class="register-box">
+    <header class="topbar">
+        <a href="index.html" class="logo">ReenaMart</a>
+    </header>
 
-        <h1>🛍️ Reena Mart</h1>
+    <main class="container">
 
-        <h2>Create Account</h2>
+        <section class="form-box">
 
-        <form id="registerForm">
+            <h1>Create Buyer Account</h1>
 
-            <div class="form-group">
+            <p class="muted">
+                Register to start shopping with ReenaMart.
+            </p>
 
-                <label for="username">
-                    Username
-                </label>
+            <form id="registerForm">
+
+                <label for="username">Full Name</label>
 
                 <input
                     type="text"
                     id="username"
-                    placeholder="Enter your username"
-                    required>
+                    name="username"
+                    autocomplete="name"
+                    placeholder="Enter your full name"
+                    required
+                >
 
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="email">
-                    Email
-                </label>
+                <label for="email">Email Address</label>
 
                 <input
                     type="email"
                     id="email"
+                    name="email"
+                    autocomplete="email"
                     placeholder="Enter your email"
-                    required>
+                    required
+                >
 
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="password">
-                    Password
-                </label>
+                <label for="password">Password</label>
 
                 <input
                     type="password"
                     id="password"
-                    placeholder="Enter your password"
-                    required>
+                    name="password"
+                    minlength="6"
+                    autocomplete="new-password"
+                    placeholder="Create a password"
+                    required
+                >
 
-            </div>
+                <button type="submit" class="btn full">
+                    Register
+                </button>
 
+            </form>
 
-            <button
-                type="submit"
-                class="register-btn">
+            <div
+                id="message"
+                role="status"
+                aria-live="polite"
+            ></div>
 
-                Register
+            <p class="center">
+                Already have an account?
+                <a href="login.html">Login</a>
+            </p>
 
-            </button>
+            <p class="center">
+                <a href="index.html">Back to Home</a>
+            </p>
 
-        </form>
+        </section>
 
+    </main>
 
-        <div class="login-link">
-
-            Already have an account?
-
-            <a href="login.html">
-                Login
-            </a>
-
-        </div>
-
-    </div>
-
+    <script src="../js/script.js"></script>
 
     <script>
-
-        const registerForm =
-            document.getElementById("registerForm");
-
-
-        registerForm.addEventListener(
-            "submit",
-            async function(event) {
-
-                event.preventDefault();
-
-
-                const username =
-                    document.getElementById("username")
-                    .value
-                    .trim();
-
-
-                const email =
-                    document.getElementById("email")
-                    .value
-                    .trim();
-
-
-                const password =
-                    document.getElementById("password")
-                    .value;
-
-
-                try {
-
-                    const response = await fetch(
-                        "http://localhost:8080/api/users/register",
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body: JSON.stringify({
-
-                                username: username,
-
-                                email: email,
-
-                                password: password,
-
-                                role: "BUYER"
-
-                            })
-                        }
-                    );
-
-
-                    if (!response.ok) {
-
-                        const errorMessage =
-                            await response.text();
-
-                        alert(
-                            errorMessage ||
-                            "Registration failed."
-                        );
-
-                        return;
-                    }
-
-
-                    const user =
-                        await response.json();
-
-
-                    alert(
-                        "Registration successful! You can now login."
-                    );
-
-
-                    window.location.href =
-                        "login.html";
-
-                }
-
-                catch (error) {
-
-                    console.error(
-                        "Registration error:",
-                        error
-                    );
-
-                    alert(
-                        "Unable to connect to server. Please make sure the backend is running."
-                    );
-
-                }
-
-            }
-        );
-
+        initRegister();
     </script>
 
 </body>
-
 </html>

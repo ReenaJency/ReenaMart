@@ -1,6 +1,7 @@
 package com.reenamart.app.service;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 
@@ -10,98 +11,201 @@ import com.reenamart.app.repository.UserRepository;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService(UserRepository repository) {
+        this.repository = repository;
     }
 
-    // Get all users
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return repository.findAll();
     }
 
-    // Get user by ID
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
-    // Register new user
+    public User registerBuyer(User user) {
+        return register(user, "BUYER");
+    }
+
+    public User registerSeller(User user) {
+        return register(user, "SELLER");
+    }
+
     public User register(User user) {
+        String role = user == null || user.getRole() == null
+                || user.getRole().isBlank()
+                ? "BUYER"
+                : user.getRole().trim().toUpperCase(Locale.ROOT);
 
-        // Default role = BUYER
-        if (user.getRole() == null || user.getRole().isBlank()) {
-            user.setRole("BUYER");
+        if (!role.equals("BUYER") && !role.equals("SELLER")) {
+            throw new IllegalArgumentException(
+                    "Only Buyer or Seller registration is allowed."
+            );
         }
 
-        // Convert role to uppercase
-        user.setRole(user.getRole().toUpperCase());
-
-        return userRepository.save(user);
+        return register(user, role);
     }
 
-    // Login using email, password and role
+    private User register(User user, String role) {
+        validate(user);
+
+        String email = normalizeEmail(user.getEmail());
+
+        if (repository.existsByEmailIgnoreCase(email)) {
+            throw new IllegalArgumentException(
+                    "Email already registered."
+            );
+        }
+
+        user.setUsername(user.getUsername().trim());
+        user.setEmail(email);
+        user.setRole(role);
+
+        return repository.save(user);
+    }
+
+    public User loginBuyer(String email, String password) {
+        return loginWithRole(email, password, "BUYER");
+    }
+
+    public User loginSeller(String email, String password) {
+        return loginWithRole(email, password, "SELLER");
+    }
+
+    public User loginAdmin(String email, String password) {
+        return loginWithRole(email, password, "ADMIN");
+    }
+
     public User login(String email, String password, String role) {
+        String selectedRole = role == null
+                ? "BUYER"
+                : role.trim().toUpperCase(Locale.ROOT);
 
-        User user = userRepository.findByEmail(email);
+        return switch (selectedRole) {
+            case "BUYER" -> loginBuyer(email, password);
+            case "SELLER" -> loginSeller(email, password);
+            case "ADMIN" -> loginAdmin(email, password);
+            default -> throw new IllegalArgumentException(
+                    "Invalid user role."
+            );
+        };
+    }
 
-        if (user == null) {
-            return null;
+    private User loginWithRole(
+            String email,
+            String password,
+            String expectedRole) {
+
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Email is required.");
         }
 
-        if (!user.getPassword().equals(password)) {
-            return null;
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("Password is required.");
         }
 
-        if (user.getRole() == null) {
-            return null;
+        User user = repository.findFirstByEmailIgnoreCase(
+                normalizeEmail(email)
+        ).orElse(null);
+
+        if (user == null || !password.equals(user.getPassword())) {
+            throw new IllegalArgumentException(
+                    "Invalid email or password."
+            );
         }
 
-        if (!user.getRole().equalsIgnoreCase(role)) {
-            return null;
+        if (user.getRole() == null
+                || !expectedRole.equalsIgnoreCase(user.getRole())) {
+            throw new IllegalArgumentException(
+                    "This account is not registered as "
+                            + expectedRole + "."
+            );
         }
 
         return user;
     }
 
-    // Update user
-    public User updateUser(Long id, User user) {
+    public User updateUser(Long id, User updated) {
+        User user = repository.findById(id).orElse(null);
 
-        User existingUser =
-                userRepository.findById(id).orElse(null);
-
-        if (existingUser == null) {
+        if (user == null) {
             return null;
         }
 
-        existingUser.setUsername(user.getUsername());
-
-        if (user.getEmail() != null &&
-                !user.getEmail().isBlank()) {
-
-            existingUser.setEmail(user.getEmail());
+        if (updated.getUsername() != null
+                && !updated.getUsername().isBlank()) {
+            user.setUsername(updated.getUsername().trim());
         }
 
-        if (user.getPassword() != null &&
-                !user.getPassword().isBlank()) {
+        if (updated.getEmail() != null
+                && !updated.getEmail().isBlank()) {
 
-            existingUser.setPassword(user.getPassword());
+            String email = normalizeEmail(updated.getEmail());
+
+            User existing = repository.findFirstByEmailIgnoreCase(email)
+                    .orElse(null);
+
+            if (existing != null && !existing.getId().equals(id)) {
+                throw new IllegalArgumentException(
+                        "Email already registered."
+                );
+            }
+
+            user.setEmail(email);
         }
 
-        // Update role if provided
-        if (user.getRole() != null &&
-                !user.getRole().isBlank()) {
+        if (updated.getPassword() != null
+                && !updated.getPassword().isBlank()) {
 
-            existingUser.setRole(
-                    user.getRole().toUpperCase()
+            if (updated.getPassword().length() < 6) {
+                throw new IllegalArgumentException(
+                        "Password must contain at least 6 characters."
+                );
+            }
+
+            user.setPassword(updated.getPassword());
+        }
+
+        return repository.save(user);
+    }
+
+    public void deleteUser(Long id) {
+        if (!repository.existsById(id)) {
+            throw new IllegalArgumentException("User not found.");
+        }
+
+        repository.deleteById(id);
+    }
+
+    private void validate(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User data is required.");
+        }
+
+        if (user.getUsername() == null
+                || user.getUsername().isBlank()) {
+            throw new IllegalArgumentException("Username is required.");
+        }
+
+        if (user.getEmail() == null
+                || !user.getEmail().matches(
+                        "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            throw new IllegalArgumentException(
+                    "Please enter a valid email."
             );
         }
 
-        return userRepository.save(existingUser);
+        if (user.getPassword() == null
+                || user.getPassword().length() < 6) {
+            throw new IllegalArgumentException(
+                    "Password must contain at least 6 characters."
+            );
+        }
     }
 
-    // Delete user
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+    private String normalizeEmail(String email) {
+        return email.trim().toLowerCase(Locale.ROOT);
     }
 }

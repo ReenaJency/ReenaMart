@@ -1,606 +1,90 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ReenaMart - Buyer Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*{box-sizing:border-box}
+    <title>Buyer Login | ReenaMart</title>
 
-body{
-margin:0;
-min-height:100vh;
-font-family:Arial,sans-serif;
-background:#f5f7fa;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px
-}
-
-.login-box{
-width:100%;
-max-width:400px;
-background:white;
-padding:35px 30px;
-border-radius:12px;
-box-shadow:0 4px 15px rgba(0,0,0,.1)
-}
-
-h1{
-text-align:center;
-color:#1f4d3a;
-margin-bottom:10px
-}
-
-h2{
-text-align:center;
-margin-bottom:25px;
-color:#222
-}
-
-.form-group{
-margin-bottom:18px
-}
-
-label{
-display:block;
-margin-bottom:6px;
-font-weight:bold
-}
-
-input{
-width:100%;
-padding:12px;
-border:1px solid #ccc;
-border-radius:6px;
-font-size:16px
-}
-
-input:focus{
-outline:none;
-border-color:#1f4d3a
-}
-
-.login-btn,
-.reset-btn{
-width:100%;
-padding:12px;
-border:none;
-border-radius:6px;
-background:#1f4d3a;
-color:white;
-font-size:16px;
-font-weight:bold;
-cursor:pointer
-}
-
-.login-btn:hover,
-.reset-btn:hover{
-background:#163a2c
-}
-
-.forgot-password{
-text-align:right;
-margin-top:8px;
-margin-bottom:20px
-}
-
-.forgot-password a{
-color:#1f4d3a;
-text-decoration:none;
-font-size:13px;
-font-weight:bold
-}
-
-.register-link,
-.back-link{
-text-align:center;
-font-size:14px;
-margin-top:20px
-}
-
-.register-link a{
-color:#1f4d3a;
-text-decoration:none;
-font-weight:bold
-}
-
-.back-link{
-margin-top:15px
-}
-
-.back-link a{
-color:#666;
-text-decoration:none;
-font-size:13px
-}
-
-.back-link a:hover{
-color:#1f4d3a
-}
-
-.forgot-box{
-display:none;
-margin-top:25px;
-padding-top:20px;
-border-top:1px solid #ddd
-}
-
-.forgot-box h3{
-text-align:center;
-color:#1f4d3a;
-margin-bottom:20px
-}
-
-.otp-row{
-display:flex;
-gap:8px
-}
-
-.otp-row input{
-flex:1
-}
-
-.otp-btn{
-padding:12px;
-border:none;
-border-radius:6px;
-background:#f5a623;
-color:#222;
-font-weight:bold;
-cursor:pointer
-}
-
-.small-link{
-text-align:center;
-margin-top:12px
-}
-
-.small-link a{
-color:#1f4d3a;
-font-size:13px;
-text-decoration:none;
-font-weight:bold
-}
-</style>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
 
-<div class="login-box">
+    <header class="topbar">
+        <a href="index.html" class="logo">ReenaMart</a>
+    </header>
 
-<h1>🛍️ ReenaMart</h1>
+    <main class="container">
 
-<h2>Buyer Login</h2>
+        <section class="form-box">
 
-<form id="loginForm">
+            <h1>Buyer Login</h1>
 
-<div class="form-group">
+            <p class="muted">
+                Login to your ReenaMart account.
+            </p>
 
-<label for="email">Email</label>
+            <form id="loginForm">
 
-<input
-type="email"
-id="email"
-placeholder="Enter your email"
-required>
+                <label for="email">Email Address</label>
 
-</div>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    placeholder="Enter your email"
+                    required
+                >
 
-<div class="form-group">
+                <label for="password">Password</label>
 
-<label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                    required
+                >
 
-<input
-type="password"
-id="password"
-placeholder="Enter your password"
-required>
+                <button type="submit" class="btn full">
+                    Login
+                </button>
 
-</div>
+            </form>
 
-<div class="forgot-password">
+            <div
+                id="message"
+                role="status"
+                aria-live="polite"
+            ></div>
 
-<a href="#" onclick="showForgotPassword(event)">
-Forgot Password?
-</a>
+            <p class="center">
+                Don't have an account?
+                <a href="register.html">Create Account</a>
+            </p>
 
-</div>
+            <p class="center" style="margin-top: 15px; font-size: 13px; color: #777;">
+                Portal logins:
+                <a href="seller-login.html" style="color: var(--green, #1f4d3a); font-weight: 600;">Seller Login</a> •
+                <a href="adminlogin.html" style="color: var(--green, #1f4d3a); font-weight: 600;">Admin Login</a>
+            </p>
 
-<button
-type="submit"
-class="login-btn">
-Login
-</button>
+            <p class="center">
+                <a href="index.html">Back to Home</a>
+            </p>
 
-</form>
+        </section>
 
-<div class="register-link">
+    </main>
 
-New to ReenaMart?
+    <script src="../js/script.js"></script>
 
-<a href="register.html">
-Register
-</a>
-
-</div>
-
-<div class="back-link">
-
-<a href="index.html">
-← Back to Home
-</a>
-
-</div>
-
-
-<!-- FORGOT PASSWORD -->
-
-<div class="forgot-box" id="forgotBox">
-
-<h3>Reset Buyer Password</h3>
-
-<div class="form-group">
-
-<label for="resetEmail">
-Registered Email
-</label>
-
-<input
-type="email"
-id="resetEmail"
-placeholder="Enter registered email">
-
-</div>
-
-<div class="form-group">
-
-<label for="resetOTP">
-OTP
-</label>
-
-<div class="otp-row">
-
-<input
-type="text"
-id="resetOTP"
-placeholder="Enter OTP">
-
-<button
-type="button"
-class="otp-btn"
-onclick="sendResetOTP()">
-Send OTP
-</button>
-
-</div>
-
-</div>
-
-<div class="form-group">
-
-<label for="newPassword">
-New Password
-</label>
-
-<input
-type="password"
-id="newPassword"
-placeholder="Enter new password">
-
-</div>
-
-<div class="form-group">
-
-<label for="confirmPassword">
-Confirm Password
-</label>
-
-<input
-type="password"
-id="confirmPassword"
-placeholder="Confirm password">
-
-</div>
-
-<button
-type="button"
-class="reset-btn"
-onclick="resetPassword()">
-Reset Password
-</button>
-
-<div class="small-link">
-
-<a href="#" onclick="hideForgotPassword(event)">
-← Back to Login
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-
-<script>
-
-let resetOTP="";
-
-
-/* -------------------------------
-   BUYER LOGIN
--------------------------------- */
-
-document
-.getElementById("loginForm")
-.addEventListener("submit",async function(e){
-
-e.preventDefault();
-
-const email=
-document.getElementById("email")
-.value.trim();
-
-const password=
-document.getElementById("password")
-.value.trim();
-
-if(!email || !password){
-
-alert("Please enter email and password.");
-
-return;
-
-}
-
-try{
-
-const response=
-await fetch(
-"http://localhost:8080/api/users/login",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-email:email,
-password:password
-})
-}
-);
-
-const data=await response.json();
-
-if(!response.ok){
-
-alert(
-data.message ||
-data.error ||
-"Invalid email or password."
-);
-
-return;
-
-}
-
-
-/* Save logged-in buyer */
-
-localStorage.setItem(
-"loggedInUser",
-JSON.stringify(data)
-);
-
-localStorage.setItem(
-"userRole",
-"BUYER"
-);
-
-
-/* Go to products */
-
-window.location.href="products.html";
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"Unable to connect to server. Please start the Spring Boot backend."
-);
-
-}
-
-});
-
-
-/* -------------------------------
-   FORGOT PASSWORD
--------------------------------- */
-
-function showForgotPassword(e){
-
-if(e){
-e.preventDefault();
-}
-
-document.getElementById(
-"forgotBox"
-).style.display="block";
-
-}
-
-
-function hideForgotPassword(e){
-
-if(e){
-e.preventDefault();
-}
-
-document.getElementById(
-"forgotBox"
-).style.display="none";
-
-resetOTP="";
-
-}
-
-
-/* -------------------------------
-   SEND RESET OTP
--------------------------------- */
-
-function sendResetOTP(){
-
-const email=
-document.getElementById("resetEmail")
-.value.trim();
-
-if(!email){
-
-alert("Enter your registered email.");
-
-return;
-
-}
-
-const users=
-JSON.parse(
-localStorage.getItem("users")
-) || [];
-
-const user=
-users.find(
-u=>String(u.email).toLowerCase()===
-email.toLowerCase()
-);
-
-if(!user){
-
-alert("No buyer account found with this email.");
-
-return;
-
-}
-
-resetOTP=
-Math.floor(
-100000+
-Math.random()*900000
-).toString();
-
-alert(
-"Demo OTP: "+resetOTP
-);
-
-}
-
-
-/* -------------------------------
-   RESET PASSWORD
--------------------------------- */
-
-function resetPassword(){
-
-const email=
-document.getElementById("resetEmail")
-.value.trim();
-
-const otp=
-document.getElementById("resetOTP")
-.value.trim();
-
-const newPassword=
-document.getElementById("newPassword")
-.value.trim();
-
-const confirmPassword=
-document.getElementById("confirmPassword")
-.value.trim();
-
-
-if(!email || !otp || !newPassword || !confirmPassword){
-
-alert("Please fill all fields.");
-
-return;
-
-}
-
-if(!resetOTP || otp!==resetOTP){
-
-alert("Invalid OTP.");
-
-return;
-
-}
-
-if(newPassword.length<6){
-
-alert(
-"Password must contain at least 6 characters."
-);
-
-return;
-
-}
-
-if(newPassword!==confirmPassword){
-
-alert("Passwords do not match.");
-
-return;
-
-}
-
-
-let users=
-JSON.parse(
-localStorage.getItem("users")
-) || [];
-
-const index=
-users.findIndex(
-u=>String(u.email).toLowerCase()===
-email.toLowerCase()
-);
-
-if(index===-1){
-
-alert("Buyer account not found.");
-
-return;
-
-}
-
-users[index].password=newPassword;
-
-localStorage.setItem(
-"users",
-JSON.stringify(users)
-);
-
-alert(
-"Password reset successfully. Please login."
-);
-
-document.getElementById(
-"forgotBox"
-).style.display="none";
-
-document.getElementById(
-"loginForm"
-).reset();
-
-resetOTP="";
-
-}
-
-</script>
+    <script>
+        initLogin();
+    </script>
 
 </body>
 </html>

@@ -1,889 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Reena Mart - Checkout</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f3f3f3;
-            color: #333;
-        }
-
-        header {
-            background-color: #1f4d3a;
-            color: white;
-            text-align: center;
-            padding: 25px;
-        }
-
-        header h1 {
-            margin: 0 0 8px;
-        }
-
-        header p {
-            margin: 0;
-        }
-
-        nav {
-            background-color: ghostwhite;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 1px 4px #ddd;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            margin: 0 15px;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            color: #1f4d3a;
-        }
-
-        .checkout-container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 40px auto;
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 25px;
-        }
-
-        .box {
-            background-color: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px #ccc;
-        }
-
-        .box h2 {
-            color: #1f4d3a;
-            margin-top: 0;
-            margin-bottom: 25px;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 7px;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 15px;
-        }
-
-        .form-group textarea {
-            height: 100px;
-            resize: vertical;
-        }
-
-        .product-item {
-            display: flex;
-            gap: 15px;
-            padding: 15px 0;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .product-item img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 7px;
-            border: 1px solid #ddd;
-        }
-
-        .product-info {
-            flex: 1;
-        }
-
-        .product-info h3 {
-            margin: 0 0 6px;
-            font-size: 16px;
-        }
-
-        .product-info p {
-            margin: 4px 0;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .product-price {
-            color: #1f4d3a !important;
-            font-weight: bold;
-        }
-
-        .summary {
-            margin-top: 20px;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 16px;
-        }
-
-        .discount-row {
-            color: #d35400;
-        }
-
-        .final-total {
-            border-top: 1px solid #ccc;
-            padding-top: 15px;
-            margin-top: 15px;
-            font-size: 22px;
-            font-weight: bold;
-            color: #1f4d3a;
-        }
-
-        .payment-method {
-            margin-top: 25px;
-        }
-
-        .payment-method h3 {
-            color: #1f4d3a;
-            margin-bottom: 15px;
-        }
-
-        .payment-option {
-            margin-bottom: 12px;
-        }
-
-        .payment-option label {
-            cursor: pointer;
-        }
-
-        .place-order-btn {
-            width: 100%;
-            border: none;
-            background-color: #f5a623;
-            color: white;
-            padding: 14px;
-            border-radius: 5px;
-            margin-top: 20px;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .place-order-btn:hover {
-            background-color: #d98c0b;
-        }
-
-        .empty-message {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .empty-message h3 {
-            color: #555;
-        }
-
-        .shop-btn {
-            display: inline-block;
-            background-color: #1f4d3a;
-            color: white;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            margin-top: 15px;
-        }
-
-        footer {
-            background-color: #222;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-        }
-
-        footer p {
-            margin: 5px;
-        }
-
-        @media (max-width: 750px) {
-            .checkout-container {
-                grid-template-columns: 1fr;
-                width: 95%;
-            }
-
-            nav a {
-                display: inline-block;
-                margin: 7px 8px;
-            }
-        }
-    </style>
+    <title>Checkout | ReenaMart</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
 
-<header>
-    <h1>🛍️ RM | Reena Mart</h1>
-    <p>Checkout</p>
-</header>
+    <header class="topbar">
+        <a href="index.html" class="logo">ReenaMart</a>
+        <nav id="nav" class="nav"></nav>
+    </header>
 
-<nav>
-    <a href="index.html">Home</a>
-    <a href="products.html">Products</a>
-    <a href="cart.html">🛒 Cart</a>
-</nav>
+    <main class="container">
 
-<div class="checkout-container">
+        <section class="page-heading">
+            <h1>Checkout</h1>
+            <p>Enter your delivery details to place your order.</p>
+        </section>
 
-    <!-- CUSTOMER DETAILS -->
+        <div class="grid-2">
 
-    <div class="box">
+            <section class="form-box">
 
-        <h2>📦 Delivery Details</h2>
+                <h2>Delivery Information</h2>
 
-        <form id="checkoutForm">
+                <form id="checkoutForm">
 
-            <div class="form-group">
-                <label for="customerName">Full Name</label>
-                <input
-                    type="text"
-                    id="customerName"
-                    placeholder="Enter your full name"
-                    required
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="mobile">Mobile Number</label>
-                <input
-                    type="tel"
-                    id="mobile"
-                    placeholder="Enter 10-digit mobile number"
-                    pattern="[0-9]{10}"
-                    maxlength="10"
-                    required
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="address">Full Address</label>
-                <textarea
-                    id="address"
-                    placeholder="House No, Street, Area"
-                    required
-                ></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="city">City</label>
-                <input
-                    type="text"
-                    id="city"
-                    placeholder="Enter city"
-                    required
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="state">State</label>
-                <input
-                    type="text"
-                    id="state"
-                    placeholder="Enter state"
-                    required
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="pincode">Pincode</label>
-                <input
-                    type="text"
-                    id="pincode"
-                    placeholder="Enter 6-digit pincode"
-                    pattern="[0-9]{6}"
-                    maxlength="6"
-                    required
-                >
-            </div>
-
-            <div class="payment-method">
-
-                <h3>💳 Payment Method</h3>
-
-                <div class="payment-option">
+                    <label for="customerName">Customer Name</label>
                     <input
-                        type="radio"
-                        id="cod"
-                        name="payment"
-                        value="Cash on Delivery"
+                        type="text"
+                        id="customerName"
+                        name="customerName"
+                        placeholder="Enter your full name"
                         required
                     >
-                    <label for="cod">Cash on Delivery</label>
-                </div>
 
-                <div class="payment-option">
+                    <label for="email">Email Address</label>
                     <input
-                        type="radio"
-                        id="upi"
-                        name="payment"
-                        value="UPI"
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
                     >
-                    <label for="upi">UPI</label>
-                </div>
 
-                <div class="payment-option">
+                    <label for="mobile">Mobile Number</label>
                     <input
-                        type="radio"
-                        id="card"
-                        name="payment"
-                        value="Card"
+                        type="tel"
+                        id="mobile"
+                        name="mobile"
+                        placeholder="10-digit mobile number"
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                        required
                     >
-                    <label for="card">Credit / Debit Card</label>
+
+                    <label for="address">Delivery Address</label>
+                    <textarea
+                        id="address"
+                        name="address"
+                        rows="4"
+                        placeholder="Door number, street and area"
+                        required
+                    ></textarea>
+
+                    <label for="city">City</label>
+                    <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        placeholder="Enter your city"
+                        required
+                    >
+
+                    <label for="state">State</label>
+                    <input
+                        type="text"
+                        id="state"
+                        name="state"
+                        value="Tamil Nadu"
+                        required
+                    >
+
+                    <label for="pincode">Pincode</label>
+                    <input
+                        type="text"
+                        id="pincode"
+                        name="pincode"
+                        inputmode="numeric"
+                        placeholder="6-digit pincode"
+                        pattern="[0-9]{6}"
+                        maxlength="6"
+                        required
+                    >
+
+                    <label for="paymentMethod">Payment Method</label>
+
+                    <select id="paymentMethod" name="paymentMethod" required>
+                        <option value="COD">Cash on Delivery</option>
+                        <option value="UPI">UPI</option>
+                        <option value="CARD">Card</option>
+                    </select>
+
+                    <p class="muted">
+                        UPI and Card payments require payment gateway
+                        integration to process real payments.
+                    </p>
+
+                    <button type="submit" class="btn full">
+                        Place Order
+                    </button>
+
+                </form>
+
+            </section>
+
+            <aside>
+
+                <div class="box">
+
+                    <h2>Order Summary</h2>
+
+                    <div id="checkoutItems">
+                        <p>Loading selected products...</p>
+                    </div>
+
+                    <hr>
+
+                    <p>
+                        Subtotal:
+                        <strong id="checkoutSubtotal">₹0</strong>
+                    </p>
+
+                    <p>
+                        Delivery:
+                        <strong>Free</strong>
+                    </p>
+
+                    <h2>
+                        Total:
+                        <span id="checkoutTotal">₹0</span>
+                    </h2>
+
+                    <a
+                        href="cart.html"
+                        class="btn gray full"
+                        id="editCartLink"
+                    >
+                        Edit Cart
+                    </a>
+
+                    <a href="products.html" class="btn gray full">
+                        Continue Shopping
+                    </a>
+
                 </div>
 
-            </div>
-
-            <button
-                type="submit"
-                class="place-order-btn"
-            >
-                ✅ Place Order
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <!-- ORDER SUMMARY -->
-
-    <div class="box">
-
-        <h2>🛒 Order Summary</h2>
-
-        <div id="orderProducts"></div>
-
-        <div class="summary">
-
-            <div class="summary-row">
-                <span>Subtotal:</span>
-                <strong id="subtotal">₹0</strong>
-            </div>
-
-            <div class="summary-row discount-row">
-                <span>Discount:</span>
-                <strong id="discount">-₹0</strong>
-            </div>
-
-            <div class="summary-row final-total">
-                <span>Final Total:</span>
-                <strong id="finalTotal">₹0</strong>
-            </div>
+            </aside>
 
         </div>
 
-    </div>
+    </main>
 
-</div>
+    <script src="../js/script.js"></script>
+    <script src="../js/ai-bot.js"></script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
 
-<footer>
-    <p>© 2026 Reena Mart</p>
-    <p>Shop Smart. Live Better.</p>
-</footer>
+            if (typeof initCheckout === "function") {
+                initCheckout();
+            }
 
+            const params = new URLSearchParams(window.location.search);
 
-<script>
+            if (params.get("mode") === "buyNow") {
+                const editCart = document.getElementById("editCartLink");
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                if (editCart) {
+                    editCart.style.display = "none";
+                }
+            }
 
-
-/* SELLING PRICE */
-
-function getSellingPrice(item) {
-
-    const price = Number(
-        item.sellingPrice ??
-        item.price ??
-        0
-    );
-
-    return Math.max(price, 0);
-}
-
-
-/* ADMIN DISCOUNT PERCENTAGE */
-
-function getDiscountPercentage(item) {
-
-    const discount = Number(item.discount ?? 0);
-
-    if (isNaN(discount) || discount < 0) {
-        return 0;
-    }
-
-    return discount;
-}
-
-
-/* FINAL PRICE */
-
-function getFinalPrice(item) {
-
-    const sellingPrice = getSellingPrice(item);
-
-    /*
-       Admin already calculated finalPrice.
-       Use it as the main source of truth.
-    */
-
-    if (
-        item.finalPrice !== undefined &&
-        item.finalPrice !== null &&
-        item.finalPrice !== ""
-    ) {
-
-        const storedFinalPrice =
-            Number(item.finalPrice);
-
-        if (!isNaN(storedFinalPrice)) {
-            return Math.max(storedFinalPrice, 0);
-        }
-    }
-
-
-    /*
-       Fallback calculation:
-       Selling Price - Admin Discount %
-    */
-
-    const discountPercentage =
-        getDiscountPercentage(item);
-
-    const discountAmount =
-        sellingPrice * discountPercentage / 100;
-
-    return Math.max(
-        sellingPrice - discountAmount,
-        0
-    );
-}
-
-
-/* DISPLAY ORDER SUMMARY */
-
-function displayOrderSummary() {
-
-    const productsContainer =
-        document.getElementById("orderProducts");
-
-    if (cart.length === 0) {
-
-        productsContainer.innerHTML = `
-            <div class="empty-message">
-
-                <h3>Your Cart is Empty</h3>
-
-                <p>Please add products before checkout.</p>
-
-                <a href="products.html" class="shop-btn">
-                    Continue Shopping
-                </a>
-
-            </div>
-        `;
-
-        document.getElementById("subtotal").textContent = "₹0";
-        document.getElementById("discount").textContent = "-₹0";
-        document.getElementById("finalTotal").textContent = "₹0";
-
-        return;
-    }
-
-
-    let subtotal = 0;
-    let totalDiscount = 0;
-    let finalTotal = 0;
-
-    let html = "";
-
-
-    cart.forEach(function(item) {
-
-        const quantity =
-            Number(item.quantity ?? item.qty ?? 1) || 1;
-
-
-        const sellingPrice =
-            getSellingPrice(item);
-
-
-        const finalPrice =
-            getFinalPrice(item);
-
-
-        /*
-           Discount per item is calculated from
-           Selling Price - Final Price.
-        */
-
-        const discountPerItem =
-            Math.max(
-                sellingPrice - finalPrice,
-                0
-            );
-
-
-        const itemSubtotal =
-            sellingPrice * quantity;
-
-
-        const itemDiscount =
-            discountPerItem * quantity;
-
-
-        const itemFinalTotal =
-            finalPrice * quantity;
-
-
-        subtotal += itemSubtotal;
-
-        totalDiscount += itemDiscount;
-
-        finalTotal += itemFinalTotal;
-
-
-        html += `
-            <div class="product-item">
-
-                <img
-                    src="${item.image || 'https://via.placeholder.com/80'}"
-                    alt="${item.name || 'Product'}"
-                    onerror="this.src='https://via.placeholder.com/80'"
-                >
-
-                <div class="product-info">
-
-                    <h3>
-                        ${item.name || "Product"}
-                    </h3>
-
-                    <p>
-                        Category:
-                        ${item.category || "Product"}
-                    </p>
-
-                    <p>
-                        Quantity:
-                        ${quantity}
-                    </p>
-
-                    <p>
-                        Selling Price:
-                        ₹${sellingPrice.toLocaleString("en-IN")}
-                    </p>
-
-                    ${
-                        discountPerItem > 0
-                        ? `
-                            <p>
-                                Discount:
-                                ₹${discountPerItem.toLocaleString("en-IN")}
-                            </p>
-                        `
-                        : ""
-                    }
-
-                    <p class="product-price">
-                        Final Price:
-                        ₹${finalPrice.toLocaleString("en-IN")}
-                    </p>
-
-                    <p class="product-price">
-                        Item Total:
-                        ₹${itemFinalTotal.toLocaleString("en-IN")}
-                    </p>
-
-                </div>
-
-            </div>
-        `;
-    });
-
-
-    productsContainer.innerHTML = html;
-
-
-    document.getElementById("subtotal").textContent =
-        "₹" + subtotal.toLocaleString("en-IN");
-
-
-    document.getElementById("discount").textContent =
-        "-₹" + totalDiscount.toLocaleString("en-IN");
-
-
-    document.getElementById("finalTotal").textContent =
-        "₹" + finalTotal.toLocaleString("en-IN");
-
-
-    /*
-       Save the exact checkout calculation.
-    */
-
-    localStorage.setItem(
-        "cartSubtotal",
-        subtotal
-    );
-
-    localStorage.setItem(
-        "cartDiscount",
-        totalDiscount
-    );
-
-    localStorage.setItem(
-        "cartTotal",
-        finalTotal
-    );
-}
-
-
-/* PLACE ORDER */
-
-document.getElementById("checkoutForm")
-.addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-
-    if (cart.length === 0) {
-
-        alert(
-            "Your cart is empty. Please add a product first."
-        );
-
-        window.location.href =
-            "products.html";
-
-        return;
-    }
-
-
-    const customerName =
-        document.getElementById("customerName")
-        .value
-        .trim();
-
-
-    const mobile =
-        document.getElementById("mobile")
-        .value
-        .trim();
-
-
-    const address =
-        document.getElementById("address")
-        .value
-        .trim();
-
-
-    const city =
-        document.getElementById("city")
-        .value
-        .trim();
-
-
-    const state =
-        document.getElementById("state")
-        .value
-        .trim();
-
-
-    const pincode =
-        document.getElementById("pincode")
-        .value
-        .trim();
-
-
-    const selectedPayment =
-        document.querySelector(
-            'input[name="payment"]:checked'
-        );
-
-
-    if (!selectedPayment) {
-
-        alert("Please select a payment method.");
-
-        return;
-    }
-
-
-    const payment =
-        selectedPayment.value;
-
-
-    /*
-       Recalculate again before placing order.
-       This prevents stale localStorage totals.
-    */
-
-    let orderSubtotal = 0;
-    let orderDiscount = 0;
-    let orderTotal = 0;
-
-
-    cart.forEach(function(item) {
-
-        const quantity =
-            Number(item.quantity ?? item.qty ?? 1) || 1;
-
-
-        const sellingPrice =
-            getSellingPrice(item);
-
-
-        const finalPrice =
-            getFinalPrice(item);
-
-
-        const discountPerItem =
-            Math.max(
-                sellingPrice - finalPrice,
-                0
-            );
-
-
-        orderSubtotal +=
-            sellingPrice * quantity;
-
-
-        orderDiscount +=
-            discountPerItem * quantity;
-
-
-        orderTotal +=
-            finalPrice * quantity;
-
-    });
-
-
-    const order = {
-
-        orderId:
-            "RM" + Date.now(),
-
-        customerName:
-            customerName,
-
-        mobile:
-            mobile,
-
-        address:
-            address,
-
-        city:
-            city,
-
-        state:
-            state,
-
-        pincode:
-            pincode,
-
-        paymentMethod:
-            payment,
-
-        products:
-            cart,
-
-        subtotal:
-            orderSubtotal,
-
-        discount:
-            orderDiscount,
-
-        total:
-            orderTotal,
-
-        status:
-            "PLACED",
-
-        orderDate:
-            new Date().toLocaleString("en-IN")
-
-    };
-
-
-    let orders =
-        JSON.parse(
-            localStorage.getItem("orders")
-        ) || [];
-
-
-    orders.push(order);
-
-
-    localStorage.setItem(
-        "orders",
-        JSON.stringify(orders)
-    );
-
-
-    /*
-       Keep both names for compatibility
-       with existing order-success flow.
-    */
-
-    localStorage.setItem(
-        "lastOrder",
-        JSON.stringify(order)
-    );
-
-    localStorage.setItem(
-        "latestOrder",
-        JSON.stringify(order)
-    );
-
-
-    /*
-       Clear cart after successful order.
-    */
-
-    localStorage.removeItem("cart");
-
-    localStorage.removeItem("cartSubtotal");
-
-    localStorage.removeItem("cartDiscount");
-
-    localStorage.removeItem("cartTotal");
-
-
-    window.location.href =
-        "order-success.html";
-
-});
-
-
-displayOrderSummary();
-
-</script>
+        });
+    </script>
 
 </body>
 </html>

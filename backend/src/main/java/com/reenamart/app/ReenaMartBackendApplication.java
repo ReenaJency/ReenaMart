@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ReenaMartBackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ReenaMartBackendApplication.class, args);
+        SpringApplication.run(
+            ReenaMartBackendApplication.class,
+            args
+        );
     }
-
 }

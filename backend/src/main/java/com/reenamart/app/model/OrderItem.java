@@ -1,5 +1,6 @@
 package com.reenamart.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,10 +21,13 @@ public class OrderItem {
 
     private String productName;
 
-    private double price;
-
     private int quantity;
 
+    private double price;
+
+    private String size;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
@@ -33,6 +37,10 @@ public class OrderItem {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getProductId() {
@@ -51,6 +59,14 @@ public class OrderItem {
         this.productName = productName;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -59,12 +75,12 @@ public class OrderItem {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getSize() {
+        return size;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public Order getOrder() {

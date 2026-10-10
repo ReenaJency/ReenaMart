@@ -1,221 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ReenaMart - Products</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f5f7f6;color:#222}
-header{background:#1f4d3a;color:white;padding:16px 30px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px}
-.logo{font-size:25px;font-weight:bold}
-nav{display:flex;gap:10px;flex-wrap:wrap}
-nav a{color:white;text-decoration:none;padding:9px 14px;border-radius:6px}
-nav a:hover{background:#2d654d}
-.container{width:92%;max-width:1400px;margin:30px auto}
-.top-section{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:25px}
-h1{color:#1f4d3a}
-.search-box{width:320px;max-width:100%;padding:12px 15px;border:1px solid #ccc;border-radius:7px;font-size:15px}
-.categories{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:25px}
-.category-btn{border:none;background:#ddd;padding:10px 17px;border-radius:6px;cursor:pointer;font-weight:bold}
-.category-btn.active,.category-btn:hover{background:#1f4d3a;color:white}
-.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
-.product-card{background:white;border-radius:10px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.1);transition:.2s;position:relative}
-.product-card:hover{transform:translateY(-4px)}
-.product-image-box{height:230px;background:#f1f1f1;position:relative;overflow:hidden}
-.product-image{width:100%;height:100%;object-fit:cover}
-.like-btn{position:absolute;right:12px;top:12px;width:38px;height:38px;border:none;border-radius:50%;background:white;cursor:pointer;font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-.like-btn.liked{color:red}
-.product-info{padding:15px}
-.product-name{font-size:18px;font-weight:bold;margin-bottom:7px}
-.category{color:#777;font-size:14px;margin-bottom:10px}
-.price-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.old-price{color:#888;text-decoration:line-through;font-size:14px}
-.final-price{color:#1f4d3a;font-size:20px;font-weight:bold}
-.discount{color:#d35400;font-size:13px;font-weight:bold;margin-bottom:8px}
-.stock{font-size:14px;font-weight:bold;margin-bottom:8px}
-.in-stock{color:#16803a}
-.out-stock{color:#d32f2f}
-.view-btn{width:100%;border:none;background:#f5a623;color:#111;padding:11px;border-radius:6px;cursor:pointer;font-weight:bold;margin-top:8px}
-.view-btn:hover{background:#e59512}
-.view-btn:disabled{background:#ccc;color:#666;cursor:not-allowed}
-.empty{grid-column:1/-1;text-align:center;background:white;padding:50px 20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
-.empty h2{color:#1f4d3a;margin-bottom:10px}
-.empty p{color:#666}
-@media(max-width:1000px){.product-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:750px){.product-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:500px){.product-grid{grid-template-columns:1fr}header{padding:15px}.container{width:94%}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | ReenaMart</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
-<header>
-<div class="logo">🛍️ ReenaMart</div>
-<nav>
-<a href="index.html">Home</a>
-<a href="products.html">Products</a>
-<a href="cart.html">Cart <span id="cartCount">0</span></a>
-</nav>
-</header>
+    <header class="topbar">
+        <a href="index.html" class="logo">ReenaMart</a>
+        <nav id="nav" class="nav"></nav>
+    </header>
 
-<div class="container">
-<div class="top-section">
-<h1>Products</h1>
-<input type="text" id="searchInput" class="search-box" placeholder="Search products...">
-</div>
+    <main class="container">
+        <h1>Our Products</h1>
+        <p class="muted">Discover products available at ReenaMart.</p>
 
-<div class="categories">
-<button class="category-btn active" onclick="filterCategory('All',this)">All</button>
-<button class="category-btn" onclick="filterCategory('Fashion',this)">Fashion</button>
-<button class="category-btn" onclick="filterCategory('Jewellery',this)">Jewellery</button>
-<button class="category-btn" onclick="filterCategory('Electronics',this)">Electronics</button>
-<button class="category-btn" onclick="filterCategory('Beauty',this)">Beauty</button>
-</div>
+        <br>
 
-<div id="productGrid" class="product-grid"></div>
-</div>
+        <div class="search-row">
+            <input
+                type="search"
+                id="search"
+                placeholder="Search products..."
+                aria-label="Search products"
+            >
 
-<script>
-let allProducts=JSON.parse(localStorage.getItem("sellerProducts"))||[];
+            <select id="category" aria-label="Filter by category">
+                <option value="">All Categories</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Jewellery">Jewellery</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Beauty">Beauty</option>
+            </select>
+        </div>
 
-let products=allProducts.filter(product=>
-String(product.approvalStatus||"").toUpperCase()==="APPROVED"
-);
+        <br>
 
-let selectedCategory="All";
+        <div id="productGrid" class="grid" aria-live="polite">
+            <div class="box center">Loading products...</div>
+        </div>
+    </main>
 
-function getSellingPrice(product){
-return Number(product.sellingPrice??product.price??0);
-}
+    <script src="../js/script.js"></script>
+    <script src="../js/ai-bot.js"></script>
 
-function getDiscount(product){
-let discount=Number(product.discount??0);
-return isNaN(discount)?0:Math.max(discount,0);
-}
-
-function getFinalPrice(product){
-if(product.finalPrice!==undefined&&product.finalPrice!==null&&product.finalPrice!==""){
-return Number(product.finalPrice);
-}
-let sellingPrice=getSellingPrice(product);
-let discount=getDiscount(product);
-return Math.max(sellingPrice-(sellingPrice*discount/100),0);
-}
-
-function getStock(product){
-let stock=product.stock??product.quantity??0;
-stock=Number(stock);
-return isNaN(stock)?0:Math.max(stock,0);
-}
-
-function isLiked(productId){
-let likedProducts=JSON.parse(localStorage.getItem("likedProducts"))||[];
-return likedProducts.some(id=>String(id)===String(productId));
-}
-
-function toggleLike(productId,event){
-event.stopPropagation();
-let likedProducts=JSON.parse(localStorage.getItem("likedProducts"))||[];
-if(likedProducts.some(id=>String(id)===String(productId))){
-likedProducts=likedProducts.filter(id=>String(id)!==String(productId));
-}else{
-likedProducts.push(productId);
-}
-localStorage.setItem("likedProducts",JSON.stringify(likedProducts));
-displayProducts();
-}
-
-function openProduct(id){
-const product=products.find(item=>String(item.id)===String(id));
-if(!product){
-alert("Product not found.");
-return;
-}
-localStorage.setItem("selectedProduct",JSON.stringify(product));
-window.location.href="product-details.html";
-}
-
-function displayProducts(){
-const grid=document.getElementById("productGrid");
-grid.innerHTML="";
-
-const searchText=document.getElementById("searchInput").value.toLowerCase().trim();
-
-const filteredProducts=products.filter(product=>{
-const matchesCategory=selectedCategory==="All"||
-String(product.category||"").toLowerCase()===selectedCategory.toLowerCase();
-
-const matchesSearch=String(product.name||"").toLowerCase().includes(searchText)||
-String(product.category||"").toLowerCase().includes(searchText);
-
-return matchesCategory&&matchesSearch;
-});
-
-if(filteredProducts.length===0){
-grid.innerHTML=`
-<div class="empty">
-<h2>No Approved Products</h2>
-<p>Products approved by the admin will appear here.</p>
-</div>`;
-return;
-}
-
-filteredProducts.forEach(product=>{
-const sellingPrice=getSellingPrice(product);
-const discount=getDiscount(product);
-const finalPrice=getFinalPrice(product);
-const stock=getStock(product);
-const liked=isLiked(product.id);
-const outOfStock=stock<=0;
-
-grid.innerHTML+=`
-<div class="product-card" onclick="openProduct('${product.id}')">
-<div class="product-image-box">
-<img src="${product.image||""}" class="product-image" alt="${product.name||"Product"}" onerror="this.src='https://via.placeholder.com/500x500?text=Product'">
-<button class="like-btn ${liked?"liked":""}" onclick="toggleLike('${product.id}',event)">${liked?"♥":"♡"}</button>
-</div>
-
-<div class="product-info">
-<div class="product-name">${product.name||"Product"}</div>
-<div class="category">${product.category||"General"}</div>
-
-<div class="price-row">
-${discount>0?`<span class="old-price">₹${sellingPrice.toFixed(2)}</span>`:""}
-<span class="final-price">₹${finalPrice.toFixed(2)}</span>
-</div>
-
-${discount>0?`<div class="discount">Admin Discount: ${discount}%</div>`:""}
-
-<div class="stock ${outOfStock?"out-stock":"in-stock"}">
-${outOfStock?"Out of Stock":`In Stock: ${stock}`}
-</div>
-
-<button class="view-btn" onclick="openProduct('${product.id}')" ${outOfStock?"disabled":""}>
-${outOfStock?"Out of Stock":"View Product"}
-</button>
-</div>
-</div>`;
-});
-}
-
-function filterCategory(category,button){
-selectedCategory=category;
-document.querySelectorAll(".category-btn").forEach(btn=>btn.classList.remove("active"));
-button.classList.add("active");
-displayProducts();
-}
-
-function updateCartCount(){
-const cart=JSON.parse(localStorage.getItem("cart"))||[];
-const count=cart.reduce((total,item)=>total+Number(item.quantity||1),0);
-document.getElementById("cartCount").textContent=count;
-}
-
-document.getElementById("searchInput").addEventListener("input",displayProducts);
-
-updateCartCount();
-displayProducts();
-</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (typeof initProducts === "function") {
+                initProducts();
+            }
+        });
+    </script>
 
 </body>
 </html>

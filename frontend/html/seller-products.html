@@ -1,493 +1,152 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ReenaMart - Seller Products</title><style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f5f7f6;color:#222}
-header{background:#1f4d3a;color:#fff;padding:18px 30px;display:flex;justify-content:space-between;align-items:center}
-header h1{font-size:24px}
-nav a{color:#fff;text-decoration:none;margin-left:18px;font-weight:bold}
-nav a:hover{color:#f5a623}
-.container{width:92%;max-width:1200px;margin:25px auto}
-.seller-info,.form-box,.product-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.seller-info{padding:18px;margin-bottom:20px}
-.seller-info h2,.form-box h2{color:#1f4d3a;margin-bottom:15px}
-.seller-info p{margin:7px 0}
-.status{display:inline-block;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:bold}
-.approved{background:#d4edda;color:#155724}
-.pending{background:#fff3cd;color:#856404}
-.rejected{background:#f8d7da;color:#721c24}
-.form-box{padding:22px;margin-bottom:25px}
-.row{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-.field{margin-bottom:15px}
-.field label{display:block;margin-bottom:6px;font-weight:bold}
-.field input,.field select{width:100%;padding:11px;border:1px solid #ccc;border-radius:6px;font-size:15px}
-.buttons{margin-top:10px}
-button{border:0;padding:11px 18px;border-radius:6px;cursor:pointer;font-weight:bold;margin-right:8px}
-.save-btn{background:#1f4d3a;color:#fff}
-.cancel-btn{background:#777;color:#fff}
-button:disabled{background:#aaa;cursor:not-allowed}
-.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.product-card{overflow:hidden}
-.product-card img{width:100%;height:210px;object-fit:cover;background:#eee}
-.product-content{padding:15px}
-.product-content h3{color:#1f4d3a;margin-bottom:8px}
-.product-content p{margin:6px 0;font-size:14px}
-.price{color:#1f4d3a;font-size:18px!important;font-weight:bold}
-.product-actions{margin-top:12px}
-.edit-btn{background:#1f4d3a;color:#fff}
-.delete-btn{background:#dc3545;color:#fff}
-.empty{background:#fff;padding:30px;text-align:center;border-radius:10px;color:#666}
-.info-note{background:#f1f7f4;border-left:4px solid #1f4d3a;padding:12px;margin-top:12px;line-height:1.5}
-@media(max-width:900px){.products-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){
-header{flex-direction:column;gap:10px;text-align:center}
-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-nav a{margin-left:0}
-.row{grid-template-columns:1fr}
-.products-grid{grid-template-columns:1fr}
-}
-</style></head><body><header>
-<h1>ReenaMart Seller</h1>
-<nav>
-<a href="seller-dashboard.html">Dashboard</a>
-<a href="seller.html">My Store</a>
-<a href="seller-products.html">Products</a>
-<a href="seller-orders.html">Orders</a>
-<a href="index.html">Logout</a>
-</nav>
-</header><div class="container"><div class="seller-info">
-<h2>Seller Information</h2><p><strong>Seller:</strong> <span id="sellerName">-</span></p>
-<p><strong>Shop:</strong> <span id="shopName">-</span></p>
-<p><strong>Email:</strong> <span id="sellerEmail">-</span></p>
-<p><strong>Seller Status:</strong> <span id="sellerStatus" class="status">-</span></p><div class="info-note">
-Seller approval is required only once. After approval, you can add multiple products.
-Each new product must be approved by Admin before it becomes available to buyers.
-<br><br>
-<strong>Note:</strong> Selling Price and Stock are entered by the seller.
-Discount is controlled only by Admin.
-</div>
-</div><div class="form-box"><h2>Add / Edit Product</h2><div class="row"><div class="field">
-<label>Product Name</label>
-<input type="text" id="productName" placeholder="Enter product name">
-</div><div class="field">
-<label>Category</label>
-<select id="category" onchange="toggleSize()">
-<option value="">Select Category</option>
-<option value="Fashion">Fashion</option>
-<option value="Jewellery">Jewellery</option>
-<option value="Electronics">Electronics</option>
-<option value="Beauty">Beauty</option>
-</select>
-</div><div class="field" id="sizeField" style="display:none">
-<label>Size</label>
-<select id="size">
-<option value="">Select Size</option>
-<option value="XS">XS</option>
-<option value="S">S</option>
-<option value="M">M</option>
-<option value="L">L</option>
-<option value="XL">XL</option>
-<option value="XXL">XXL</option>
-</select>
-</div><div class="field">
-<label>Cost Price</label>
-<input type="number" id="costPrice" placeholder="Example: 500" min="0">
-</div><div class="field">
-<label>Selling Price</label>
-<input type="number" id="sellingPrice" placeholder="Example: 700" min="0">
-</div><div class="field">
-<label>Stock Quantity</label>
-<input type="number" id="stock" placeholder="Example: 10" min="0">
-</div><div class="field">
-<label>Product Image URL</label>
-<input type="text" id="image" placeholder="Paste image URL">
-</div></div><div class="buttons">
-<button class="save-btn" id="saveButton" onclick="saveProduct()">Add Product</button>
-<button class="cancel-btn" id="cancelButton" onclick="cancelEdit()" style="display:none">Cancel</button>
-</div></div><h2 style="color:#1f4d3a;margin-bottom:15px">My Products</h2>
-<div id="productsContainer" class="products-grid"></div></div><script>
-let sellerData=JSON.parse(localStorage.getItem("sellerRegistration"));
-let products=JSON.parse(localStorage.getItem("sellerProducts"))||[];
-let editingId=null;
+<title>Seller Products - ReenaMart</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
 
-if(!sellerData){
-alert("Seller registration not found.");
-window.location.href="seller-login.html";
-}
+<body>
 
-const sellerEmail=sellerData?.email||"";
+<header class="topbar">
 
-function getSellerStatus(){
-return(
-sellerData?.approvalStatus||
-localStorage.getItem("sellerApprovalStatus")||
-"PENDING"
-).toUpperCase();
-}
+    <div class="logo">
+        ReenaMart Seller
+    </div>
 
-function displaySellerInfo(){
-document.getElementById("sellerName").textContent=
-sellerData?.sellerName||sellerData?.name||"-";
+    <nav class="nav">
 
-document.getElementById("shopName").textContent=
-sellerData?.shopName||"-";
+        <a href="seller-dashboard.html">
+            Dashboard
+        </a>
 
-document.getElementById("sellerEmail").textContent=
-sellerEmail||"-";
+        <a href="seller-orders.html">
+            Orders
+        </a>
 
-const status=getSellerStatus();
-const statusElement=document.getElementById("sellerStatus");
+        <button onclick="sellerLogout()">
+            Logout
+        </button>
 
-statusElement.textContent=status;
-statusElement.className="status "+status.toLowerCase();
+    </nav>
 
-const saveButton=document.getElementById("saveButton");
+</header>
 
-if(status!=="APPROVED"){
-saveButton.disabled=true;
+<main class="container">
 
-if(status==="PENDING"){
-saveButton.textContent="Waiting for Admin Approval";
-}
+<div class="form-box">
 
-if(status==="REJECTED"){
-saveButton.textContent="Seller Rejected";
-}
-}else{
-saveButton.disabled=false;
-saveButton.textContent=editingId?"Update Product":"Add Product";
-}
-}
+    <h1>Add Product</h1>
 
-function toggleSize(){
-const category=document.getElementById("category").value;
-const sizeField=document.getElementById("sizeField");
+    <div class="notice">
+        Seller should enter <strong>only Seller Price</strong>.<br>
+        Cost Price, Selling Price, Discount and Final Price are set by Admin on approval.
+        <div style="margin-top: 12px;">
+            <button type="button" class="btn small orange" onclick="fillSampleProduct()" style="cursor: pointer;">
+                ⚡ Fill Sample Product (1-Click Test)
+            </button>
+        </div>
+    </div>
 
-if(category==="Fashion"){
-sizeField.style.display="block";
-}else{
-sizeField.style.display="none";
-document.getElementById("size").value="";
-}
-}
+    <form id="sellerProductForm">
 
-function saveProduct(){
+        <label>Product Name</label>
 
-if(getSellerStatus()!=="APPROVED"){
-alert("Admin must approve your seller account before adding products.");
-return;
-}
+        <input
+            id="productName"
+            required
+        >
 
-const name=document.getElementById("productName").value.trim();
-const category=document.getElementById("category").value;
-const size=document.getElementById("size").value;
-const costPrice=Number(document.getElementById("costPrice").value);
-const sellingPrice=Number(document.getElementById("sellingPrice").value);
-const stock=Number(document.getElementById("stock").value);
-const image=document.getElementById("image").value.trim();
+        <label>Description</label>
 
-if(!name||!category||!image){
-alert("Please fill all required fields.");
-return;
-}
+        <textarea
+            id="description"
+        ></textarea>
 
-if(costPrice<=0||sellingPrice<=0){
-alert("Cost Price and Selling Price must be greater than 0.");
-return;
-}
+        <label>Seller Price</label>
 
-if(stock<0){
-alert("Stock cannot be negative.");
-return;
-}
+        <input
+            id="sellerPrice"
+            type="number"
+            min="1"
+            required
+        >
 
-if(category==="Fashion"&&!size){
-alert("Please select a size for Fashion products.");
-return;
-}
+        <label>Category</label>
 
-if(sellingPrice<costPrice){
-if(!confirm("Selling price is lower than cost price. Do you want to continue?")){
-return;
-}
-}
+        <select
+            id="category"
+            required
+        >
 
-if(editingId){
+            <option value="Fashion">
+                Fashion
+            </option>
 
-const index=products.findIndex(
-product=>String(product.id)===String(editingId)
-);
+            <option value="Jewellery">
+                Jewellery
+            </option>
 
-if(index!==-1){
+            <option value="Electronics">
+                Electronics
+            </option>
 
-products[index].name=name;
-products[index].category=category;
-products[index].size=category==="Fashion"?size:"";
-products[index].costPrice=costPrice;
-products[index].sellingPrice=sellingPrice;
-products[index].stock=stock;
-products[index].quantity=stock;
-products[index].image=image;
+            <option value="Beauty">
+                Beauty
+            </option>
 
-/*
-Keep the Admin-controlled discount.
-When seller edits a product, approval is required again.
-*/
-products[index].discount=
-products[index].discount??0;
+        </select>
 
-products[index].finalPrice=
-Number(
-sellingPrice-
-(sellingPrice*Number(products[index].discount||0)/100)
-).toFixed(2);
+        <label>Image URL</label>
 
-products[index].approvalStatus="PENDING";
-products[index].updatedAt=new Date().toLocaleString("en-IN");
-}
+        <input id="imageUrl">
 
-alert("Product updated successfully. It is waiting for Admin approval.");
+        <label>Sizes</label>
 
-}else{
+        <input
+            id="sizes"
+            placeholder="S,M,L,XL,XXL"
+        >
 
-const newProduct={
-id:Date.now(),
-sellerId:sellerEmail,
-sellerName:sellerData.sellerName||sellerData.name||"",
-shopName:sellerData.shopName||"",
-sellerEmail:sellerEmail,
-sellerMobile:sellerData.mobile||sellerData.phone||"",
-name:name,
-category:category,
-size:category==="Fashion"?size:"",
-costPrice:costPrice,
-sellingPrice:sellingPrice,
-stock:stock,
-quantity:stock,
-discount:0,
-finalPrice:sellingPrice,
-image:image,
-approvalStatus:"PENDING",
-createdAt:new Date().toLocaleString("en-IN")
-};
+        <label>Shop Name</label>
 
-products.push(newProduct);
+        <input
+            id="shopName"
+            required
+        >
 
-alert("Product added successfully. Waiting for Admin approval.");
-}
+        <label>Stock</label>
 
-localStorage.setItem("sellerProducts",JSON.stringify(products));
+        <input
+            id="stock"
+            type="number"
+            min="1"
+            required
+        >
 
-clearForm();
-displayProducts();
-displaySellerInfo();
-}
+        <button
+            class="btn full"
+            type="submit"
+        >
+            Submit for Admin Approval
+        </button>
 
-function displayProducts(){
-
-const container=document.getElementById("productsContainer");
-
-const myProducts=products.filter(product=>
-product.sellerEmail===sellerEmail||
-product.sellerId===sellerEmail
-);
-
-if(myProducts.length===0){
-container.innerHTML=`
-<div class="empty">
-<h3>No Products Added</h3>
-<p>Add your first product above.</p>
-</div>`;
-return;
-}
-
-container.innerHTML=myProducts.map(product=>{
-
-const status=(product.approvalStatus||"PENDING").toUpperCase();
-
-let statusClass="pending";
-
-if(status==="APPROVED")statusClass="approved";
-if(status==="REJECTED")statusClass="rejected";
-
-const discount=Number(product.discount||0);
-
-const finalPrice=
-Number(
-product.sellingPrice||product.price||0
-)-
-(
-Number(product.sellingPrice||product.price||0)*
-discount/100
-);
-
-return`
-<div class="product-card">
-
-<img
-src="${product.image||""}"
-alt="${product.name||"Product"}"
-onerror="this.src='https://via.placeholder.com/400x250?text=No+Image'"
->
-
-<div class="product-content">
-
-<h3>${product.name||"Unnamed Product"}</h3>
-
-<p>
-<strong>Category:</strong>
-${product.category||"-"}
-</p>
-
-${product.category==="Fashion"?`
-<p>
-<strong>Size:</strong>
-${product.size||"-"}
-</p>
-`:""}
-
-<p>
-<strong>Cost Price:</strong>
-₹${Number(product.costPrice||0).toFixed(2)}
-</p>
-
-<p>
-<strong>Selling Price:</strong>
-₹${Number(product.sellingPrice||product.price||0).toFixed(2)}
-</p>
-
-<p>
-<strong>Stock:</strong>
-${Number(product.stock??product.quantity??0)}
-</p>
-
-<p>
-<strong>Discount:</strong>
-${discount}%
-<span style="color:#777">(Admin controlled)</span>
-</p>
-
-<p>
-<strong>Final Price:</strong>
-₹${Number(finalPrice).toFixed(2)}
-</p>
-
-<p>
-<strong>Status:</strong>
-<span class="status ${statusClass}">
-${status}
-</span>
-</p>
-
-<div class="product-actions">
-
-<button class="edit-btn" onclick="editProduct('${product.id}')">
-Edit
-</button>
-
-<button class="delete-btn" onclick="deleteProduct('${product.id}')">
-Delete
-</button>
+    </form>
 
 </div>
 
-</div>
-</div>
-`;
+<h2>My Products</h2>
 
-}).join("");
-}
+<div id="sellerProducts"></div>
 
-function editProduct(id){
+</main>
 
-const product=products.find(
-p=>String(p.id)===String(id)
-);
+<script src="../js/script.js"></script>
 
-if(!product)return;
+<script>
+initSellerProducts();
+</script>
 
-if(getSellerStatus()!=="APPROVED"){
-alert("Your seller account must be approved.");
-return;
-}
-
-editingId=id;
-
-document.getElementById("productName").value=product.name||"";
-document.getElementById("category").value=product.category||"";
-document.getElementById("size").value=product.size||"";
-document.getElementById("costPrice").value=product.costPrice||"";
-document.getElementById("sellingPrice").value=
-product.sellingPrice||product.price||"";
-document.getElementById("stock").value=
-product.stock??product.quantity??0;
-document.getElementById("image").value=product.image||"";
-
-toggleSize();
-
-document.getElementById("saveButton").textContent="Update Product";
-document.getElementById("cancelButton").style.display="inline-block";
-
-window.scrollTo({
-top:document.querySelector(".form-box").offsetTop-20,
-behavior:"smooth"
-});
-}
-
-function deleteProduct(id){
-
-const product=products.find(
-p=>String(p.id)===String(id)
-);
-
-if(!product)return;
-
-if(!confirm("Are you sure you want to delete this product?")){
-return;
-}
-
-products=products.filter(
-p=>String(p.id)!==String(id)
-);
-
-localStorage.setItem("sellerProducts",JSON.stringify(products));
-
-if(String(editingId)===String(id)){
-clearForm();
-}
-
-displayProducts();
-displaySellerInfo();
-
-alert("Product deleted successfully.");
-}
-
-function clearForm(){
-
-editingId=null;
-
-document.getElementById("productName").value="";
-document.getElementById("category").value="";
-document.getElementById("size").value="";
-document.getElementById("costPrice").value="";
-document.getElementById("sellingPrice").value="";
-document.getElementById("stock").value="";
-document.getElementById("image").value="";
-
-document.getElementById("sizeField").style.display="none";
-
-document.getElementById("saveButton").textContent="Add Product";
-document.getElementById("cancelButton").style.display="none";
-}
-
-function cancelEdit(){
-clearForm();
-displaySellerInfo();
-}
-
-displaySellerInfo();
-displayProducts();
-</script></body>
+</body>
 </html>

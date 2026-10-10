@@ -3,793 +3,229 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ReenaMart Admin Dashboard</title>
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#f5f7f6;color:#333}
-header{height:65px;background:#1f4d3a;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 25px}
-.logo{font-size:24px;font-weight:bold}
-.logout-btn{background:#f5a623;border:0;padding:10px 18px;border-radius:7px;font-weight:bold;cursor:pointer}
-.layout{display:flex;min-height:calc(100vh - 65px)}
-.sidebar{width:230px;background:#183c2e;padding:20px 0}
-.sidebar button{width:100%;padding:15px 20px;background:none;border:0;color:#fff;text-align:left;font-size:15px;cursor:pointer}
-.sidebar button:hover,.sidebar button.active{background:#1f4d3a}
-.main{flex:1;padding:25px;overflow-x:auto}
-.section{display:none}
-.section.active{display:block}
-h1{color:#1f4d3a;margin-bottom:20px}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:25px}
-.card{background:#fff;padding:22px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
-.card h3{color:#666;font-size:15px;margin-bottom:10px}
-.card p{color:#1f4d3a;font-size:28px;font-weight:bold}
-.box{background:#fff;padding:20px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);margin-bottom:20px}
-.info{background:#eaf4ef;border-left:4px solid #1f4d3a;padding:14px;margin-bottom:20px;line-height:1.5}
-table{width:100%;border-collapse:collapse;min-width:950px}
-th,td{padding:12px;border-bottom:1px solid #ddd;text-align:left}
-th{background:#1f4d3a;color:#fff}
-.product-img{width:55px;height:55px;object-fit:cover;border-radius:7px}
-input{padding:8px;border:1px solid #ccc;border-radius:5px}
-.price-input{width:90px}
-.stock-input{width:70px}
-.discount-input{width:70px}
-.save-btn{background:#1f4d3a;color:#fff;border:0;padding:8px 12px;border-radius:5px;cursor:pointer;font-weight:bold}
-.approve-btn{background:#198754;color:#fff;border:0;padding:8px 12px;border-radius:5px;cursor:pointer;margin-right:5px}
-.reject-btn{background:#dc3545;color:#fff;border:0;padding:8px 12px;border-radius:5px;cursor:pointer}
-.pending{color:#856404;font-weight:bold}
-.approved{color:#198754;font-weight:bold}
-.rejected{color:#dc3545;font-weight:bold}
-.final-price{color:#1f4d3a;font-weight:bold}
-.empty{text-align:center;padding:30px;color:#777}
-.seller-search{display:flex;gap:10px;margin-bottom:20px}
-.seller-search input{flex:1;padding:12px;font-size:14px}
-.clear-search-btn{background:#f5a623;border:0;padding:10px 18px;border-radius:7px;font-weight:bold;cursor:pointer}
-@media(max-width:900px){.sidebar{width:190px}.cards{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.layout{flex-direction:column}.sidebar{width:100%}.sidebar button{display:inline-block;width:auto}.cards{grid-template-columns:1fr}.main{padding:15px}}
-</style>
+<title>Admin Dashboard - ReenaMart</title>
+<link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
 
-<header>
-<div class="logo">ReenaMart Admin</div>
-<button class="logout-btn" onclick="logout()">Logout</button>
+<header class="topbar">
+
+    <div class="logo">
+        ReenaMart Admin
+    </div>
+
+    <nav class="nav">
+        <a href="products.html">Store View</a>
+        <button type="button" class="btn small outline" onclick="adminLogout()" style="cursor: pointer;">
+            Logout
+        </button>
+    </nav>
+
 </header>
 
-<div class="layout">
+<main class="container">
 
-<aside class="sidebar">
-<button class="active" onclick="showSection('dashboard',this)">Dashboard</button>
-<button onclick="showSection('products',this)">Products</button>
-<button onclick="showSection('sellers',this)">Seller Approvals</button>
-<button onclick="showSection('orders',this)">Orders</button>
-<button onclick="showSection('customers',this)">Customers</button>
-<button onclick="showSection('reports',this)">Reports</button>
-</aside>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+        <h1 style="margin: 0;">Admin Dashboard</h1>
+        <div style="font-size: 14px; color: #555;">
+            Logged in as: <strong id="adminUserBadge" style="color: var(--green, #1f4d3a); background: #eef6f3; padding: 4px 10px; border-radius: 6px;">admin@gmail.com</strong>
+            <a href="adminlogin.html" class="btn small outline" style="margin-left: 10px; text-decoration: none;">Admin Login</a>
+        </div>
+    </div>
 
-<main class="main">
+    <div class="stats">
 
-<section id="dashboard" class="section active">
-<h1>Admin Dashboard</h1>
+        <div class="stat">
+            <small>Total Sellers</small>
+            <strong id="totalSellers">0</strong>
+        </div>
 
-<div class="cards">
-<div class="card"><h3>Total Sellers</h3><p id="totalSellers">0</p></div>
-<div class="card"><h3>Total Products</h3><p id="totalProducts">0</p></div>
-<div class="card"><h3>Total Orders</h3><p id="totalOrders">0</p></div>
-<div class="card"><h3>Total Revenue</h3><p id="totalRevenue">₹0</p></div>
-</div>
+        <div class="stat">
+            <small>Total Products</small>
+            <strong id="totalProducts">0</strong>
+        </div>
 
-<div class="box">
-<div class="info">
-<strong>Admin Product Control</strong><br><br>
-Admin can change Selling Price, Stock and Discount.<br>
-Final Price will be calculated automatically.
-</div>
-</div>
-</section>
+        <div class="stat">
+            <small>Total Orders</small>
+            <strong id="totalOrders">0</strong>
+        </div>
 
+        <div class="stat">
+            <small>Total Revenue</small>
+            <strong id="totalRevenue">₹0</strong>
+        </div>
 
-<section id="products" class="section">
-<h1>Product Management</h1>
+    </div>
 
-<div class="box">
-<div id="productsTable"></div>
-</div>
-</section>
+    <div class="notice">
 
+        <strong>Final Pricing Rule</strong>
 
-<section id="sellers" class="section">
-<h1>Seller Approvals</h1>
+        <br><br>
 
-<div class="box">
+        Seller Price =
+        seller provides to ReenaMart.
 
-<div class="seller-search">
-<input type="text" id="sellerSearch" placeholder="Search seller by name, email or shop..." oninput="searchSellers()">
-<button class="clear-search-btn" onclick="clearSellerSearch()">Clear</button>
-</div>
+        <br>
 
-<div id="sellersTable"></div>
+        Selling Price =
+        Admin decides.
 
-</div>
-</section>
+        <br>
 
+        Discount =
+        Admin decides.
 
-<section id="orders" class="section">
-<h1>Orders</h1>
-<div class="box"><div id="ordersTable"></div></div>
-</section>
+        <br>
 
+        Discount Amount =
+        System calculates.
 
-<section id="customers" class="section">
-<h1>Customers</h1>
-<div class="box"><div id="customersTable"></div></div>
-</section>
+        <br>
 
+        Final Price =
+        System calculates automatically.
 
-<section id="reports" class="section">
-<h1>Reports</h1>
+        <br><br>
 
-<div class="cards">
-<div class="card"><h3>Total Products</h3><p id="reportProducts">0</p></div>
-<div class="card"><h3>Total Sellers</h3><p id="reportSellers">0</p></div>
-<div class="card"><h3>Total Stock</h3><p id="reportStock">0</p></div>
-<div class="card"><h3>Total Revenue</h3><p id="reportRevenue">₹0</p></div>
-</div>
-</section>
+        Buyer will
+        <strong>never see Seller Price</strong>.
+
+    <div id="adminNotificationBox" class="admin-alert-banner" style="display: none;">
+        <h3 style="margin: 0 0 10px 0; color: #d35400;">
+            🔔 Seller Notifications (<span id="pendingNotificationCount">0</span> Products Pending Approval)
+        </h3>
+        <p style="margin: 0 0 12px 0; font-size: 13.5px; color: #555;">
+            The following products were added by sellers and require your pricing & approval before going live on ReenaMart:
+        </p>
+        <div id="adminNotificationList"></div>
+    </div>
+
+    <div class="box">
+
+        <h2>Product Management</h2>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Seller</th>
+                        <th>Seller Price</th>
+                        <th>Selling Price</th>
+                        <th>Discount %</th>
+                        <th>Final Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="productsTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="box">
+
+        <h2>Seller Approvals</h2>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Seller</th>
+                        <th>Email</th>
+                        <th>Shop</th>
+                        <th>Category</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="sellersTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="box">
+
+        <h2>Orders</h2>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="ordersTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="box">
+
+        <h2>Customers</h2>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="customersTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </main>
-</div>
 
+<script src="../js/script.js"></script>
 
 <script>
-
-if(localStorage.getItem("adminLoggedIn")!=="true"){
-window.location.href="admin-login.html";
-}
-
-
-function getArray(key){
-try{
-let data=JSON.parse(localStorage.getItem(key));
-return Array.isArray(data)?data:[];
-}catch(e){
-return[];
-}
-}
-
-
-/* SELLERS */
-
-let sellers=getArray("sellers");
-
-let sellerRegistration=JSON.parse(
-localStorage.getItem("sellerRegistration")
-);
-
-
-if(sellers.length===0&&sellerRegistration){
-sellers=[sellerRegistration];
-localStorage.setItem("sellers",JSON.stringify(sellers));
-}
-
-
-if(sellerRegistration){
-
-let exists=sellers.some(
-s=>s.email===sellerRegistration.email
-);
-
-if(!exists){
-sellers.push(sellerRegistration);
-localStorage.setItem("sellers",JSON.stringify(sellers));
-}
-
-}
-
-
-/* PRODUCTS */
-
-let products=getArray("sellerProducts");
-
-let orders=getArray("orders");
-let customers=getArray("users");
-
-
-/* PRODUCT DEFAULTS */
-
-products=products.map(product=>{
-
-if(product.sellingPrice===undefined||product.sellingPrice===null){
-product.sellingPrice=0;
-}
-
-if(product.stock===undefined||product.stock===null){
-product.stock=5;
-}
-
-if(product.discount===undefined||product.discount===null){
-product.discount=0;
-}
-
-product.finalPrice=
-Number(product.sellingPrice)-
-(Number(product.sellingPrice)*Number(product.discount)/100);
-
-return product;
-
-});
-
-localStorage.setItem(
-"sellerProducts",
-JSON.stringify(products)
-);
-
-
-/* NAVIGATION */
-
-function showSection(id,button){
-
-document.querySelectorAll(".section").forEach(s=>{
-s.classList.remove("active");
-});
-
-document.getElementById(id).classList.add("active");
-
-document.querySelectorAll(".sidebar button").forEach(b=>{
-b.classList.remove("active");
-});
-
-button.classList.add("active");
-
-if(id==="products")displayProducts();
-if(id==="sellers")displaySellers();
-if(id==="orders")displayOrders();
-if(id==="customers")displayCustomers();
-
-}
-
-
-/* DASHBOARD */
-
-function updateDashboard(){
-
-document.getElementById("totalSellers").textContent=sellers.length;
-document.getElementById("totalProducts").textContent=products.length;
-document.getElementById("totalOrders").textContent=orders.length;
-
-let revenue=0;
-
-orders.forEach(order=>{
-revenue+=Number(
-order.total||
-order.totalAmount||
-order.amount||
-0
-);
-});
-
-document.getElementById("totalRevenue").textContent=
-"₹"+revenue.toFixed(2);
-
-document.getElementById("reportProducts").textContent=
-products.length;
-
-document.getElementById("reportSellers").textContent=
-sellers.length;
-
-let stock=0;
-
-products.forEach(product=>{
-stock+=Number(product.stock||0);
-});
-
-document.getElementById("reportStock").textContent=stock;
-
-document.getElementById("reportRevenue").textContent=
-"₹"+revenue.toFixed(2);
-
-}
-
-
-/* PRODUCTS */
-
-function displayProducts(){
-
-let box=document.getElementById("productsTable");
-
-if(products.length===0){
-box.innerHTML='<div class="empty">No products available.</div>';
-return;
-}
-
-box.innerHTML=`
-
-<table>
-<thead>
-<tr>
-<th>Image</th>
-<th>Product</th>
-<th>Seller</th>
-<th>Selling Price</th>
-<th>Stock</th>
-<th>Discount</th>
-<th>Final Price</th>
-<th>Save</th>
-</tr>
-</thead>
-
-<tbody>
-
-${products.map(p=>{
-
-let price=Number(p.sellingPrice||0);
-let stock=Number(p.stock||5);
-let discount=Number(p.discount||0);
-
-let finalPrice=
-price-(price*discount/100);
-
-return`
-
-<tr>
-
-<td>
-<img class="product-img"
-src="${p.image||p.imageUrl||"https://via.placeholder.com/100"}"
-onerror="this.src='https://via.placeholder.com/100'">
-</td>
-
-<td>
-<strong>${p.name||"Product"}</strong><br>
-<small>${p.category||""}</small>
-</td>
-
-<td>
-${p.shopName||p.sellerName||"Seller"}
-</td>
-
-<td>
-<input
-class="price-input"
-type="number"
-id="price-${p.id}"
-value="${price}"
-min="0">
-</td>
-
-<td>
-<input
-class="stock-input"
-type="number"
-id="stock-${p.id}"
-value="${stock}"
-min="0">
-</td>
-
-<td>
-<input
-class="discount-input"
-type="number"
-id="discount-${p.id}"
-value="${discount}"
-min="0"
-max="100">
-%
-</td>
-
-<td class="final-price">
-₹${finalPrice.toFixed(2)}
-</td>
-
-<td>
-<button
-class="save-btn"
-onclick="saveProduct(${p.id})">
-Save
-</button>
-</td>
-
-</tr>
-
-`;
-
-}).join("")}
-
-</tbody>
-</table>
-`;
-
-}
-
-
-/* SAVE PRODUCT */
-
-function saveProduct(id){
-
-let product=products.find(
-p=>Number(p.id)===Number(id)
-);
-
-if(!product){
-alert("Product not found");
-return;
-}
-
-let price=Number(
-document.getElementById("price-"+id).value
-);
-
-let stock=Number(
-document.getElementById("stock-"+id).value
-);
-
-let discount=Number(
-document.getElementById("discount-"+id).value
-);
-
-if(price<0||stock<0){
-alert("Price and stock cannot be negative.");
-return;
-}
-
-if(discount<0||discount>100){
-alert("Discount must be between 0% and 100%.");
-return;
-}
-
-product.sellingPrice=price;
-product.stock=stock;
-product.quantity=stock;
-product.discount=discount;
-
-product.finalPrice=
-Number(
-(price-(price*discount/100)).toFixed(2)
-);
-
-localStorage.setItem(
-"sellerProducts",
-JSON.stringify(products)
-);
-
-alert("Product updated successfully!");
-
-displayProducts();
-updateDashboard();
-
-}
-
-
-/* SELLERS */
-
-function displaySellers(){
-
-let box=document.getElementById("sellersTable");
-
-let search=
-(document.getElementById("sellerSearch")?.value||"")
-.toLowerCase()
-.trim();
-
-let filtered=sellers.filter(s=>{
-
-let name=(s.sellerName||s.name||"").toLowerCase();
-let email=(s.email||"").toLowerCase();
-let shop=(s.shopName||"").toLowerCase();
-
-return(
-name.includes(search)||
-email.includes(search)||
-shop.includes(search)
-);
-
-});
-
-
-if(filtered.length===0){
-
-box.innerHTML=`
-<div class="empty">
-${search?"No sellers found.":"No seller registrations found."}
-</div>`;
-
-return;
-}
-
-
-box.innerHTML=`
-
-<table>
-
-<thead>
-<tr>
-<th>Name</th>
-<th>Email</th>
-<th>Mobile</th>
-<th>Shop</th>
-<th>Category</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody>
-
-${filtered.map(s=>{
-
-let status=
-(s.approvalStatus||"PENDING").toUpperCase();
-
-return`
-
-<tr>
-
-<td>${s.sellerName||s.name||"-"}</td>
-<td>${s.email||"-"}</td>
-<td>${s.mobile||"-"}</td>
-<td>${s.shopName||"-"}</td>
-<td>${s.category||"-"}</td>
-
-<td class="${status.toLowerCase()}">
-${status}
-</td>
-
-<td>
-
-${
-status==="PENDING"
-
-?
-
-`
-<button
-class="approve-btn"
-onclick="approveSeller('${s.email}')">
-Approve
-</button>
-
-<button
-class="reject-btn"
-onclick="rejectSeller('${s.email}')">
-Reject
-</button>
-`
-
-:
-
-status==="APPROVED"
-
-?
-
-`<span class="approved">Approved</span>`
-
-:
-
-`<span class="rejected">Rejected</span>`
-}
-
-</td>
-
-</tr>
-
-`;
-
-}).join("")}
-
-</tbody>
-</table>
-`;
-
-}
-
-
-/* SEARCH */
-
-function searchSellers(){
-displaySellers();
-}
-
-
-function clearSellerSearch(){
-document.getElementById("sellerSearch").value="";
-displaySellers();
-}
-
-
-/* APPROVE */
-
-function approveSeller(email){
-
-sellers=sellers.map(s=>{
-
-if(s.email===email){
-s.approvalStatus="APPROVED";
-}
-
-return s;
-
-});
-
-localStorage.setItem(
-"sellers",
-JSON.stringify(sellers)
-);
-
-
-if(
-sellerRegistration&&
-sellerRegistration.email===email
-){
-
-sellerRegistration.approvalStatus="APPROVED";
-
-localStorage.setItem(
-"sellerRegistration",
-JSON.stringify(sellerRegistration)
-);
-
-localStorage.setItem(
-"sellerApprovalStatus",
-"APPROVED"
-);
-
-}
-
-alert("Seller approved successfully.");
-
-displaySellers();
-updateDashboard();
-
-}
-
-
-/* REJECT */
-
-function rejectSeller(email){
-
-sellers=sellers.map(s=>{
-
-if(s.email===email){
-s.approvalStatus="REJECTED";
-}
-
-return s;
-
-});
-
-localStorage.setItem(
-"sellers",
-JSON.stringify(sellers)
-);
-
-
-if(
-sellerRegistration&&
-sellerRegistration.email===email
-){
-
-sellerRegistration.approvalStatus="REJECTED";
-
-localStorage.setItem(
-"sellerRegistration",
-JSON.stringify(sellerRegistration)
-);
-
-localStorage.setItem(
-"sellerApprovalStatus",
-"REJECTED"
-);
-
-}
-
-alert("Seller rejected.");
-
-displaySellers();
-
-}
-
-
-/* ORDERS */
-
-function displayOrders(){
-
-let box=document.getElementById("ordersTable");
-
-if(orders.length===0){
-box.innerHTML='<div class="empty">No orders available.</div>';
-return;
-}
-
-box.innerHTML=`
-
-<table>
-<thead>
-<tr>
-<th>Order ID</th>
-<th>Customer</th>
-<th>Total</th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody>
-
-${orders.map(o=>`
-
-<tr>
-<td>${o.id||o.orderId||"-"}</td>
-<td>${o.customerName||o.name||"-"}</td>
-<td>₹${Number(o.total||o.totalAmount||0).toFixed(2)}</td>
-<td>${o.status||"PLACED"}</td>
-</tr>
-
-`).join("")}
-
-</tbody>
-</table>
-`;
-
-}
-
-
-/* CUSTOMERS */
-
-function displayCustomers(){
-
-let box=document.getElementById("customersTable");
-
-if(customers.length===0){
-box.innerHTML='<div class="empty">No customers available.</div>';
-return;
-}
-
-box.innerHTML=`
-
-<table>
-
-<thead>
-<tr>
-<th>Name</th>
-<th>Email</th>
-<th>Role</th>
-</tr>
-</thead>
-
-<tbody>
-
-${customers.map(c=>`
-
-<tr>
-<td>${c.name||c.username||"-"}</td>
-<td>${c.email||"-"}</td>
-<td>${c.role||"BUYER"}</td>
-</tr>
-
-`).join("")}
-
-</tbody>
-</table>
-`;
-
-}
-
-
-/* LOGOUT */
-
-function logout(){
-
-localStorage.removeItem("adminLoggedIn");
-localStorage.removeItem("userRole");
-
-window.location.href="admin-login.html";
-
-}
-
-
-/* START */
-
-updateDashboard();
-
+initAdmin();
 </script>
 
 </body>
